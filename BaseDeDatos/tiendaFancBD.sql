@@ -2,8 +2,6 @@ drop database if exists tiendaFnac;
 create database tiendaFnac;
 use tiendaFnac;
 
-create database if not exists appInventario;
-
 drop table if exists usuario;
 create table usuario (
 ID int not null primary key auto_increment,
