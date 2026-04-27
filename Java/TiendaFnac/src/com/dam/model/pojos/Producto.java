@@ -7,4 +7,5 @@ public class Producto {
 	private String categoria;
 	private double precio;
 	private String descripcion;
+	//TODO: Agregar cosas pertinentes al stock
 }
