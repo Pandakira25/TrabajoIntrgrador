@@ -1,4 +1,4 @@
-package com.dam.Ctrl;
+package com.dam.ctrl;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
