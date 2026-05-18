@@ -1,7 +1,5 @@
 package com.dam.model.pojos;
 
-import java.util.ArrayList;
-
 public class Carrito {
 
 	private int id;
