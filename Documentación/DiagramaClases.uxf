@@ -1,0 +1,62 @@
+<diagram program="umletino" version="15.1"><zoom_level>9</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>585</x><y>297</y><w>117</w><h>117</h></coordinates><panel_attributes>Carrito
+--
+	- int id
+	- Comprador c
+	- double importe
+--
+	+ Carrito
+	+ toString() String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>783</x><y>297</y><w>171</w><h>135</h></coordinates><panel_attributes>CarritoProducto
+--
+	- int id
+	- int idProducto
+	- int cantidadP
+	- Carrito ca
+	- Comprador co
+--
+	+ CarritoProducto
+	+ toString() String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>297</x><y>297</y><w>189</w><h>126</h></coordinates><panel_attributes>Comprador
+--
+	- String direccion;
+	- String nTarjeta;
+--
++ Comprador
++ verCarrito
++ pagar
++ verStock</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>36</x><y>297</y><w>162</w><h>99</h></coordinates><panel_attributes>Empleado
+--
+	- String nSeguridad
+	- String iban
+--
+	+ toString() String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>639</x><y>72</y><w>234</w><h>162</h></coordinates><panel_attributes>Producto
+--
+	- int id;
+	- String nombre;
+	- String categoria;
+	- double precio;
+	- String descripcion
+	- int stock
+--
++ Producto()
++ toString() String
++ getters</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>450</x><y>477</y><w>171</w><h>144</h></coordinates><panel_attributes>Transacciones
+--
+	- int id
+	- Comprador
+	- Empleado
+	- Carrito
+--
+	+ toString()
+	+ Transacciones
+		</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>117</x><y>72</y><w>234</w><h>162</h></coordinates><panel_attributes>Usuario
+--
+	-int id;
+	- int autorizacion;
+	- String nombre;
+	- String contrasenia
+	- int tel
+--
+	+ Usuario
+	+ toString() String 	</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>99</x><y>225</y><w>81</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;80;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>306</x><y>225</y><w>108</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>100;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>693</x><y>360</y><w>108</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>477</x><y>351</y><w>126</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>819</x><y>225</y><w>72</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;60;80</additional_attributes></element><element><id>Relation</id><coordinates><x>432</x><y>414</y><w>72</w><h>81</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;60;70</additional_attributes></element><element><id>Relation</id><coordinates><x>549</x><y>405</y><w>108</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;.</panel_attributes><additional_attributes>10;80;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>99</x><y>387</y><w>369</w><h>189</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=m
+&lt; asesora</panel_attributes><additional_attributes>10;10;390;190</additional_attributes></element></diagram>
