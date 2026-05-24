@@ -1,11 +1,11 @@
-<diagram program="umletino" version="15.1"><zoom_level>9</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>585</x><y>297</y><w>117</w><h>117</h></coordinates><panel_attributes>Carrito
+<diagram program="umletino" version="15.1"><zoom_level>5</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>1070</x><y>195</y><w>65</w><h>65</h></coordinates><panel_attributes>Carrito
 --
 	- int id
 	- Comprador c
 	- double importe
 --
 	+ Carrito
-	+ toString() String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>783</x><y>297</y><w>171</w><h>135</h></coordinates><panel_attributes>CarritoProducto
+	+ toString() String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1180</x><y>195</y><w>95</w><h>75</h></coordinates><panel_attributes>CarritoProducto
 --
 	- int id
 	- int idProducto
@@ -14,7 +14,7 @@
 	- Comprador co
 --
 	+ CarritoProducto
-	+ toString() String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>297</x><y>297</y><w>189</w><h>126</h></coordinates><panel_attributes>Comprador
+	+ toString() String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>910</x><y>195</y><w>105</w><h>70</h></coordinates><panel_attributes>Comprador
 --
 	- String direccion;
 	- String nTarjeta;
@@ -22,12 +22,12 @@
 + Comprador
 + verCarrito
 + pagar
-+ verStock</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>36</x><y>297</y><w>162</w><h>99</h></coordinates><panel_attributes>Empleado
++ verStock</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>765</x><y>195</y><w>90</w><h>55</h></coordinates><panel_attributes>Empleado
 --
 	- String nSeguridad
 	- String iban
 --
-	+ toString() String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>639</x><y>72</y><w>234</w><h>162</h></coordinates><panel_attributes>Producto
+	+ toString() String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1100</x><y>70</y><w>130</w><h>90</h></coordinates><panel_attributes>Producto
 --
 	- int id;
 	- String nombre;
@@ -38,7 +38,7 @@
 --
 + Producto()
 + toString() String
-+ getters</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>450</x><y>477</y><w>171</w><h>144</h></coordinates><panel_attributes>Transacciones
++ getters</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>995</x><y>295</y><w>95</w><h>80</h></coordinates><panel_attributes>Transacciones
 --
 	- int id
 	- Comprador
@@ -47,7 +47,7 @@
 --
 	+ toString()
 	+ Transacciones
-		</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>117</x><y>72</y><w>234</w><h>162</h></coordinates><panel_attributes>Usuario
+		</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>810</x><y>70</y><w>130</w><h>90</h></coordinates><panel_attributes>Usuario
 --
 	-int id;
 	- int autorizacion;
@@ -56,7 +56,42 @@
 	- int tel
 --
 	+ Usuario
-	+ toString() String 	</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>99</x><y>225</y><w>81</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;80;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>306</x><y>225</y><w>108</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>100;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>693</x><y>360</y><w>108</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>477</x><y>351</y><w>126</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>819</x><y>225</y><w>72</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;60;80</additional_attributes></element><element><id>Relation</id><coordinates><x>432</x><y>414</y><w>72</w><h>81</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;60;70</additional_attributes></element><element><id>Relation</id><coordinates><x>549</x><y>405</y><w>108</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;.</panel_attributes><additional_attributes>10;80;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>99</x><y>387</y><w>369</w><h>189</h></coordinates><panel_attributes>lt=-
+	+ toString() String 	</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>800</x><y>155</y><w>45</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;80;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>915</x><y>155</y><w>60</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>100;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1130</x><y>230</y><w>60</w><h>15</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1010</x><y>225</y><w>70</w><h>15</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1200</x><y>155</y><w>40</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;60;80</additional_attributes></element><element><id>Relation</id><coordinates><x>985</x><y>260</y><w>40</w><h>45</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;60;70</additional_attributes></element><element><id>Relation</id><coordinates><x>1050</x><y>255</y><w>60</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;.</panel_attributes><additional_attributes>10;80;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>800</x><y>245</y><w>205</w><h>105</h></coordinates><panel_attributes>lt=-
 m1=1
 m2=m
-&lt; asesora</panel_attributes><additional_attributes>10;10;390;190</additional_attributes></element></diagram>
+&lt; asesora</panel_attributes><additional_attributes>10;10;390;190</additional_attributes></element><element><id>UMLClass</id><coordinates><x>275</x><y>285</y><w>80</w><h>35</h></coordinates><panel_attributes>VinicioSesion
+--
+//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>620</x><y>285</y><w>80</w><h>35</h></coordinates><panel_attributes>VprodTrabajador
+--
+//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>535</x><y>285</y><w>80</w><h>35</h></coordinates><panel_attributes>VCarrito
+--
+//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>450</x><y>285</y><w>80</w><h>35</h></coordinates><panel_attributes>VGestionEmp
+--
+//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>365</x><y>285</y><w>80</w><h>35</h></coordinates><panel_attributes>VTrans
+--
+//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>255</x><y>100</y><w>135</w><h>90</h></coordinates><panel_attributes>IFrames
+--
++ 	configurarVentana() void
++ 	crearComponentes() void
++	crearMenu() void
++	setControlador(CI ControladorVP) void
++	cargarPanel(Jpanel panel) void
++	hacerVisible() void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>515</x><y>110</y><w>155</w><h>55</h></coordinates><panel_attributes>IPanels
+--
++	crearComponentes() void
++	configurarPanel() void
++ 	setControlador(CI controladorPaneles)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>285</x><y>185</y><w>30</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>40;200;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>650</x><y>160</y><w>25</w><h>135</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;250;30;10</additional_attributes></element><element><id>Relation</id><coordinates><x>595</x><y>160</y><w>65</w><h>135</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;250;110;10</additional_attributes></element><element><id>Relation</id><coordinates><x>515</x><y>160</y><w>110</w><h>135</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;250;200;10</additional_attributes></element><element><id>Relation</id><coordinates><x>425</x><y>160</y><w>115</w><h>135</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;250;210;10</additional_attributes></element><element><id>UMLNote</id><coordinates><x>240</x><y>20</y><w>475</w><h>305</h></coordinates><panel_attributes>Interfaz Grafica</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>740</x><y>10</y><w>570</w><h>430</h></coordinates><panel_attributes>Pojos</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>275</x><y>370</y><w>80</w><h>35</h></coordinates><panel_attributes>DAOCarritoProducto
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>355</x><y>370</y><w>80</w><h>35</h></coordinates><panel_attributes>DAOCarrito
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>515</x><y>370</y><w>80</w><h>35</h></coordinates><panel_attributes>DAOEmpleado
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>435</x><y>370</y><w>80</w><h>35</h></coordinates><panel_attributes>DAOComprador
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>595</x><y>370</y><w>80</w><h>35</h></coordinates><panel_attributes>DAOTransacciones
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>195</x><y>370</y><w>80</w><h>35</h></coordinates><panel_attributes>DAOUsuario
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>115</x><y>370</y><w>80</w><h>35</h></coordinates><panel_attributes>DAOProducto
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>550</x><y>245</y><w>230</w><h>280</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>20;330;10;540;440;540;440;10</additional_attributes></element><element><id>UMLNote</id><coordinates><x>745</x><y>15</y><w>570</w><h>430</h></coordinates><panel_attributes>Pojos</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>605</x><y>375</y><w>425</w><h>125</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>20;70;10;230;822;221;820;10</additional_attributes></element><element><id>Relation</id><coordinates><x>445</x><y>260</y><w>500</w><h>400</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>20;300;10;780;972;761;960;10</additional_attributes></element><element><id>Relation</id><coordinates><x>370</x><y>260</y><w>775</w><h>480</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>20;290;10;940;1522;911;1520;10</additional_attributes></element><element><id>Relation</id><coordinates><x>320</x><y>265</y><w>900</w><h>550</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;290;10;1080;1772;1051;1770;10</additional_attributes></element><element><id>Relation</id><coordinates><x>230</x><y>155</y><w>660</w><h>630</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;500;10;1240;1292;1221;1270;10</additional_attributes></element><element><id>Relation</id><coordinates><x>115</x><y>160</y><w>1060</w><h>785</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>50;480;10;1550;2100;1510;2070;10</additional_attributes></element><element><id>UMLNote</id><coordinates><x>85</x><y>340</y><w>640</w><h>310</h></coordinates><panel_attributes>DAO</panel_attributes><additional_attributes></additional_attributes></element></diagram>
