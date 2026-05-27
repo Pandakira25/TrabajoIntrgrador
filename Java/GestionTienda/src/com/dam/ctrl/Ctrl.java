@@ -31,11 +31,12 @@ public class Ctrl implements ActionListener {
 
 	private void entrar() {
 		String usuario = vloginForm.getTxtuser().getText();
-		String contrasena = new String(vloginForm.getTxtpwd().getPassword());
+		String pwd = new String(vloginForm.getTxtpwd().getPassword());
 		// TODO: validar credenciales y abrir ventana principal
 	}
 
 	private void registrarse() {
+		
 		// TODO: abrir VRegistrarse
 	}
 
