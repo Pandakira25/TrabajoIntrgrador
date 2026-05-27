@@ -9,70 +9,74 @@ DROP TABLE IF EXISTS producto;
 DROP TABLE IF EXISTS usuario;
 
 CREATE TABLE usuario(
-	usuario_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	idUsuario INTEGER PRIMARY KEY AUTOINCREMENT,
 	autorizacion INTEGER not NULL CHECK (autorizacion in (1, 2, 3)),
 	nombre TEXT NOT NULL,
 	contrasenia TEXT NOT NULL,
-	activo INTEGER NOT NULL DEFAULT 1 CHECK (activo IN (0, 1)),
 	tel int
 );
 
 
 CREATE TABLE comprador(
-	comprador_id INTEGER,
+	idComprador INTEGER,
 	direccion TEXT NOT NULL,
-	n_tarjeta TEXT NOT NULL,
-	CONSTRAINT fk_Co FOREIGN key (comprador_id) REFERENCES usuario(usuario_id),
-	CONSTRAINT pk_idComp PRIMARY KEY (comprador_id)
+	nTarjeta TEXT NOT NULL,
+	CONSTRAINT fk_Co FOREIGN key (idComprador) REFERENCES usuario(idUsuario)
+	on DELETE CASCADE on UPDATE CASCADE,
+	CONSTRAINT pk_idComp PRIMARY KEY (idComprador)
 );
 
 
 CREATE TABLE carrito(
-	carrito_id INTEGER PRIMARY KEY AUTOINCREMENT,
-	comprador_id INTEGER,
-	CONSTRAINT fk_idCar FOREIGN KEY(comprador_id) REFERENCES comprador(comprador_id)
+	idCarrito INTEGER PRIMARY KEY AUTOINCREMENT,
+	idComprador INTEGER,
+	CONSTRAINT fk_idCar FOREIGN KEY(idComprador) REFERENCES comprador(idComprador)
+	on DELETE CASCADE on UPDATE CASCADE
 );
 
 
 CREATE TABLE producto(
-	producto_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	idProducto INTEGER PRIMARY KEY AUTOINCREMENT,
 	nombre TEXT NOT NULL,
 	categoria TEXT NOT NULL,
 	precio REAL NOT NULL,
-	descripcion TEXT,
-	stock INTEGER NOT NULL DEFAULT 0
+	descripcion TEXT
 );
 
 
 CREATE TABLE carrito_producto(
-	carrito_id INTEGER,
-	producto_id INTEGER,
-	cantidad_p INTEGER,
-	CONSTRAINT pk_idCaPr PRIMARY KEY (carrito_id, producto_id),
-	CONSTRAINT fk_idCa FOREIGN KEY (carrito_id) REFERENCES carrito(carrito_id),
-	CONSTRAINT fk_idPr FOREIGN KEY (producto_id) REFERENCES producto(producto_id)
+	idCarrito INTEGER,
+	idProducto INTEGER,
+	cantidadP INTEGER,
+	CONSTRAINT pk_idCaPr PRIMARY KEY (idCarrito, idProducto),
+	CONSTRAINT fk_idCa FOREIGN KEY (idCarrito) REFERENCES carrito(idCarrito)
+	on DELETE CASCADE on UPDATE CASCADE,
+	CONSTRAINT fk_idPr FOREIGN KEY (idProducto) REFERENCES producto(idProducto)
+	on DELETE CASCADE on UPDATE CASCADE
 );
 
 
 CREATE TABLE empleado(
-	empleado_id INTEGER,
-	n_seg_social TEXT,
+	idEmpleado INTEGER,
+	nSegSocial TEXT,
 	iban TEXT,
-	CONSTRAINT fk_Em FOREIGN KEY (empleado_id) REFERENCES usuario(usuario_id),
-	CONSTRAINT pk_Em PRIMARY KEY (empleado_id)
+	CONSTRAINT fk_Em FOREIGN KEY (idEmpleado) REFERENCES usuario(idUsuario)
+	on DELETE CASCADE on UPDATE CASCADE,
+	CONSTRAINT pk_Em PRIMARY KEY (idEmpleado)
 );
 
 
 CREATE TABLE transacciones(
-	comprador_id INTEGER,
-	carrito_id INTEGER,
-	empleado_id INTEGER,
-	fecha TEXT NOT NULL DEFAULT (date('now','localtime')),
-	CONSTRAINT fk_Co FOREIGN KEY (comprador_id) REFERENCES comprador(comprador_id)
+	idComprador INTEGER,
+	idCarrito INTEGER,
+	idEmpleado INTEGER,
+	CONSTRAINT fk_Co FOREIGN KEY (idComprador) REFERENCES comprador(idComprador)
 	on DELETE CASCADE on UPDATE CASCADE,
-	CONSTRAINT fk_Ca FOREIGN KEY (carrito_id) REFERENCES carrito(carrito_id),
-	CONSTRAINT fk_Em FOREIGN KEY (empleado_id) REFERENCES empleado(empleado_id),
-	CONSTRAINT pk_CoCaEm PRIMARY KEY (comprador_id, carrito_id)
+	CONSTRAINT fk_Ca FOREIGN KEY (idCarrito) REFERENCES carrito(idCarrito)
+	on DELETE CASCADE on UPDATE CASCADE,
+	CONSTRAINT fk_Em FOREIGN KEY (idEmpleado) REFERENCES empleado(idEmpleado)
+	on DELETE SET NULL on UPDATE CASCADE,
+	CONSTRAINT pk_CoCaEm PRIMARY KEY (idComprador, idCarrito)
 );
 
 
