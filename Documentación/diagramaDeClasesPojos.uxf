@@ -1,4 +1,4 @@
-<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>770</x><y>480</y><w>260</w><h>160</h></coordinates><panel_attributes>Carrito
+<diagram program="umletino" version="15.1"><zoom_level>11</zoom_level><element><id>UMLClass</id><coordinates><x>924</x><y>382</y><w>286</w><h>198</h></coordinates><panel_attributes>Carrito
 --
 	-carritoId: int
 	- carritoId: int
@@ -10,7 +10,8 @@
 	+addP(Prodcuto p, int cant): void
 	+dellP(Producto p): void
 	+restCant(int cantR): void
-//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>400</x><y>480</y><w>270</w><h>160</h></coordinates><panel_attributes>Comprador
+	+clearCarrito(): void
+//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>528</x><y>382</y><w>297</w><h>176</h></coordinates><panel_attributes>Comprador
 --
 	- direccion: String
 	- nTarjeta: String
@@ -21,13 +22,13 @@
 + addProd(Producto p, int cantidad): void
 +dellProd(Producto p): void
 +restProd(int cant):void
-//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>160</x><y>480</y><w>180</w><h>110</h></coordinates><panel_attributes>Empleado
+//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>253</x><y>382</y><w>198</w><h>121</h></coordinates><panel_attributes>Empleado
 --
 	- String nSeguridad
 	- String iban
 --
-	+ toString() String
-//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>830</x><y>230</y><w>260</w><h>180</h></coordinates><panel_attributes>Producto
++ toString() String
+//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>990</x><y>107</y><w>286</w><h>198</h></coordinates><panel_attributes>Producto
 --
 	- int id;
 	- String nombre;
@@ -39,7 +40,7 @@
 + Producto()
 + toString() String
 + getters
-//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>690</y><w>190</w><h>130</h></coordinates><panel_attributes>Transaccion
+//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>649</x><y>613</y><w>209</w><h>143</h></coordinates><panel_attributes>Transaccion
 --
 	- compradorId: int
 	- empleadoId: int
@@ -49,7 +50,7 @@
 	+ toString()
 	+ Transaccion()
 //TODO
-		</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>250</x><y>230</y><w>260</w><h>180</h></coordinates><panel_attributes>Usuario
+		</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>352</x><y>107</y><w>286</w><h>198</h></coordinates><panel_attributes>Usuario
 --
 	-userId: int
 	- int autorizacion;
@@ -57,6 +58,10 @@
 	- String contrasenia
 	- int tel
 --
-	+ Usuario
-	+ toString() String 	
-//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>230</x><y>400</y><w>90</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;80;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>460</x><y>400</y><w>130</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>110;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>660</x><y>540</y><w>130</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;110;10</additional_attributes></element><element><id>Relation</id><coordinates><x>900</x><y>400</y><w>30</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element></diagram>
+	+ Usuario()
+	+ toString() String 
+	+getId(): int
+	+getAutorización(): int
+	+getNombre(): String
+	+getContrasenia(): String	
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>330</x><y>294</y><w>99</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;80;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>583</x><y>294</y><w>154</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>120;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>814</x><y>448</y><w>132</w><h>33</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1067</x><y>294</y><w>33</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element></diagram>
