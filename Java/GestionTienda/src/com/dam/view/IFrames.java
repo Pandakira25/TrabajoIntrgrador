@@ -1,5 +1,9 @@
 package com.dam.view;
 
-public interface IFrames {
+import javax.swing.JPanel;
 
+public interface IFrames {
+    void hacerVisible();
+    void cargarPanel(JPanel panel);
+    void mostrarLogin();
 }

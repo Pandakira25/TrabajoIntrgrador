@@ -1,5 +1,8 @@
 package com.dam.view;
 
-public interface IPanels {
+import java.awt.event.ActionListener;
 
+public interface IPanels {
+    void setControlador(ActionListener controlador);
+    void limpiarDatos();
 }
