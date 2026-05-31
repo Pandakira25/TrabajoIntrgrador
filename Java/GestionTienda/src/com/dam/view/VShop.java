@@ -86,7 +86,7 @@ public class VShop extends JPanel implements IPanels {
 		cmbCategoria.setBounds(501, 42, 110, 26);
 		add(cmbCategoria);
 
-		btnBuscar = new JButton("Buscar");
+		btnBuscar = new JButton(ConstantesBotones.BUSCAR);
 		btnBuscar.setBounds(15, 80, 92, 26);
 		add(btnBuscar);
 
@@ -101,11 +101,11 @@ public class VShop extends JPanel implements IPanels {
 		configurarTabla();
 
 		
-		btnVerMas = new JButton("Ver más");
+		btnVerMas = new JButton(ConstantesBotones.VER_MAS);
 		btnVerMas.setBounds(15, 542, 92, 28);
 		add(btnVerMas);
 
-		btnCarrito = new JButton("Carrito");
+		btnCarrito = new JButton(ConstantesBotones.CARRITO);
 		btnCarrito.setBounds(115, 542, 92, 28);
 		add(btnCarrito);
 
@@ -180,7 +180,7 @@ public class VShop extends JPanel implements IPanels {
 		}
 		lblDescripcion.setVisible(mostrar);
 		scrpDescripcion.setVisible(mostrar);
-		btnVerMas.setText(mostrar ? "Ver menos" : "Ver más");
+		btnVerMas.setText(mostrar ? ConstantesBotones.VER_MENOS : ConstantesBotones.VER_MAS);
 		revalidate();
 		repaint();
 	}
@@ -212,7 +212,7 @@ public class VShop extends JPanel implements IPanels {
 		cmbCategoria.setSelectedIndex(0);
 		lblDescripcion.setVisible(false);
 		scrpDescripcion.setVisible(false);
-		btnVerMas.setText("Ver más");
+		btnVerMas.setText(ConstantesBotones.VER_MAS);
 	}
 
 	@Override

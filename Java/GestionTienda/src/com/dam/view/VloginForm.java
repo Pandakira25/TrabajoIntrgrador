@@ -50,11 +50,11 @@ public class VloginForm extends JFrame {
         txtContrasena.setBounds(130, 100, 210, 25);
         contentPane.add(txtContrasena);
 
-        btnEntrar = new JButton("Entrar");
+        btnEntrar = new JButton(ConstantesBotones.ENTRAR);
         btnEntrar.setBounds(130, 150, 95, 30);
         contentPane.add(btnEntrar);
 
-        btnRegistrarse = new JButton("Registrarse");
+        btnRegistrarse = new JButton(ConstantesBotones.REGISTRARSE);
         btnRegistrarse.setBounds(235, 150, 105, 30);
         contentPane.add(btnRegistrarse);
     }

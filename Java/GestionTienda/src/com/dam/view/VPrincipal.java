@@ -120,11 +120,11 @@ public class VPrincipal extends JFrame implements IFrames {
 		txtContrasenia.setBounds(330, 235, 220, 26);
 		pnlLogin.add(txtContrasenia);
 
-		btnIniciarSesion = new JButton("Iniciar Sesión");
+		btnIniciarSesion = new JButton(ConstantesBotones.INICIAR_SESION);
 		btnIniciarSesion.setBounds(255, 295, 155, 30);
 		pnlLogin.add(btnIniciarSesion);
 
-		btnRegistrarse = new JButton("Registrarse");
+		btnRegistrarse = new JButton(ConstantesBotones.REGISTRARSE);
 		btnRegistrarse.setBounds(430, 295, 130, 30);
 		pnlLogin.add(btnRegistrarse);
 

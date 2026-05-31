@@ -96,11 +96,11 @@ public class VGestionEmp extends JPanel implements IPanels {
 		txtIban.setBounds(125, 133, 380, 26);
 		add(txtIban);
 
-		btnRegistrarEmp = new JButton("Registrar Empleado");
+		btnRegistrarEmp = new JButton(ConstantesBotones.REGISTRAR_EMPLEADO);
 		btnRegistrarEmp.setBounds(150, 178, 175, 30);
 		add(btnRegistrarEmp);
 
-		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar = new JButton(ConstantesBotones.LIMPIAR);
 		btnLimpiar.setBounds(345, 178, 100, 30);
 		add(btnLimpiar);
 
@@ -118,7 +118,7 @@ public class VGestionEmp extends JPanel implements IPanels {
 		scrpEmpleados.setViewportView(tblEmpleados);
 		configurarTabla();
 
-		btnEliminarEmp = new JButton("Eliminar Empleado");
+		btnEliminarEmp = new JButton(ConstantesBotones.ELIMINAR_EMPLEADO);
 		btnEliminarEmp.setBounds(535, 480, 175, 30);
 		btnEliminarEmp.setEnabled(false);
 		add(btnEliminarEmp);

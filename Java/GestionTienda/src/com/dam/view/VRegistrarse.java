@@ -83,11 +83,11 @@ public class VRegistrarse extends JPanel implements IPanels {
 		txtNTarjeta.setBounds(165, 222, 250, 26);
 		add(txtNTarjeta);
 
-		btnRegistrar = new JButton("Registrar");
+		btnRegistrar = new JButton(ConstantesBotones.REGISTRAR);
 		btnRegistrar.setBounds(185, 285, 130, 30);
 		add(btnRegistrar);
 
-		btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton(ConstantesBotones.CANCELAR);
 		btnCancelar.setBounds(335, 285, 130, 30);
 		add(btnCancelar);
 	}
