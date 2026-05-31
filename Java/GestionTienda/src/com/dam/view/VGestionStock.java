@@ -9,6 +9,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -18,6 +19,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import com.dam.ctrl.Ctrl;
+import com.dam.model.pojos.Producto;
 
 public class VGestionStock extends JPanel implements IPanels {
 
@@ -90,7 +92,7 @@ public class VGestionStock extends JPanel implements IPanels {
 		lblCategoria.setBounds(430, 82, 68, 20);
 		add(lblCategoria);
 
-		// TODO
+		// TODO: cargar las categorias
 		dcbmCategoria = new DefaultComboBoxModel<>();
 		dcbmCategoria.addElement("Todas");
 		cmbCategoria = new JComboBox<>(dcbmCategoria);
@@ -126,9 +128,8 @@ public class VGestionStock extends JPanel implements IPanels {
 		txtCantidad.setHorizontalAlignment(JTextField.CENTER);
 		txtCantidad.setBounds(550, 240, 62, 38);
 		add(txtCantidad);
-		
-		
-		//TODO: por que estan deshabiñitados??
+
+		// TODO: por que estan deshabilitados??
 		btnMas = new JButton("+");
 		btnMas.setBounds(622, 247, 38, 28);
 		btnMas.setEnabled(false);
@@ -159,7 +160,7 @@ public class VGestionStock extends JPanel implements IPanels {
 
 	}
 
-	// TODO: corregir
+	// corregir: hecho
 	// No se debería cargar el id
 	private void configurarTabla() {
 		dtmProductos = new DefaultTableModel() {
@@ -170,38 +171,40 @@ public class VGestionStock extends JPanel implements IPanels {
 		};
 		tblProductos.setModel(dtmProductos);
 
-		// Columnas modelo: 0=Nombre, 1=Precio, 2=Stock, 3=Categoría, 4=ID (oculto),
-		// 5=Descripción (oculta)
 		dtmProductos.addColumn("Nombre");
 		dtmProductos.addColumn("Precio (€)");
 		dtmProductos.addColumn("Stock");
-		dtmProductos.addColumn("Categoría");
-		dtmProductos.addColumn("ID");
-		dtmProductos.addColumn("Descripción");
 
-		// Ocultar columnas ID y Descripción de la vista (datos siguen en el modelo)
-		tblProductos.removeColumn(tblProductos.getColumnModel().getColumn(5));
-		tblProductos.removeColumn(tblProductos.getColumnModel().getColumn(4));
-
-		tblProductos.getColumnModel().getColumn(0).setPreferredWidth(200);
-		tblProductos.getColumnModel().getColumn(1).setPreferredWidth(75);
-		tblProductos.getColumnModel().getColumn(2).setPreferredWidth(55);
-		tblProductos.getColumnModel().getColumn(3).setPreferredWidth(120);
+		tblProductos.getColumnModel().getColumn(0).setPreferredWidth(470);
+		tblProductos.getColumnModel().getColumn(1).setPreferredWidth(80);
+		tblProductos.getColumnModel().getColumn(2).setPreferredWidth(50);
 	}
-	
-	
-	//TODO: corregir
-	/**
-	 * Cada Object[] contiene: [0] nombre, [1] precio, [2] stock, [3] categoria, [4]
-	 * id, [5] descripcion
-	 */
-	public void cargarTabla(ArrayList<Object[]> lista) {
-		dtmProductos.getDataVector().clear();
-		for (Object[] fila : lista) {
-			dtmProductos.addRow(fila);
+
+	// corregir el cargar tabla: hecho
+	public void cargarTabla(ArrayList<Producto> productos) {
+		if (productos.size() != 0) {
+			clearTable();
+			Object[] row = new Object[3];
+			for (Producto prod : productos) {
+				row[0] = prod.getNombre();
+				row[1] = prod.getPrecio();
+				row[2] = prod.getStock();
+
+				dtmProductos.addRow(row);
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "No se han encontrado items con los filtros seleccionados", "Mensaje",
+					JOptionPane.INFORMATION_MESSAGE);
 		}
-		dtmProductos.fireTableDataChanged();
 	}
+
+	private void clearTable() {
+		int r = dtmProductos.getRowCount();
+		for(int i = 0; i < r; i++) {
+			//System.out.println(i);
+			dtmProductos.removeRow(0);
+		}
+	}	
 
 	public void cargarCategorias(ArrayList<String> categorias) {
 		dcbmCategoria.removeAllElements();
@@ -210,7 +213,7 @@ public class VGestionStock extends JPanel implements IPanels {
 			dcbmCategoria.addElement(cat);
 		}
 	}
-	
+
 	public void toggleDescripcion() {
 		boolean mostrar = !scrpDescripcion.isVisible();
 		if (mostrar) {
@@ -224,15 +227,15 @@ public class VGestionStock extends JPanel implements IPanels {
 		revalidate();
 		repaint();
 	}
-	
-	//TODO: deberiamos hacer un método para habilitar y deshabilitar el de menos dependiendo de la cantidad de stock
+
+	// TODO: deberiamos hacer un método para habilitar y deshabilitar el de menos
+	// dependiendo de la cantidad de stock
 	public void setStockButtonsEnabled(boolean b) {
 		btnMas.setEnabled(b);
 		btnMenos.setEnabled(b);
 	}
-	
-	
-	//TODO: no deberíamos obtener asi el id
+
+	// TODO: no deberíamos obtener asi el id
 	public int getIdProductoSeleccionado() {
 		int fila = tblProductos.getSelectedRow();
 		if (fila == -1)

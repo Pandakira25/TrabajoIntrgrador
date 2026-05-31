@@ -14,6 +14,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import com.dam.ctrl.Ctrl;
+import com.dam.model.pojos.Producto;
 
 public class VGestionProd extends JPanel implements IPanels {
 
@@ -126,8 +127,6 @@ public class VGestionProd extends JPanel implements IPanels {
 		add(btnEliminarProd);
 	}
 
-	//TODO: corregir
-	//No se debería ver el id
 	private void configurarTabla() {
 		dtmProductos = new DefaultTableModel() {
 			@Override
@@ -137,14 +136,12 @@ public class VGestionProd extends JPanel implements IPanels {
 		};
 		tblProductos.setModel(dtmProductos);
 
-		dtmProductos.addColumn("ID");
 		dtmProductos.addColumn("Nombre");
 		dtmProductos.addColumn("Categoría");
 		dtmProductos.addColumn("Precio");
 		dtmProductos.addColumn("Stock");
-		dtmProductos.addColumn("Descripción");
+		dtmProductos.addColumn("Descripción"); //TODO: preguntarles a los profes si deberíamos hacerlo con un ver más
 
-		tblProductos.getColumnModel().getColumn(0).setPreferredWidth(40);
 		tblProductos.getColumnModel().getColumn(1).setPreferredWidth(130);
 		tblProductos.getColumnModel().getColumn(2).setPreferredWidth(100);
 		tblProductos.getColumnModel().getColumn(3).setPreferredWidth(70);
@@ -153,21 +150,37 @@ public class VGestionProd extends JPanel implements IPanels {
 	}
 	
 	
-	//TODO: Corregir 
-	public void cargarTabla(ArrayList<Object[]> lista) {
-		dtmProductos.getDataVector().clear();
-		for (Object[] fila : lista) {
-			dtmProductos.addRow(fila);
+	public void cargarTabla(ArrayList<Producto> productos) {
+		if (productos.size() != 0) {
+			clearTable();
+			Object[] row = new Object[5];
+			for (Producto prod : productos) {
+				row[0] = prod.getNombre();
+				row[1] = prod.getCategoria();
+				row[2] = prod.getPrecio();
+				row[2] = prod.getStock();
+				row[2] = prod.getDescripcion();
+
+				dtmProductos.addRow(row);
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "No se han encontrado items con los filtros seleccionados", "Mensaje",
+					JOptionPane.INFORMATION_MESSAGE);
 		}
-		dtmProductos.fireTableDataChanged();
+	}
+
+	private void clearTable() {
+		int r = dtmProductos.getRowCount();
+		for(int i = 0; i < r; i++) {
+			//System.out.println(i);
+			dtmProductos.removeRow(0);
+		}
 	}
 	
 	//Para cuando tengamos que modificar un producto
-	//No deberíamos obtener el id desde acá
 	public void cargarProductoEnForm() {
 		int fila = tblProductos.getSelectedRow();
-		if (fila == -1)
-			return;
+		
 		txtNombre.setText((String) tblProductos.getValueAt(fila, 1));
 		txtCategoria.setText((String) tblProductos.getValueAt(fila, 2));
 		txtPrecio.setText(String.valueOf(tblProductos.getValueAt(fila, 3)));
@@ -184,14 +197,6 @@ public class VGestionProd extends JPanel implements IPanels {
 	}
 	
 	//TODO: agregaría otro setUnabled para agregar producto cuando le demos a modificar
-
-	//TODO: Deberíamos eliminar este método?
-	public int getIdProductoSeleccionado() {
-		int fila = tblProductos.getSelectedRow();
-		if (fila == -1)
-			return -1;
-		return (int) tblProductos.getValueAt(fila, 0);
-	}
 
 	//TODO: corregir lo que retorna tiene que retornar un producto
 	public Object[] obtenerDatosFormulario() {

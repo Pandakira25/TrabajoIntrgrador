@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -11,6 +12,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import com.dam.ctrl.Ctrl;
+import com.dam.model.pojos.Producto;
+import com.dam.model.pojos.Transacciones;
 
 public class VTrans extends JPanel implements IPanels {
 
@@ -55,7 +58,7 @@ public class VTrans extends JPanel implements IPanels {
 		configurarTabla();
 	}
 
-	//TODO: lo del id que no se tiene que ver
+
 	private void configurarTabla() {
 		dtmTransacciones = new DefaultTableModel() {
 			@Override
@@ -65,24 +68,43 @@ public class VTrans extends JPanel implements IPanels {
 		};
 		tblTransacciones.setModel(dtmTransacciones);
 
-		dtmTransacciones.addColumn("ID Transacción");
 		dtmTransacciones.addColumn("Comprador");
 		dtmTransacciones.addColumn("Empleado");
 		dtmTransacciones.addColumn("Importe (€)");
 
-		tblTransacciones.getColumnModel().getColumn(0).setPreferredWidth(100);
+		tblTransacciones.getColumnModel().getColumn(0).setPreferredWidth(200);
 		tblTransacciones.getColumnModel().getColumn(1).setPreferredWidth(200);
-		tblTransacciones.getColumnModel().getColumn(2).setPreferredWidth(200);
-		tblTransacciones.getColumnModel().getColumn(3).setPreferredWidth(110);
+		tblTransacciones.getColumnModel().getColumn(2).setPreferredWidth(110);
 	}
 	
-	//TODO: Corregirlo
-	public void cargarTabla(ArrayList<Object[]> datos) {
-		dtmTransacciones.getDataVector().clear();
-		for (Object[] fila : datos) {
-			dtmTransacciones.addRow(fila);
+	//Le tenemos que pasar un string [][] con la siguiente estructura
+	/*
+	 * {
+	 * {nombreComprador, nombreEmpleado, importeTotal}
+	 * }
+	 * */
+	public void cargarTabla(String infoTransaccion [][]) {
+		if(infoTransaccion.length != 0) {
+			clearTable();
+			Object[] row = new Object[3];
+			for(int i = 0; i < infoTransaccion.length; i++) {
+				row[0] = infoTransaccion[i][0];
+				row[1] = infoTransaccion[i][1];
+				row[2] = infoTransaccion[i][2];
+				
+				dtmTransacciones.addRow(row);
+			}
+		}else {
+			JOptionPane.showMessageDialog(this, "No se han encontrado items con los filtros seleccionados","Mensaje",JOptionPane.INFORMATION_MESSAGE);
 		}
-		dtmTransacciones.fireTableDataChanged();
+	}
+
+	private void clearTable() {
+		int r = dtmTransacciones.getRowCount();
+		for(int i = 0; i < r; i++) {
+			//System.out.println(i);
+			dtmTransacciones.removeRow(0);
+		}
 	}
 
 	public void limpiarDatos() {
@@ -92,6 +114,6 @@ public class VTrans extends JPanel implements IPanels {
 
 	@Override
 	public void setControlador(Ctrl c) {
-		//TODO
+		//No tiene botones por el momento
 	}
 }

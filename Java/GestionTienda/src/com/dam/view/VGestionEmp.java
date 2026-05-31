@@ -16,6 +16,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import com.dam.ctrl.Ctrl;
+import com.dam.model.pojos.Empleado;
+import com.dam.model.pojos.Producto;
 
 public class VGestionEmp extends JPanel implements IPanels {
 
@@ -127,7 +129,7 @@ public class VGestionEmp extends JPanel implements IPanels {
 		
 	}
 
-	//TODO: corregir
+	//corregir: hecho
 	//No se debería ver el id
 	private void configurarTabla() {
 		dtmEmpleados = new DefaultTableModel() {
@@ -138,38 +140,45 @@ public class VGestionEmp extends JPanel implements IPanels {
 		};
 		tblEmpleados.setModel(dtmEmpleados);
 
-		dtmEmpleados.addColumn("ID");
 		dtmEmpleados.addColumn("Nombre");
 		dtmEmpleados.addColumn("Teléfono");
 		dtmEmpleados.addColumn("N. Seguridad");
 		dtmEmpleados.addColumn("IBAN");
 
-		tblEmpleados.getColumnModel().getColumn(0).setPreferredWidth(40);
-		tblEmpleados.getColumnModel().getColumn(1).setPreferredWidth(160);
-		tblEmpleados.getColumnModel().getColumn(2).setPreferredWidth(90);
-		tblEmpleados.getColumnModel().getColumn(3).setPreferredWidth(130);
-		tblEmpleados.getColumnModel().getColumn(4).setPreferredWidth(220);
+		tblEmpleados.getColumnModel().getColumn(0).setPreferredWidth(160);
+		tblEmpleados.getColumnModel().getColumn(1).setPreferredWidth(90);
+		tblEmpleados.getColumnModel().getColumn(2).setPreferredWidth(130);
+		tblEmpleados.getColumnModel().getColumn(3).setPreferredWidth(220);
 	}
 
-	//TODO: corregir cargar tabla
-	public void cargarTabla(ArrayList<Object[]> datos) {
-		dtmEmpleados.getDataVector().clear();
-		for (Object[] fila : datos) {
-			dtmEmpleados.addRow(fila);
+	// corregir cargar tabla: hecho
+	public void cargarTabla(ArrayList<Empleado> empleados) {
+		if(empleados.size() != 0) {
+			clearTable();
+			Object[] row = new Object[5];
+			for(Empleado emp : empleados) {
+				row[0] = emp.getNombre();
+				row[1] = emp.getTel();
+				row[2] = emp.getnSeguridad();
+				row[3] = emp.getIban();
+				
+				dtmEmpleados.addRow(row);
+			}
+		}else {
+			JOptionPane.showMessageDialog(this, "No se han encontrado items con los filtros seleccionados","Mensaje",JOptionPane.INFORMATION_MESSAGE);
 		}
-		dtmEmpleados.fireTableDataChanged();
+	}
+
+	private void clearTable() {
+		int r = dtmEmpleados.getRowCount();
+		for(int i = 0; i < r; i++) {
+			//System.out.println(i);
+			dtmEmpleados.removeRow(0);
+		}
 	}
 
 	public void setEliminarEnabled(boolean b) {
 		btnEliminarEmp.setEnabled(b);
-	}
-
-	//TODO: Revisar bien esto
-	public int getIdEmpleadoSeleccionado() {
-		int fila = tblEmpleados.getSelectedRow();
-		if (fila == -1)
-			return -1;
-		return (int) tblEmpleados.getValueAt(fila, 0);
 	}
 	
 	//TODO: corregir lo que retorna tiene que retornar un Empleado

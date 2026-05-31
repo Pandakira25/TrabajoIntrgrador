@@ -8,6 +8,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,6 +18,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import com.dam.ctrl.Ctrl;
+import com.dam.model.pojos.Producto;
 
 public class VShop extends JPanel implements IPanels {
 
@@ -130,8 +132,6 @@ public class VShop extends JPanel implements IPanels {
 		
 	}
 	
-	
-	//TODO: No tenemos que cargar el id
 	private void configurarTabla() {
 		dtmProductos = new DefaultTableModel() {
 			@Override
@@ -140,32 +140,48 @@ public class VShop extends JPanel implements IPanels {
 			}
 		};
 		tblProductos.setModel(dtmProductos);
+
 		dtmProductos.addColumn("Nombre");
 		dtmProductos.addColumn("Precio (€)");
-		dtmProductos.addColumn("Categoría");
-		dtmProductos.addColumn("+");
-		dtmProductos.addColumn("-");
-		dtmProductos.addColumn("ID");
-		dtmProductos.addColumn("Descripción");
+		dtmProductos.addColumn("");
+		dtmProductos.addColumn("");
+		dtmProductos.addColumn("");
+		//TODO: quisiera que tuviera la cantidad que vas agregando en tiempo real (preguntarle a pilar)
 
-		
-		tblProductos.removeColumn(tblProductos.getColumnModel().getColumn(6));
-		tblProductos.removeColumn(tblProductos.getColumnModel().getColumn(5));
-
-		tblProductos.getColumnModel().getColumn(0).setPreferredWidth(185);
-		tblProductos.getColumnModel().getColumn(1).setPreferredWidth(70);
-		tblProductos.getColumnModel().getColumn(2).setPreferredWidth(105);
+		tblProductos.getColumnModel().getColumn(0).setPreferredWidth(470);
+		tblProductos.getColumnModel().getColumn(1).setPreferredWidth(80);
+		tblProductos.getColumnModel().getColumn(2).setPreferredWidth(50);
 		tblProductos.getColumnModel().getColumn(3).setPreferredWidth(50);
-		tblProductos.getColumnModel().getColumn(4).setPreferredWidth(50);
+		tblProductos.getColumnModel().getColumn(4).setPreferredWidth(80);
 	}
 	
-	//Corregir
-	public void cargarTabla(ArrayList<Object[]> lista) {
-		dtmProductos.getDataVector().clear();
-		for (Object[] fila : lista) {
-			dtmProductos.addRow(fila);
+	
+	//corregir el cargar tabla: hecho
+	public void cargarTabla(ArrayList<Producto> productos) {
+		if(productos.size() != 0) {
+			clearTable();
+			Object[] row = new Object[5];
+			for(Producto prod : productos) {
+				row[0] = prod.getNombre();
+				row[1] = prod.getPrecio();
+				//TODO: preguntarle a pilar cómo hacerlo
+				row[2] = "+";
+				row[3] = "-";
+				row[4] = "Eliminar";
+				
+				dtmProductos.addRow(row);
+			}
+		}else {
+			JOptionPane.showMessageDialog(this, "No se han encontrado items con los filtros seleccionados","Mensaje",JOptionPane.INFORMATION_MESSAGE);
 		}
-		dtmProductos.fireTableDataChanged();
+	}
+
+	private void clearTable() {
+		int r = dtmProductos.getRowCount();
+		for(int i = 0; i < r; i++) {
+			//System.out.println(i);
+			dtmProductos.removeRow(0);
+		}
 	}
 
 	public void cargarCategorias(ArrayList<String> categorias) {

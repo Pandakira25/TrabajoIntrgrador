@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -60,7 +61,7 @@ public class VCarrito extends JPanel implements IPanels {
 		add(btnPagar);
 	}
 
-	//TODO: corregir
+	//corregir: hecho
 	//No se debería ver el id
 	private void configurarTabla() {
 		dtmCarrito = new DefaultTableModel() {
@@ -73,13 +74,10 @@ public class VCarrito extends JPanel implements IPanels {
 
 		dtmCarrito.addColumn("Nombre");
 		dtmCarrito.addColumn("Precio (€)");
-		dtmCarrito.addColumn("+");
-		dtmCarrito.addColumn("-");
-		dtmCarrito.addColumn("Eliminar");
-		dtmCarrito.addColumn("ID");
-		dtmCarrito.addColumn("Cantidad");
-		tblCarrito.removeColumn(tblCarrito.getColumnModel().getColumn(6));
-		tblCarrito.removeColumn(tblCarrito.getColumnModel().getColumn(5));
+		dtmCarrito.addColumn("");
+		dtmCarrito.addColumn("");
+		dtmCarrito.addColumn("");
+		//TODO: quisiera que tuviera la cantidad que vas agregando en tiempo real (preguntarle a pilar)
 
 		tblCarrito.getColumnModel().getColumn(0).setPreferredWidth(470);
 		tblCarrito.getColumnModel().getColumn(1).setPreferredWidth(80);
@@ -89,21 +87,32 @@ public class VCarrito extends JPanel implements IPanels {
 	}
 	
 	
-	//TODO: corregir el cargar tabla
-	public void cargarTabla(ArrayList<Producto> producto) {
-		dtmCarrito.getDataVector().clear();
-		for (Producto fila : producto) {
-			dtmCarrito.addRow(fila);
+	//corregir el cargar tabla: hecho
+	public void cargarTabla(ArrayList<Producto> productos) {
+		if(productos.size() != 0) {
+			clearTable();
+			Object[] row = new Object[5];
+			for(Producto prod : productos) {
+				row[0] = prod.getNombre();
+				row[1] = prod.getPrecio();
+				//TODO: preguntarle a pilar cómo hacerlo
+				row[2] = "+";
+				row[3] = "-";
+				row[4] = "Eliminar";
+				
+				dtmCarrito.addRow(row);
+			}
+		}else {
+			JOptionPane.showMessageDialog(this, "No se han encontrado items con los filtros seleccionados","Mensaje",JOptionPane.INFORMATION_MESSAGE);
 		}
-		dtmCarrito.fireTableDataChanged();
 	}
 
-	//TODO: revisar bien esto
-	public int getIdFilaSeleccionada() {
-		int fila = tblCarrito.getSelectedRow();
-		if (fila == -1)
-			return -1;
-		return (int) dtmCarrito.getValueAt(fila, 5);
+	private void clearTable() {
+		int r = dtmCarrito.getRowCount();
+		for(int i = 0; i < r; i++) {
+			//System.out.println(i);
+			dtmCarrito.removeRow(0);
+		}
 	}
 	
 	//TODO: no se si vamos a usar esto
@@ -112,11 +121,6 @@ public class VCarrito extends JPanel implements IPanels {
 		if (fila == -1)
 			return 0;
 		return (int) dtmCarrito.getValueAt(fila, 6);
-	}
-
-	public void limpiarDatos() {
-		dtmCarrito.getDataVector().clear();
-		dtmCarrito.fireTableDataChanged();
 	}
 
 	@Override

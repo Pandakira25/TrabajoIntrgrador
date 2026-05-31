@@ -11,7 +11,14 @@ public class Empleado extends Usuario{
 		this.nSeguridad = nSeguridad;
 		this.iban = iban;
 	}
+	
+	public String getnSeguridad() {
+		return nSeguridad;
+	}
 
+	public String getIban() {
+		return iban;
+	}
 
 	@Override
 	public String toString() {
