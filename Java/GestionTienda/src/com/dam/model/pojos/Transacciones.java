@@ -7,6 +7,7 @@ public class Transacciones {
 	private int carritoId;
 	private String fecha;
 	private double importe;
+	
 	public Transacciones(int comptradorId, int empleadoId, int carritoId, String fecha, double importe) {
 		this.comptradorId = comptradorId;
 		this.empleadoId = empleadoId;

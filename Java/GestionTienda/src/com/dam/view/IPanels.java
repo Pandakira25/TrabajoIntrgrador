@@ -8,5 +8,5 @@ public interface IPanels {
 
     public void crearComponentes();
 
-    public void setControlador(Ctrl consultaResController);
+    public void setControlador(Ctrl c);
 }

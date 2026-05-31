@@ -2,7 +2,6 @@ package com.dam.view;
 
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
@@ -16,7 +15,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
+
+import com.dam.ctrl.Ctrl;
 
 public class VShop extends JPanel implements IPanels {
 
@@ -40,12 +40,18 @@ public class VShop extends JPanel implements IPanels {
 	private JButton btnCarrito;
 
 	public VShop() {
+		configurarVentana();
+		crearComponentes();
+	}
+	
+	@Override
+	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
 		setPreferredSize(new Dimension(ANCHO, 600));
-		initComponents();
 	}
 
-	private void initComponents() {
+	@Override
+	public void crearComponentes() {
 		setLayout(null);
 
 		JLabel lblProductos = new JLabel("Productos");
@@ -81,10 +87,6 @@ public class VShop extends JPanel implements IPanels {
 		add(cmbCategoria);
 
 		btnBuscar = new JButton("Buscar");
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnBuscar.setBounds(15, 80, 92, 26);
 		add(btnBuscar);
 
@@ -123,6 +125,7 @@ public class VShop extends JPanel implements IPanels {
 		scrpDescripcion.setBounds(550, 140, 235, 385);
 		scrpDescripcion.setVisible(false);
 		add(scrpDescripcion);
+		
 	}
 
 	private void configurarTabla() {
@@ -201,7 +204,6 @@ public class VShop extends JPanel implements IPanels {
 		return (String) cmbCategoria.getSelectedItem();
 	}
 
-	@Override
 	public void limpiarDatos() {
 		dtmProductos.getDataVector().clear();
 		dtmProductos.fireTableDataChanged();
@@ -214,10 +216,10 @@ public class VShop extends JPanel implements IPanels {
 	}
 
 	@Override
-	public void setControlador(ActionListener controlador) {
-		btnBuscar.addActionListener(controlador);
-		btnVerMas.addActionListener(controlador);
-		btnCarrito.addActionListener(controlador);
+	public void setControlador(Ctrl c) {
+		btnBuscar.addActionListener(c);
+		btnVerMas.addActionListener(c);
+		btnCarrito.addActionListener(c);
 	}
 
 	public JTable getTblProductos() {
@@ -239,4 +241,6 @@ public class VShop extends JPanel implements IPanels {
 	public JButton getBtnCarrito() {
 		return btnCarrito;
 	}
+
+
 }

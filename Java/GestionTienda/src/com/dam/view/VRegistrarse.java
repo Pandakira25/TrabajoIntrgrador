@@ -1,7 +1,6 @@
 package com.dam.view;
 
 import java.awt.Font;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -9,6 +8,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import com.dam.ctrl.Ctrl;
 
 public class VRegistrarse extends JPanel implements IPanels {
 
@@ -24,11 +25,17 @@ public class VRegistrarse extends JPanel implements IPanels {
 	private JButton btnCancelar;
 
 	public VRegistrarse() {
-		setSize(ANCHO, ALTO);
-		initComponents();
+		configurarVentana();
+		crearComponentes();
 	}
-
-	private void initComponents() {
+	
+	@Override
+	public void configurarVentana() {
+		setSize(ANCHO, ALTO);
+	}
+	
+	@Override
+	public void crearComponentes() {
 		setLayout(null);
 
 		JLabel lblTitulo = new JLabel("Registrarse como Comprador");
@@ -83,9 +90,9 @@ public class VRegistrarse extends JPanel implements IPanels {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(335, 285, 130, 30);
 		add(btnCancelar);
+		
 	}
 
-	@Override
 	public void limpiarDatos() {
 		txtNombre.setText("");
 		txtContrasenia.setText("");
@@ -95,9 +102,9 @@ public class VRegistrarse extends JPanel implements IPanels {
 	}
 
 	@Override
-	public void setControlador(ActionListener controlador) {
-		btnRegistrar.addActionListener(controlador);
-		btnCancelar.addActionListener(controlador);
+	public void setControlador(Ctrl c) {
+		btnRegistrar.addActionListener(c);
+		btnCancelar.addActionListener(c);
 	}
 
 	public String[] obtenerDatos() {
@@ -135,4 +142,6 @@ public class VRegistrarse extends JPanel implements IPanels {
 
 	public JButton getBtnRegistrar() { return btnRegistrar; }
 	public JButton getBtnCancelar()  { return btnCancelar; }
+
+	
 }

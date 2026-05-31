@@ -14,7 +14,7 @@ public interface IFrames {
 
     // Inyecta el controlador para que los componentes puedan registrarlo como listener.
     // Se llama DESPUÉS de crear el controlador en Inicio.java.
-    public void setControlador(Ctrl consultaResController);
+    public void setControlador(Ctrl c);
 
     // Hace visible la ventana. Siempre al final, cuando todo está listo.
     public void hacerVisible();

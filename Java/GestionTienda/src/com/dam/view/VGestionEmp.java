@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import com.dam.ctrl.Ctrl;
+
 public class VGestionEmp extends JPanel implements IPanels {
 
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
@@ -34,11 +36,18 @@ public class VGestionEmp extends JPanel implements IPanels {
 	private JLabel lblListado;
 
 	public VGestionEmp() {
+		configurarVentana();
+		crearComponentes();
+	}
+	
+	@Override
+	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
-		initComponents();
+		
 	}
 
-	private void initComponents() {
+	@Override
+	public void crearComponentes() {
 		setLayout(null);
 
 		JLabel lblTitulo = new JLabel("Gestión de Empleados");
@@ -113,6 +122,7 @@ public class VGestionEmp extends JPanel implements IPanels {
 		btnEliminarEmp.setBounds(535, 480, 175, 30);
 		btnEliminarEmp.setEnabled(false);
 		add(btnEliminarEmp);
+		
 	}
 
 	private void configurarTabla() {
@@ -189,7 +199,6 @@ public class VGestionEmp extends JPanel implements IPanels {
 		return new String[] { nombre, contra, telStr, nSeguridad, iban };
 	}
 
-	@Override
 	public void limpiarDatos() {
 		txtNombre.setText("");
 		txtContrasenia.setText("");
@@ -199,10 +208,10 @@ public class VGestionEmp extends JPanel implements IPanels {
 	}
 
 	@Override
-	public void setControlador(ActionListener controlador) {
-		btnRegistrarEmp.addActionListener(controlador);
-		btnLimpiar.addActionListener(controlador);
-		btnEliminarEmp.addActionListener(controlador);
+	public void setControlador(Ctrl c) {
+		btnRegistrarEmp.addActionListener(c);
+		btnLimpiar.addActionListener(c);
+		btnEliminarEmp.addActionListener(c);
 	}
 
 	public JTable getTblEmpleados() {
@@ -220,4 +229,5 @@ public class VGestionEmp extends JPanel implements IPanels {
 	public JButton getBtnEliminarEmp() {
 		return btnEliminarEmp;
 	}
+
 }

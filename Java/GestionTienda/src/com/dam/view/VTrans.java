@@ -1,7 +1,6 @@
 package com.dam.view;
 
 import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -10,6 +9,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+
+import com.dam.ctrl.Ctrl;
 
 public class VTrans extends JPanel implements IPanels {
 
@@ -21,11 +22,17 @@ public class VTrans extends JPanel implements IPanels {
 	private JScrollPane scrpTransacciones;
 
 	public VTrans() {
+		configurarVentana();
+		crearComponentes();
+	}
+	
+	@Override
+	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
-		initComponents();
 	}
 
-	private void initComponents() {
+	@Override
+	public void crearComponentes() {
 		setLayout(null);
 
 		JLabel lblTitulo = new JLabel("Transacciones");
@@ -75,14 +82,13 @@ public class VTrans extends JPanel implements IPanels {
 		dtmTransacciones.fireTableDataChanged();
 	}
 
-	@Override
 	public void limpiarDatos() {
 		dtmTransacciones.getDataVector().clear();
 		dtmTransacciones.fireTableDataChanged();
 	}
 
 	@Override
-	public void setControlador(ActionListener controlador) {
+	public void setControlador(Ctrl c) {
 
 	}
 

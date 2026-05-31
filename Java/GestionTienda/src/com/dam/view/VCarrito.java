@@ -2,7 +2,6 @@ package com.dam.view;
 
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -13,6 +12,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+
+import com.dam.ctrl.Ctrl;
 
 public class VCarrito extends JPanel implements IPanels {
 
@@ -25,12 +26,18 @@ public class VCarrito extends JPanel implements IPanels {
 	private JButton btnPagar;
 
 	public VCarrito() {
-		setSize(ANCHO, ALTO);
-		setPreferredSize(new Dimension(ANCHO, 590));
-		initComponents();
+		configurarVentana();
+		crearComponentes();
 	}
 
-	private void initComponents() {
+	@Override
+	public void configurarVentana() {
+		setSize(ANCHO, ALTO);
+		setPreferredSize(new Dimension(ANCHO, 590));
+	}
+	
+	@Override
+	public void crearComponentes() {
 		setLayout(null);
 
 		JLabel lblTitulo = new JLabel("Tu carrito", SwingConstants.CENTER);
@@ -77,7 +84,6 @@ public class VCarrito extends JPanel implements IPanels {
 		tblCarrito.getColumnModel().getColumn(3).setPreferredWidth(50);
 		tblCarrito.getColumnModel().getColumn(4).setPreferredWidth(80);
 	}
-
 	
 	public void cargarTabla(ArrayList<Object[]> datos) {
 		dtmCarrito.getDataVector().clear();
@@ -101,15 +107,14 @@ public class VCarrito extends JPanel implements IPanels {
 		return (int) dtmCarrito.getValueAt(fila, 6);
 	}
 
-	@Override
 	public void limpiarDatos() {
 		dtmCarrito.getDataVector().clear();
 		dtmCarrito.fireTableDataChanged();
 	}
 
 	@Override
-	public void setControlador(ActionListener controlador) {
-		btnPagar.addActionListener(controlador);
+	public void setControlador(Ctrl c) {
+		btnPagar.addActionListener(c);
 	}
 
 	public JTable getTblCarrito() {
@@ -123,4 +128,5 @@ public class VCarrito extends JPanel implements IPanels {
 	public JButton getBtnPagar() {
 		return btnPagar;
 	}
+
 }

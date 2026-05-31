@@ -1,7 +1,6 @@
 package com.dam.view;
 
 import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -13,6 +12,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+
+import com.dam.ctrl.Ctrl;
 
 public class VGestionProd extends JPanel implements IPanels {
 
@@ -33,11 +34,17 @@ public class VGestionProd extends JPanel implements IPanels {
 	private JButton btnEliminarProd;
 
 	public VGestionProd() {
+		configurarVentana();
+		crearComponentes();
+	}
+	
+	@Override
+	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
-		initComponents();
 	}
 
-	private void initComponents() {
+	@Override
+	public void crearComponentes() {
 		setLayout(null);
 
 		JLabel lblTitulo = new JLabel("Gestión de Productos");
@@ -209,7 +216,6 @@ public class VGestionProd extends JPanel implements IPanels {
 		return new Object[] { nombre, categoria, precio, descripcion, stock };
 	}
 
-	@Override
 	public void limpiarDatos() {
 		txtNombre.setText("");
 		txtCategoria.setText("");
@@ -222,11 +228,11 @@ public class VGestionProd extends JPanel implements IPanels {
 	}
 
 	@Override
-	public void setControlador(ActionListener controlador) {
-		btnAgregarProd.addActionListener(controlador);
-		btnModificarProd.addActionListener(controlador);
-		btnLimpiar.addActionListener(controlador);
-		btnEliminarProd.addActionListener(controlador);
+	public void setControlador(Ctrl c) {
+		btnAgregarProd.addActionListener(c);
+		btnModificarProd.addActionListener(c);
+		btnLimpiar.addActionListener(c);
+		btnEliminarProd.addActionListener(c);
 	}
 
 	public JTable getTblProductos() {

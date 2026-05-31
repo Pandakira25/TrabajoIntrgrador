@@ -19,6 +19,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
+import com.dam.ctrl.Ctrl;
+
 public class VPrincipal extends JFrame implements IFrames {
 
 	public static final int ALTO = 600;
@@ -53,7 +55,7 @@ public class VPrincipal extends JFrame implements IFrames {
 		mostrarLogin();
 	}
 
-	private void configurarVentana() {
+	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
 		insetsR = getInsets().right;
 		insetsL = getInsets().left;
@@ -74,7 +76,6 @@ public class VPrincipal extends JFrame implements IFrames {
 		setLocation((pantalla.width - ANCHO) / 2, (pantalla.height - ALTO) / 2);
 	}
 
-	@Override
 	public void mostrarLogin() {
 		if (menuBar != null) {
 			setJMenuBar(null);
@@ -131,6 +132,18 @@ public class VPrincipal extends JFrame implements IFrames {
 		lblInfo.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		lblInfo.setBounds(433, 330, 150, 20);
 		pnlLogin.add(lblInfo);
+	}
+	
+	@Override
+	public void crearComponentes() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void crearMenu() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void crearMenuBase() {
@@ -268,5 +281,11 @@ public class VPrincipal extends JFrame implements IFrames {
 
 	public JMenuItem getMntmCerrarSesion() {
 		return mntmCerrarSesion;
+	}
+
+	@Override
+	public void setControlador(Ctrl c) {
+		// TODO Auto-generated method stub
+		
 	}
 }

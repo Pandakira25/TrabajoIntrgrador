@@ -17,6 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import com.dam.ctrl.Ctrl;
+
 public class VGestionStock extends JPanel implements IPanels {
 
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
@@ -42,12 +44,18 @@ public class VGestionStock extends JPanel implements IPanels {
 	private JButton btnVerMas;
 
 	public VGestionStock() {
+		configurarVentana();
+		crearComponentes();
+	}
+	
+	@Override
+	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
 		setPreferredSize(new Dimension(ANCHO, 620));
-		initComponents();
 	}
 
-	private void initComponents() {
+	@Override
+	public void crearComponentes() {
 		setLayout(null);
 
 		JLabel lblTitulo = new JLabel("Gestión de Stock");
@@ -142,6 +150,7 @@ public class VGestionStock extends JPanel implements IPanels {
 		scrpDescripcion.setBounds(550, 340, 230, 190);
 		scrpDescripcion.setVisible(false);
 		add(scrpDescripcion);
+		
 	}
 
 	private void configurarTabla() {
@@ -238,7 +247,6 @@ public class VGestionStock extends JPanel implements IPanels {
 		return (String) cmbCategoria.getSelectedItem();
 	}
 
-	@Override
 	public void limpiarDatos() {
 		dtmProductos.getDataVector().clear();
 		dtmProductos.fireTableDataChanged();
@@ -254,11 +262,11 @@ public class VGestionStock extends JPanel implements IPanels {
 	}
 
 	@Override
-	public void setControlador(ActionListener controlador) {
-		btnBuscar.addActionListener(controlador);
-		btnMas.addActionListener(controlador);
-		btnMenos.addActionListener(controlador);
-		btnVerMas.addActionListener(controlador);
+	public void setControlador(Ctrl c) {
+		btnBuscar.addActionListener(c);
+		btnMas.addActionListener(c);
+		btnMenos.addActionListener(c);
+		btnVerMas.addActionListener(c);
 	}
 
 	public JTable getTblProductos() {
@@ -280,4 +288,5 @@ public class VGestionStock extends JPanel implements IPanels {
 	public JButton getBtnVerMas() {
 		return btnVerMas;
 	}
+
 }
