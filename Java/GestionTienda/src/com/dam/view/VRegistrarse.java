@@ -29,12 +29,12 @@ public class VRegistrarse extends JPanel implements IPanels {
 		configurarVentana();
 		crearComponentes();
 	}
-	
+
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
 	}
-	
+
 	@Override
 	public void crearComponentes() {
 		setLayout(null);
@@ -84,14 +84,13 @@ public class VRegistrarse extends JPanel implements IPanels {
 		txtNTarjeta.setBounds(165, 222, 250, 26);
 		add(txtNTarjeta);
 
-		btnRegistrar = new JButton("Registrar");
+		btnRegistrar = new JButton(ConstantesBotones.REGISTRAR);
 		btnRegistrar.setBounds(185, 285, 130, 30);
 		add(btnRegistrar);
 
-		btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton(ConstantesBotones.CANCELAR);
 		btnCancelar.setBounds(335, 285, 130, 30);
 		add(btnCancelar);
-		
 	}
 
 	public void limpiarDatos() {
@@ -150,4 +149,7 @@ public class VRegistrarse extends JPanel implements IPanels {
 			return null;
 		}
 	}
+
+	public JButton getBtnRegistrar() { return btnRegistrar; }
+	public JButton getBtnCancelar()  { return btnCancelar; }
 }

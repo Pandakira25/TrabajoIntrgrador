@@ -9,9 +9,6 @@ public interface IFrames {
     // Crea y añade los componentes Swing al contenedor (JScrollPane central).
     public void crearComponentes();
 
-    // Crea la barra de menú con sus ítems.
-    public void crearMenu();
-
     // Inyecta el controlador para que los componentes puedan registrarlo como listener.
     // Se llama DESPUÉS de crear el controlador en Inicio.java.
     public void setControlador(Ctrl c);

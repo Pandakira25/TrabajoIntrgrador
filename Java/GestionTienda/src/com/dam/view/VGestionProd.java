@@ -93,19 +93,17 @@ public class VGestionProd extends JPanel implements IPanels {
 		txtDescripcion.setBounds(125, 133, 500, 26);
 		add(txtDescripcion);
 
-		btnAgregarProd = new JButton("Agregar Producto");
+		btnAgregarProd = new JButton(ConstantesBotones.ADD_PRODUCTO);
 		btnAgregarProd.setBounds(100, 178, 160, 30);
 		add(btnAgregarProd);
-		
-		
-		//Por defecto deshabilitado
-		btnModificarProd = new JButton("Modificar Producto");
-		btnModificarProd.setBounds(355, 465, 165, 30);
+
+		btnModificarProd = new JButton(ConstantesBotones.MODIFICAR_PRODUCTO);
+		btnModificarProd.setBounds(275, 178, 165, 30);
 		btnModificarProd.setEnabled(false);
 		add(btnModificarProd);
 
-		btnLimpiar = new JButton("Limpiar");
-		btnLimpiar.setBounds(277, 178, 100, 30);
+		btnLimpiar = new JButton(ConstantesBotones.LIMPIAR);
+		btnLimpiar.setBounds(455, 178, 100, 30);
 		add(btnLimpiar);
 
 		JLabel lblListado = new JLabel("Listado de Productos:");
@@ -121,7 +119,7 @@ public class VGestionProd extends JPanel implements IPanels {
 		scrpProductos.setViewportView(tblProductos);
 		configurarTabla();
 
-		btnEliminarProd = new JButton("Eliminar Producto");
+		btnEliminarProd = new JButton(ConstantesBotones.ELIMINAR_PRODUCTO);
 		btnEliminarProd.setBounds(543, 465, 163, 30);
 		btnEliminarProd.setEnabled(false);
 		add(btnEliminarProd);

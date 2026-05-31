@@ -97,7 +97,7 @@ public class VGestionStock extends JPanel implements IPanels {
 		cmbCategoria.setBounds(501, 79, 110, 26);
 		add(cmbCategoria);
 
-		btnBuscar = new JButton("Buscar");
+		btnBuscar = new JButton(ConstantesBotones.BUSCAR);
 		btnBuscar.setBounds(15, 118, 92, 26);
 		add(btnBuscar);
 
@@ -112,7 +112,7 @@ public class VGestionStock extends JPanel implements IPanels {
 		configurarTabla();
 
 		// --- Botón Ver más ---
-		btnVerMas = new JButton("Ver más");
+		btnVerMas = new JButton(ConstantesBotones.VER_MAS);
 		btnVerMas.setBounds(15, 542, 92, 28);
 		add(btnVerMas);
 
@@ -126,11 +126,11 @@ public class VGestionStock extends JPanel implements IPanels {
 		txtCantidad.setBounds(550, 240, 62, 38);
 		add(txtCantidad);
 
-		btnMas = new JButton("+");
+		btnMas = new JButton(ConstantesBotones.MAS);
 		btnMas.setBounds(622, 247, 38, 28);
 		add(btnMas);
 
-		btnMenos = new JButton("-");
+		btnMenos = new JButton(ConstantesBotones.MENOS);
 		btnMenos.setBounds(666, 247, 38, 28);
 		add(btnMenos);
 
@@ -217,7 +217,7 @@ public class VGestionStock extends JPanel implements IPanels {
 		}
 		lblDescripcion.setVisible(mostrar);
 		scrpDescripcion.setVisible(mostrar);
-		btnVerMas.setText(mostrar ? "Ver menos" : "Ver más");
+		btnVerMas.setText(mostrar ? ConstantesBotones.VER_MENOS : ConstantesBotones.VER_MAS);
 		revalidate();
 		repaint();
 	}
@@ -245,7 +245,7 @@ public class VGestionStock extends JPanel implements IPanels {
 		btnMenos.setEnabled(false);
 		lblDescripcion.setVisible(false);
 		scrpDescripcion.setVisible(false);
-		btnVerMas.setText("Ver más");
+		btnVerMas.setText(ConstantesBotones.VER_MAS);
 	}
 
 	@Override

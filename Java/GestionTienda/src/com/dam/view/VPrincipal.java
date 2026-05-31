@@ -67,9 +67,66 @@ public class VPrincipal extends JFrame implements IFrames {
 	}
 
 	private void centrarVentana() {
-		Dimension pantalla = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-		Dimension ventana = new Dimension(WIDTH, HEIGHT);
-		setLocation((pantalla.width - ventana.width) / 2, (pantalla.height - ventana.height) / 2);
+		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+		setLocation((pantalla.width - ANCHO) / 2, (pantalla.height - ALTO) / 2);
+	}
+
+	public void mostrarLogin() {
+		if (menuBar != null) {
+			setJMenuBar(null);
+			menuBar = null;
+			menuH = 0;
+			mntmShop = null;
+			mntmCarrito = null;
+			mntmGestionEmp = null;
+			mntmGestionProd = null;
+			mntmGestionStock = null;
+			mntmTransacciones = null;
+			mntmCerrarSesion = null;
+		}
+		crearPanelLogin();
+		scrpContenedor.setViewportView(pnlLogin);
+		revalidate();
+		repaint();
+	}
+
+	private void crearPanelLogin() {
+		pnlLogin = new JPanel(null);
+		pnlLogin.setPreferredSize(new Dimension(ANCHO, ALTO));
+
+		JLabel lblTitulo = new JLabel("Iniciar Sesión");
+		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 22));
+		lblTitulo.setBounds(275, 120, 260, 30);
+		pnlLogin.add(lblTitulo);
+
+		JLabel lblUsuario = new JLabel("Usuario:");
+		lblUsuario.setBounds(215, 195, 100, 25);
+		pnlLogin.add(lblUsuario);
+
+		txtUsuario = new JTextField();
+		txtUsuario.setBounds(330, 192, 220, 26);
+		pnlLogin.add(txtUsuario);
+
+		JLabel lblContrasenia = new JLabel("Contraseña:");
+		lblContrasenia.setBounds(215, 238, 100, 25);
+		pnlLogin.add(lblContrasenia);
+
+		txtContrasenia = new JPasswordField();
+		txtContrasenia.setBounds(330, 235, 220, 26);
+		pnlLogin.add(txtContrasenia);
+
+		btnIniciarSesion = new JButton(ConstantesBotones.INICIAR_SESION);
+		btnIniciarSesion.setBounds(255, 295, 155, 30);
+		pnlLogin.add(btnIniciarSesion);
+
+		btnRegistrarse = new JButton(ConstantesBotones.REGISTRARSE);
+		btnRegistrarse.setBounds(430, 295, 130, 30);
+		pnlLogin.add(btnRegistrarse);
+
+		JLabel lblInfo = new JLabel("¿No tienes cuenta?");
+		lblInfo.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		lblInfo.setBounds(433, 330, 150, 20);
+		pnlLogin.add(lblInfo);
 	}
 	
 	@Override
@@ -78,8 +135,7 @@ public class VPrincipal extends JFrame implements IFrames {
 		getContentPane().add(scrpContenedor, BorderLayout.CENTER);
 	}
 
-	@Override
-	public void crearMenu() {
+	private void crearMenuBase() {
 		menuBar = new JMenuBar();
 		menuH = menuBar.getPreferredSize().height;
 		setJMenuBar(menuBar);

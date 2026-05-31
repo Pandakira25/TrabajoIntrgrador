@@ -56,7 +56,7 @@ public class VCarrito extends JPanel implements IPanels {
 		scrpCarrito.setViewportView(tblCarrito);
 		configurarTabla();
 
-		btnPagar = new JButton("Pagar");
+		btnPagar = new JButton(ConstantesBotones.PAGAR);
 		btnPagar.setBounds((ANCHO - 120) / 2, 535, 120, 30);
 		add(btnPagar);
 	}

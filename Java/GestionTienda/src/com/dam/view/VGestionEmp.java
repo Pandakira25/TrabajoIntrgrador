@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -25,6 +27,8 @@ public class VGestionEmp extends JPanel implements IPanels {
 	private static final int ALTO = VPrincipal.ALTO - VPrincipal.insetsT - VPrincipal.insetsB - VPrincipal.menuH;
 
 	private JTextField txtNombre;
+	private JMenuBar mnBarraMenu;
+	private JMenuItem mntmGestionStock;
 	private JPasswordField txtContrasenia;
 	private JTextField txtTel;
 	private JTextField txtNSeguridad;
@@ -98,11 +102,11 @@ public class VGestionEmp extends JPanel implements IPanels {
 		txtIban.setBounds(125, 133, 380, 26);
 		add(txtIban);
 
-		btnRegistrarEmp = new JButton("Registrar Empleado");
+		btnRegistrarEmp = new JButton(ConstantesBotones.REGISTRAR_EMPLEADO);
 		btnRegistrarEmp.setBounds(150, 178, 175, 30);
 		add(btnRegistrarEmp);
 
-		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar = new JButton(ConstantesBotones.LIMPIAR);
 		btnLimpiar.setBounds(345, 178, 100, 30);
 		add(btnLimpiar);
 
@@ -119,14 +123,12 @@ public class VGestionEmp extends JPanel implements IPanels {
 		tblEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrpEmpleados.setViewportView(tblEmpleados);
 		configurarTabla();
-		
-		
-		//Por defecto deshabilitado
-		btnEliminarEmp = new JButton("Eliminar Empleado");
+
+		btnEliminarEmp = new JButton(ConstantesBotones.ELIMINAR_EMPLEADO);
 		btnEliminarEmp.setBounds(535, 480, 175, 30);
 		btnEliminarEmp.setEnabled(false);
 		add(btnEliminarEmp);
-		
+
 	}
 
 	//corregir: hecho
