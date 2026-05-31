@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.dam.ctrl.Ctrl;
+import com.dam.model.pojos.Producto;
 
 public class VCarrito extends JPanel implements IPanels {
 
@@ -59,6 +60,8 @@ public class VCarrito extends JPanel implements IPanels {
 		add(btnPagar);
 	}
 
+	//TODO: corregir
+	//No se debería ver el id
 	private void configurarTabla() {
 		dtmCarrito = new DefaultTableModel() {
 			@Override
@@ -85,21 +88,25 @@ public class VCarrito extends JPanel implements IPanels {
 		tblCarrito.getColumnModel().getColumn(4).setPreferredWidth(80);
 	}
 	
-	public void cargarTabla(ArrayList<Object[]> datos) {
+	
+	//TODO: corregir el cargar tabla
+	public void cargarTabla(ArrayList<Producto> producto) {
 		dtmCarrito.getDataVector().clear();
-		for (Object[] fila : datos) {
+		for (Producto fila : producto) {
 			dtmCarrito.addRow(fila);
 		}
 		dtmCarrito.fireTableDataChanged();
 	}
 
+	//TODO: revisar bien esto
 	public int getIdFilaSeleccionada() {
 		int fila = tblCarrito.getSelectedRow();
 		if (fila == -1)
 			return -1;
 		return (int) dtmCarrito.getValueAt(fila, 5);
 	}
-
+	
+	//TODO: no se si vamos a usar esto
 	public int getCantidadFilaSeleccionada() {
 		int fila = tblCarrito.getSelectedRow();
 		if (fila == -1)
@@ -115,18 +122,6 @@ public class VCarrito extends JPanel implements IPanels {
 	@Override
 	public void setControlador(Ctrl c) {
 		btnPagar.addActionListener(c);
-	}
-
-	public JTable getTblCarrito() {
-		return tblCarrito;
-	}
-
-	public DefaultTableModel getDtmCarrito() {
-		return dtmCarrito;
-	}
-
-	public JButton getBtnPagar() {
-		return btnPagar;
 	}
 
 }

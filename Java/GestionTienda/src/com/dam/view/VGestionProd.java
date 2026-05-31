@@ -95,14 +95,16 @@ public class VGestionProd extends JPanel implements IPanels {
 		btnAgregarProd = new JButton("Agregar Producto");
 		btnAgregarProd.setBounds(100, 178, 160, 30);
 		add(btnAgregarProd);
-
+		
+		
+		//Por defecto deshabilitado
 		btnModificarProd = new JButton("Modificar Producto");
-		btnModificarProd.setBounds(275, 178, 165, 30);
+		btnModificarProd.setBounds(355, 465, 165, 30);
 		btnModificarProd.setEnabled(false);
 		add(btnModificarProd);
 
 		btnLimpiar = new JButton("Limpiar");
-		btnLimpiar.setBounds(455, 178, 100, 30);
+		btnLimpiar.setBounds(277, 178, 100, 30);
 		add(btnLimpiar);
 
 		JLabel lblListado = new JLabel("Listado de Productos:");
@@ -124,6 +126,8 @@ public class VGestionProd extends JPanel implements IPanels {
 		add(btnEliminarProd);
 	}
 
+	//TODO: corregir
+	//No se debería ver el id
 	private void configurarTabla() {
 		dtmProductos = new DefaultTableModel() {
 			@Override
@@ -147,7 +151,9 @@ public class VGestionProd extends JPanel implements IPanels {
 		tblProductos.getColumnModel().getColumn(4).setPreferredWidth(50);
 		tblProductos.getColumnModel().getColumn(5).setPreferredWidth(260);
 	}
-
+	
+	
+	//TODO: Corregir 
 	public void cargarTabla(ArrayList<Object[]> lista) {
 		dtmProductos.getDataVector().clear();
 		for (Object[] fila : lista) {
@@ -155,7 +161,9 @@ public class VGestionProd extends JPanel implements IPanels {
 		}
 		dtmProductos.fireTableDataChanged();
 	}
-
+	
+	//Para cuando tengamos que modificar un producto
+	//No deberíamos obtener el id desde acá
 	public void cargarProductoEnForm() {
 		int fila = tblProductos.getSelectedRow();
 		if (fila == -1)
@@ -174,7 +182,10 @@ public class VGestionProd extends JPanel implements IPanels {
 	public void setEliminarEnabled(boolean b) {
 		btnEliminarProd.setEnabled(b);
 	}
+	
+	//TODO: agregaría otro setUnabled para agregar producto cuando le demos a modificar
 
+	//TODO: Deberíamos eliminar este método?
 	public int getIdProductoSeleccionado() {
 		int fila = tblProductos.getSelectedRow();
 		if (fila == -1)
@@ -182,6 +193,7 @@ public class VGestionProd extends JPanel implements IPanels {
 		return (int) tblProductos.getValueAt(fila, 0);
 	}
 
+	//TODO: corregir lo que retorna tiene que retornar un producto
 	public Object[] obtenerDatosFormulario() {
 		String nombre = txtNombre.getText().trim();
 		String categoria = txtCategoria.getText().trim();
@@ -233,25 +245,5 @@ public class VGestionProd extends JPanel implements IPanels {
 		btnModificarProd.addActionListener(c);
 		btnLimpiar.addActionListener(c);
 		btnEliminarProd.addActionListener(c);
-	}
-
-	public JTable getTblProductos() {
-		return tblProductos;
-	}
-
-	public JButton getBtnAgregarProd() {
-		return btnAgregarProd;
-	}
-
-	public JButton getBtnModificarProd() {
-		return btnModificarProd;
-	}
-
-	public JButton getBtnLimpiar() {
-		return btnLimpiar;
-	}
-
-	public JButton getBtnEliminarProd() {
-		return btnEliminarProd;
 	}
 }

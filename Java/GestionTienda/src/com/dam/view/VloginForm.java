@@ -7,7 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class VloginForm extends JFrame {
+import com.dam.ctrl.Ctrl;
+
+public class VloginForm extends JPanel implements IPanels{
 
     private JPanel contentPane;
     private JLabel lblTitulo;
@@ -18,6 +20,8 @@ public class VloginForm extends JFrame {
     private JButton btnEntrar;
     private JButton btnRegistrarse;
 
+    //TODO: arreglarla para que sea un panel
+    
     public VloginForm() {
         initAbsoluteLayout();
         crearComponentes();
@@ -86,4 +90,10 @@ public class VloginForm extends JFrame {
     public JButton getBtnregister() {
         return btnRegistrarse;
     }
+
+	@Override
+	public void setControlador(Ctrl c) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -37,10 +37,11 @@ public class VTrans extends JPanel implements IPanels {
 
 		JLabel lblTitulo = new JLabel("Transacciones");
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblTitulo.setBounds(15, 16, 300, 25);
+		lblTitulo.setBounds(36, 20, 300, 25);
 		add(lblTitulo);
 
 		JLabel lblInfo = new JLabel("Histórico de todas las transacciones realizadas:");
+		lblInfo.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblInfo.setBounds(35, 55, 380, 20);
 		add(lblInfo);
 
@@ -54,6 +55,7 @@ public class VTrans extends JPanel implements IPanels {
 		configurarTabla();
 	}
 
+	//TODO: lo del id que no se tiene que ver
 	private void configurarTabla() {
 		dtmTransacciones = new DefaultTableModel() {
 			@Override
@@ -73,7 +75,8 @@ public class VTrans extends JPanel implements IPanels {
 		tblTransacciones.getColumnModel().getColumn(2).setPreferredWidth(200);
 		tblTransacciones.getColumnModel().getColumn(3).setPreferredWidth(110);
 	}
-
+	
+	//TODO: Corregirlo
 	public void cargarTabla(ArrayList<Object[]> datos) {
 		dtmTransacciones.getDataVector().clear();
 		for (Object[] fila : datos) {
@@ -89,10 +92,6 @@ public class VTrans extends JPanel implements IPanels {
 
 	@Override
 	public void setControlador(Ctrl c) {
-
-	}
-
-	public JTable getTblTransacciones() {
-		return tblTransacciones;
+		//TODO
 	}
 }

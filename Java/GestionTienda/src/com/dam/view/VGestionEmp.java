@@ -117,7 +117,9 @@ public class VGestionEmp extends JPanel implements IPanels {
 		tblEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrpEmpleados.setViewportView(tblEmpleados);
 		configurarTabla();
-
+		
+		
+		//Por defecto deshabilitado
 		btnEliminarEmp = new JButton("Eliminar Empleado");
 		btnEliminarEmp.setBounds(535, 480, 175, 30);
 		btnEliminarEmp.setEnabled(false);
@@ -125,6 +127,8 @@ public class VGestionEmp extends JPanel implements IPanels {
 		
 	}
 
+	//TODO: corregir
+	//No se debería ver el id
 	private void configurarTabla() {
 		dtmEmpleados = new DefaultTableModel() {
 			@Override
@@ -147,6 +151,7 @@ public class VGestionEmp extends JPanel implements IPanels {
 		tblEmpleados.getColumnModel().getColumn(4).setPreferredWidth(220);
 	}
 
+	//TODO: corregir cargar tabla
 	public void cargarTabla(ArrayList<Object[]> datos) {
 		dtmEmpleados.getDataVector().clear();
 		for (Object[] fila : datos) {
@@ -159,13 +164,15 @@ public class VGestionEmp extends JPanel implements IPanels {
 		btnEliminarEmp.setEnabled(b);
 	}
 
+	//TODO: Revisar bien esto
 	public int getIdEmpleadoSeleccionado() {
 		int fila = tblEmpleados.getSelectedRow();
 		if (fila == -1)
 			return -1;
 		return (int) tblEmpleados.getValueAt(fila, 0);
 	}
-
+	
+	//TODO: corregir lo que retorna tiene que retornar un Empleado
 	public String[] obtenerDatosFormulario() {
 		String nombre = txtNombre.getText().trim();
 		String contra = new String(txtContrasenia.getPassword()).trim();

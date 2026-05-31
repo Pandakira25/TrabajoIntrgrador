@@ -106,7 +106,9 @@ public class VRegistrarse extends JPanel implements IPanels {
 		btnRegistrar.addActionListener(c);
 		btnCancelar.addActionListener(c);
 	}
-
+	
+	
+	//TODO: es mejor que devuelva un comprador y arreglar lo que retorna
 	public String[] obtenerDatos() {
 		String nombre    = txtNombre.getText().trim();
 		String contra    = new String(txtContrasenia.getPassword()).trim();
@@ -139,9 +141,4 @@ public class VRegistrarse extends JPanel implements IPanels {
 
 		return new String[] { nombre, contra, telStr, direccion, nTarjeta };
 	}
-
-	public JButton getBtnRegistrar() { return btnRegistrar; }
-	public JButton getBtnCancelar()  { return btnCancelar; }
-
-	
 }

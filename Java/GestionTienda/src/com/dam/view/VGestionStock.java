@@ -47,7 +47,7 @@ public class VGestionStock extends JPanel implements IPanels {
 		configurarVentana();
 		crearComponentes();
 	}
-	
+
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
@@ -81,6 +81,7 @@ public class VGestionStock extends JPanel implements IPanels {
 		lblPrecio.setBounds(248, 82, 48, 20);
 		add(lblPrecio);
 
+		// TODO: Ver si queremos otro rango?
 		cmbPrecio = new JComboBox<>(new String[] { "Todos", "< 10 €", "10 - 50 €", "> 50 €" });
 		cmbPrecio.setBounds(300, 79, 115, 26);
 		add(cmbPrecio);
@@ -89,6 +90,7 @@ public class VGestionStock extends JPanel implements IPanels {
 		lblCategoria.setBounds(430, 82, 68, 20);
 		add(lblCategoria);
 
+		// TODO
 		dcbmCategoria = new DefaultComboBoxModel<>();
 		dcbmCategoria.addElement("Todas");
 		cmbCategoria = new JComboBox<>(dcbmCategoria);
@@ -115,6 +117,7 @@ public class VGestionStock extends JPanel implements IPanels {
 		add(btnVerMas);
 
 		// --- Panel derecho: cantidad ---
+		// TODO: html?
 		JLabel lblCantInfo = new JLabel("<html>Ingrese la cantidad a<br>añadir/eliminar</html>");
 		lblCantInfo.setBounds(550, 185, 240, 42);
 		add(lblCantInfo);
@@ -123,7 +126,9 @@ public class VGestionStock extends JPanel implements IPanels {
 		txtCantidad.setHorizontalAlignment(JTextField.CENTER);
 		txtCantidad.setBounds(550, 240, 62, 38);
 		add(txtCantidad);
-
+		
+		
+		//TODO: por que estan deshabiñitados??
 		btnMas = new JButton("+");
 		btnMas.setBounds(622, 247, 38, 28);
 		btnMas.setEnabled(false);
@@ -135,6 +140,7 @@ public class VGestionStock extends JPanel implements IPanels {
 		add(btnMenos);
 
 		// --- Descripción (oculta por defecto) ---
+		// TODO: ver por que no se oculta
 		lblDescripcion = new JLabel("Descripción");
 		lblDescripcion.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblDescripcion.setBounds(550, 315, 100, 20);
@@ -150,9 +156,11 @@ public class VGestionStock extends JPanel implements IPanels {
 		scrpDescripcion.setBounds(550, 340, 230, 190);
 		scrpDescripcion.setVisible(false);
 		add(scrpDescripcion);
-		
+
 	}
 
+	// TODO: corregir
+	// No se debería cargar el id
 	private void configurarTabla() {
 		dtmProductos = new DefaultTableModel() {
 			@Override
@@ -180,7 +188,9 @@ public class VGestionStock extends JPanel implements IPanels {
 		tblProductos.getColumnModel().getColumn(2).setPreferredWidth(55);
 		tblProductos.getColumnModel().getColumn(3).setPreferredWidth(120);
 	}
-
+	
+	
+	//TODO: corregir
 	/**
 	 * Cada Object[] contiene: [0] nombre, [1] precio, [2] stock, [3] categoria, [4]
 	 * id, [5] descripcion
@@ -200,7 +210,7 @@ public class VGestionStock extends JPanel implements IPanels {
 			dcbmCategoria.addElement(cat);
 		}
 	}
-
+	
 	public void toggleDescripcion() {
 		boolean mostrar = !scrpDescripcion.isVisible();
 		if (mostrar) {
@@ -214,12 +224,15 @@ public class VGestionStock extends JPanel implements IPanels {
 		revalidate();
 		repaint();
 	}
-
+	
+	//TODO: deberiamos hacer un método para habilitar y deshabilitar el de menos dependiendo de la cantidad de stock
 	public void setStockButtonsEnabled(boolean b) {
 		btnMas.setEnabled(b);
 		btnMenos.setEnabled(b);
 	}
-
+	
+	
+	//TODO: no deberíamos obtener asi el id
 	public int getIdProductoSeleccionado() {
 		int fila = tblProductos.getSelectedRow();
 		if (fila == -1)
@@ -267,26 +280,6 @@ public class VGestionStock extends JPanel implements IPanels {
 		btnMas.addActionListener(c);
 		btnMenos.addActionListener(c);
 		btnVerMas.addActionListener(c);
-	}
-
-	public JTable getTblProductos() {
-		return tblProductos;
-	}
-
-	public JButton getBtnBuscar() {
-		return btnBuscar;
-	}
-
-	public JButton getBtnMas() {
-		return btnMas;
-	}
-
-	public JButton getBtnMenos() {
-		return btnMenos;
-	}
-
-	public JButton getBtnVerMas() {
-		return btnVerMas;
 	}
 
 }

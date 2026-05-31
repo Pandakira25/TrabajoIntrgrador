@@ -71,7 +71,8 @@ public class VShop extends JPanel implements IPanels {
 		JLabel lblPrecio = new JLabel("Precio:");
 		lblPrecio.setBounds(248, 45, 48, 20);
 		add(lblPrecio);
-
+		
+		//TODO: ver si queremos estos rangos
 		cmbPrecio = new JComboBox<>(new String[] { "Todos", "< 10 €", "10 - 50 €", "> 50 €" });
 		cmbPrecio.setBounds(300, 42, 115, 26);
 		add(cmbPrecio);
@@ -109,13 +110,14 @@ public class VShop extends JPanel implements IPanels {
 		btnCarrito.setBounds(115, 542, 92, 28);
 		add(btnCarrito);
 
-		
+		//TODO: ver por que es visible
 		lblDescripcion = new JLabel("Descripción");
 		lblDescripcion.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblDescripcion.setBounds(550, 115, 100, 20);
 		lblDescripcion.setVisible(false);
 		add(lblDescripcion);
-
+		
+		
 		txaDescripcion = new JTextArea();
 		txaDescripcion.setLineWrap(true);
 		txaDescripcion.setWrapStyleWord(true);
@@ -127,7 +129,9 @@ public class VShop extends JPanel implements IPanels {
 		add(scrpDescripcion);
 		
 	}
-
+	
+	
+	//TODO: No tenemos que cargar el id
 	private void configurarTabla() {
 		dtmProductos = new DefaultTableModel() {
 			@Override
@@ -154,7 +158,8 @@ public class VShop extends JPanel implements IPanels {
 		tblProductos.getColumnModel().getColumn(3).setPreferredWidth(50);
 		tblProductos.getColumnModel().getColumn(4).setPreferredWidth(50);
 	}
-
+	
+	//Corregir
 	public void cargarTabla(ArrayList<Object[]> lista) {
 		dtmProductos.getDataVector().clear();
 		for (Object[] fila : lista) {
@@ -170,7 +175,8 @@ public class VShop extends JPanel implements IPanels {
 			dcbmCategoria.addElement(cat);
 		}
 	}
-
+	
+	//TODO: la descripcion la pasamos desde el controlador solo tenemos que hacer que se haga visible y que cargue el texto
 	public void toggleDescripcion() {
 		boolean mostrar = !scrpDescripcion.isVisible();
 		if (mostrar) {
@@ -181,10 +187,9 @@ public class VShop extends JPanel implements IPanels {
 		lblDescripcion.setVisible(mostrar);
 		scrpDescripcion.setVisible(mostrar);
 		btnVerMas.setText(mostrar ? "Ver menos" : "Ver más");
-		revalidate();
-		repaint();
 	}
 
+	//TODO: no podemos obtener así el id
 	public int getIdProductoSeleccionado() {
 		int fila = tblProductos.getSelectedRow();
 		if (fila == -1)
@@ -220,26 +225,6 @@ public class VShop extends JPanel implements IPanels {
 		btnBuscar.addActionListener(c);
 		btnVerMas.addActionListener(c);
 		btnCarrito.addActionListener(c);
-	}
-
-	public JTable getTblProductos() {
-		return tblProductos;
-	}
-
-	public DefaultTableModel getDtmProductos() {
-		return dtmProductos;
-	}
-
-	public JButton getBtnBuscar() {
-		return btnBuscar;
-	}
-
-	public JButton getBtnVerMas() {
-		return btnVerMas;
-	}
-
-	public JButton getBtnCarrito() {
-		return btnCarrito;
 	}
 
 
