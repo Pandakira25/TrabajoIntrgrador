@@ -1,11 +1,20 @@
 package com.dam.main;
 
+import com.dam.ctrl.Ctrl;
 import com.dam.model.acessbd.TableCarritoDAO;
 import com.dam.model.acessbd.TableCarritoProductoDAO;
 import com.dam.model.acessbd.TableCompradorDAO;
 import com.dam.model.acessbd.TableEmpleadoDAO;
 import com.dam.model.acessbd.TableProductoDAO;
 import com.dam.model.acessbd.TableTransaccionesDAO;
+import com.dam.view.VCarrito;
+import com.dam.view.VGestionEmp;
+import com.dam.view.VGestionProd;
+import com.dam.view.VGestionStock;
+import com.dam.view.VRegistrarse;
+import com.dam.view.VShop;
+import com.dam.view.VTrans;
+import com.dam.view.VloginForm;
 
 public class App {
 
@@ -17,6 +26,27 @@ public class App {
 		TableProductoDAO tp = new TableProductoDAO();
 		TableTransaccionesDAO ttr = new TableTransaccionesDAO();
 		
+		VloginForm vlf = new VloginForm();
+		VCarrito vca = new VCarrito();
+		VGestionProd vgprod = new VGestionProd();
+		VGestionStock vgstk = new VGestionStock();
+		VGestionEmp vgemp = new VGestionEmp();
+		VRegistrarse vr = new VRegistrarse();
+		VShop vsh = new VShop();
+		VTrans vtr = new VTrans();
+		
+		Ctrl c = new Ctrl(vlf, vca, vgemp, vgprod, vgstk, vr, vsh, vtr);
+		
+		vlf.setControlador(c);
+		vca.setControlador(c);
+		vgprod.setControlador(c);
+		vgstk.setControlador(c);
+		vgemp.setControlador(c);
+		vr.setControlador(c);
+		vsh.setControlador(c);
+		vtr.setControlador(c);
+		
+		vlf.hacerVisible();
 	}
 
 }

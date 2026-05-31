@@ -1,6 +1,7 @@
 package com.dam.view;
 
 import java.awt.Font;
+import java.text.CollationElementIterator;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -15,6 +16,10 @@ import javax.swing.table.DefaultTableModel;
 
 import com.dam.ctrl.Ctrl;
 import com.dam.model.pojos.Producto;
+import javax.swing.JComboBox;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JSeparator;
 
 public class VGestionProd extends JPanel implements IPanels {
 
@@ -33,6 +38,11 @@ public class VGestionProd extends JPanel implements IPanels {
 	private DefaultTableModel dtmProductos;
 	private JScrollPane scrpProductos;
 	private JButton btnEliminarProd;
+	private JTextField textField;
+	private JComboBox<String> cmbPrecio;
+	private JComboBox<String> cmbCategoria;
+	private DefaultComboBoxModel<String> dcbmCategoria;
+	private JButton btnBuscar;
 
 	public VGestionProd() {
 		configurarVentana();
@@ -42,6 +52,7 @@ public class VGestionProd extends JPanel implements IPanels {
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
+		setName("VGestionProd");
 	}
 
 	@Override
@@ -107,11 +118,11 @@ public class VGestionProd extends JPanel implements IPanels {
 		add(btnLimpiar);
 
 		JLabel lblListado = new JLabel("Listado de Productos:");
-		lblListado.setBounds(35, 228, 220, 20);
+		lblListado.setBounds(33, 306, 220, 20);
 		add(lblListado);
 
 		scrpProductos = new JScrollPane();
-		scrpProductos.setBounds(35, 253, 710, 200);
+		scrpProductos.setBounds(33, 331, 710, 200);
 		add(scrpProductos);
 
 		tblProductos = new JTable();
@@ -120,9 +131,51 @@ public class VGestionProd extends JPanel implements IPanels {
 		configurarTabla();
 
 		btnEliminarProd = new JButton(ConstantesBotones.ELIMINAR_PRODUCTO);
-		btnEliminarProd.setBounds(543, 465, 163, 30);
+		btnEliminarProd.setBounds(541, 543, 163, 30);
 		btnEliminarProd.setEnabled(false);
 		add(btnEliminarProd);
+		
+		textField = new JTextField();
+		textField.setBounds(98, 228, 155, 26);
+		add(textField);
+		
+		JLabel lblNombre_1 = new JLabel("Nombre:");
+		lblNombre_1.setBounds(35, 231, 60, 20);
+		add(lblNombre_1);
+		
+		JLabel lblPrecio_1 = new JLabel("Precio:");
+		lblPrecio_1.setBounds(268, 231, 48, 20);
+		add(lblPrecio_1);
+		
+		cmbPrecio = new JComboBox<>(new String[] { "Todos", "< 10 €", "10 - 50 €", "> 50 €" });
+		cmbPrecio.setBounds(313, 227, 115, 26);
+		add(cmbPrecio);
+		
+		JLabel lblCategoria_1 = new JLabel("Categoría:");
+		lblCategoria_1.setBounds(450, 231, 68, 20);
+		add(lblCategoria_1);
+		
+		dcbmCategoria = new DefaultComboBoxModel<>();
+		dcbmCategoria.addElement("Todas");
+		cmbCategoria = new JComboBox<>(dcbmCategoria);
+		cmbCategoria.setBounds(515, 227, 110, 26);
+		add(cmbCategoria);
+		
+		btnBuscar = new JButton(ConstantesBotones.BUSCAR_PRODUCTO);
+		btnBuscar.setBounds(35, 267, 115, 26);
+		add(btnBuscar);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(15, 216, 730, 6);
+		add(separator);
+	}
+	
+	public void cargarCategorias(ArrayList<String> categorias) {
+		dcbmCategoria.removeAllElements();
+		dcbmCategoria.addElement("Todas");
+		for (String cat : categorias) {
+			dcbmCategoria.addElement(cat);
+		}
 	}
 
 	private void configurarTabla() {
@@ -140,11 +193,11 @@ public class VGestionProd extends JPanel implements IPanels {
 		dtmProductos.addColumn("Stock");
 		dtmProductos.addColumn("Descripción"); //TODO: preguntarles a los profes si deberíamos hacerlo con un ver más
 
-		tblProductos.getColumnModel().getColumn(1).setPreferredWidth(130);
-		tblProductos.getColumnModel().getColumn(2).setPreferredWidth(100);
-		tblProductos.getColumnModel().getColumn(3).setPreferredWidth(70);
-		tblProductos.getColumnModel().getColumn(4).setPreferredWidth(50);
-		tblProductos.getColumnModel().getColumn(5).setPreferredWidth(260);
+		tblProductos.getColumnModel().getColumn(0).setPreferredWidth(130);
+		tblProductos.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tblProductos.getColumnModel().getColumn(2).setPreferredWidth(70);
+		tblProductos.getColumnModel().getColumn(3).setPreferredWidth(50);
+		tblProductos.getColumnModel().getColumn(4).setPreferredWidth(260);
 	}
 	
 	
@@ -156,8 +209,8 @@ public class VGestionProd extends JPanel implements IPanels {
 				row[0] = prod.getNombre();
 				row[1] = prod.getCategoria();
 				row[2] = prod.getPrecio();
-				row[2] = prod.getStock();
-				row[2] = prod.getDescripcion();
+				row[3] = prod.getStock();
+				row[4] = prod.getDescripcion();
 
 				dtmProductos.addRow(row);
 			}
@@ -194,7 +247,7 @@ public class VGestionProd extends JPanel implements IPanels {
 		btnEliminarProd.setEnabled(b);
 	}
 	
-	//TODO: agregaría otro setUnabled para agregar producto cuando le demos a modificar
+	public void setAgregarEnabled(boolean b) {btnAgregarProd.setEnabled(b);}
 
 	//TODO: corregir lo que retorna tiene que retornar un producto y validación de datos
 	public Producto obtenerDatosFormulario() {
@@ -255,8 +308,37 @@ public class VGestionProd extends JPanel implements IPanels {
 	@Override
 	public void setControlador(Ctrl c) {
 		btnAgregarProd.addActionListener(c);
+		btnAgregarProd.setActionCommand(ConstantesBotones.ADD_PRODUCTO);
+		
 		btnModificarProd.addActionListener(c);
+		btnModificarProd.setActionCommand(ConstantesBotones.MODIFICAR_PRODUCTO);
+		
 		btnLimpiar.addActionListener(c);
+		btnLimpiar.setActionCommand(ConstantesBotones.LIMPIAR);
+		
 		btnEliminarProd.addActionListener(c);
+		btnEliminarProd.setActionCommand(ConstantesBotones.ELIMINAR_PRODUCTO);
 	}
+
+	public JButton getBtnAgregarProd() {
+		return btnAgregarProd;
+	}
+
+	public JButton getBtnModificarProd() {
+		return btnModificarProd;
+	}
+
+	public JButton getBtnLimpiar() {
+		return btnLimpiar;
+	}
+
+	public JButton getBtnEliminarProd() {
+		return btnEliminarProd;
+	}
+
+	public JButton getBtnBuscar() {
+		return btnBuscar;
+	}
+	
+	
 }

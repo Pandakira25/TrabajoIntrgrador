@@ -85,12 +85,12 @@ public class VPrincipal extends JFrame implements IFrames {
 			mntmCerrarSesion = null;
 		}
 		crearPanelLogin();
-		scrpContenedor.setViewportView(pnlLogin);
-		revalidate();
-		repaint();
+		
 	}
 
 	private void crearPanelLogin() {
+		scrpContenedor.setViewportView(pnlLogin);
+		
 		pnlLogin = new JPanel(null);
 		pnlLogin.setPreferredSize(new Dimension(ANCHO, ALTO));
 
@@ -145,7 +145,7 @@ public class VPrincipal extends JFrame implements IFrames {
 	}
 
 	public void configurarMenuEmpleado() {
-		crearMenu();
+		//crearMenu();
 
 		JMenu mnGestion = new JMenu("Gestión");
 		menuBar.add(mnGestion, 0);
@@ -155,7 +155,7 @@ public class VPrincipal extends JFrame implements IFrames {
 	}
 
 	public void configurarMenuComprador() {
-		crearMenu();
+		//crearMenu();
 
 		JMenu mnTienda = new JMenu("Menú");
 		menuBar.add(mnTienda, 0);
@@ -168,7 +168,7 @@ public class VPrincipal extends JFrame implements IFrames {
 	}
 
 	public void configurarMenuAdmin() {
-		crearMenu();
+		//crearMenu();
 
 		JMenu mnEmpleados = new JMenu("Empleados");
 		menuBar.add(mnEmpleados, 0);

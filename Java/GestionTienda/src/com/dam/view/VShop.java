@@ -50,6 +50,7 @@ public class VShop extends JPanel implements IPanels {
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
 		setPreferredSize(new Dimension(ANCHO, 600));
+		setName("VShop");
 	}
 
 	@Override
@@ -88,8 +89,8 @@ public class VShop extends JPanel implements IPanels {
 		cmbCategoria.setBounds(501, 42, 110, 26);
 		add(cmbCategoria);
 
-		btnBuscar = new JButton(ConstantesBotones.BUSCAR);
-		btnBuscar.setBounds(15, 80, 92, 26);
+		btnBuscar = new JButton(ConstantesBotones.BUSCAR_PRODUCTO);
+		btnBuscar.setBounds(15, 80, 110, 26);
 		add(btnBuscar);
 
 		scrpProductos = new JScrollPane();

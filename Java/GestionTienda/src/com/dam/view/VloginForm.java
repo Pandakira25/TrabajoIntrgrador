@@ -1,5 +1,8 @@
 package com.dam.view;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -8,12 +11,22 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 import com.dam.ctrl.Ctrl;
 
 public class VloginForm extends JFrame implements IFrames {
+
+	public static final int WIDTH = 600;
+	public static final int HEIGHT = 800;
+
+	public static int insetsR;
+	public static int insetsL;
+	public static int insetsT;
+	public static int insetsB;
+	public static int menuH;
 
 	public static final int ADMIN = 1;
 	public static final int EMPLEADO = 2;
@@ -30,7 +43,6 @@ public class VloginForm extends JFrame implements IFrames {
 	private JButton btnEntrar;
 	private JButton btnRegistrarse;
 
-
 	private JMenuBar menuBar;
 	private JMenuItem mntmShop;
 	private JMenuItem mntmCarrito;
@@ -39,21 +51,23 @@ public class VloginForm extends JFrame implements IFrames {
 	private JMenuItem mntmGestionStock;
 	private JMenuItem mntmTransacciones;
 	private JMenuItem mntmCerrarSesion;
+	private JScrollPane scrlCont;
 
 	public VloginForm() {
-		initAbsoluteLayout();
 		crearComponentes();
 		configurarVentana();
 		quitarMenu();
 	}
 
-	private void initAbsoluteLayout() {
-		contentPane = new JPanel(null);
-		setContentPane(contentPane);
-	}
-
 	@Override
 	public void crearComponentes() {
+		contentPane = new JPanel(null);
+		setContentPane(contentPane);
+		setName("VloginForm");
+
+		scrlCont = new JScrollPane();
+		getContentPane().add(scrlCont, BorderLayout.CENTER);
+
 		lblTitulo = new JLabel("Iniciar sesión");
 		lblTitulo.setBounds(110, 15, 180, 28);
 		contentPane.add(lblTitulo);
@@ -85,11 +99,25 @@ public class VloginForm extends JFrame implements IFrames {
 
 	@Override
 	public void configurarVentana() {
-		setTitle("Login - Gestión Tienda");
+		setTitle("* * G U I A  M I C H E L I N * *");
+
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setSize(400, 250);
-		setLocationRelativeTo(null);
+
+		setSize(WIDTH, HEIGHT);
+
+		insetsR = this.getInsets().right;
+		insetsL = this.getInsets().left;
+		insetsT = this.getInsets().top;
+		insetsB = this.getInsets().bottom;
+
+		centerWindow();
 		setResizable(false);
+	}
+	
+	private void centerWindow() {
+		Dimension pantalla = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		Dimension ventana = new Dimension(WIDTH, HEIGHT);
+		setLocation((pantalla.width - ventana.width) / 2, (pantalla.height - ventana.height) / 2);
 	}
 
 	private void crearMenuBase() {
@@ -142,6 +170,7 @@ public class VloginForm extends JFrame implements IFrames {
 		mnTienda.add(mntmCarrito);
 	}
 
+	// TODO: Corregirlo para que esté en el controlador
 	public void autorizacionesMenu(int autorizacion) {
 		if (controlador == null) {
 			return;
@@ -179,7 +208,7 @@ public class VloginForm extends JFrame implements IFrames {
 
 	@Override
 	public void cargarPanel(JPanel panel) {
-		// TODO: cambiar contenido central cuando se implemente navegación
+		scrlCont.setViewportView(panel);
 	}
 
 	@Override
@@ -189,9 +218,10 @@ public class VloginForm extends JFrame implements IFrames {
 
 	@Override
 	public void setControlador(Ctrl c) {
-		controlador = c;
 		btnEntrar.addActionListener(c);
+
 		btnRegistrarse.addActionListener(c);
+		btnRegistrarse.setActionCommand(ConstantesBotones.REGISTRARSE);
 	}
 
 	private void controladorMenuAdmin(Ctrl c) {

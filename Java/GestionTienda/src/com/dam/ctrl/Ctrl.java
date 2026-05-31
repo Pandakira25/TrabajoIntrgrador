@@ -43,70 +43,42 @@ public class Ctrl implements ActionListener {
 	
 	private Usuario usuarioLogueado;
 
-	public Ctrl() {
+	public Ctrl(VloginForm vloginForm, VCarrito vca, VGestionEmp vgemp, VGestionProd vgprod, VGestionStock vgstk, VRegistrarse vr, VShop vsh, VTrans vtr) {
 		usuarioDAO = new TableUsuarioDAO();
-		vloginForm = new VloginForm();
-		vloginForm.setControlador(this);
-		vloginForm.hacerVisible();
+		this.vloginForm = vloginForm;
+		this.vca = vca;
+		this.vgemp = vgemp;
+		this.vgprod = vgprod;
+		this.vgstk = vgstk;
+		this.vr = vr;
+		this.vsh = vsh;
+		this.vtr = vtr;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == vloginForm.getBtnEntrar()) {
+		Object src = e.getSource();
+		System.out.println(src);
+		System.out.println(vloginForm.getMntmCerrarSesion());
+		if (src == vloginForm.getBtnEntrar()) {
 			entrar();
-		} else if (e.getSource() == vloginForm.getBtnregister()) {
-			registrarse();
-		} else if (e.getSource() == vloginForm.getMntmCerrarSesion()) {
+		} else if (src == vloginForm.getBtnregister()) {
+			vloginForm.cargarPanel(vr);
+		} else if (src == vloginForm.getMntmCerrarSesion()) {
 			cerrarSesion();
-		} else if (e.getSource() == vloginForm.getMntmGestionEmp()) {
-			gestionEmpresa();
-		} else if (e.getSource() == vloginForm.getMntmGestionProd()) {
-			gestionProductos();
-		} else if (e.getSource() == vloginForm.getMntmTransacciones()) {
-			transacciones();
-		} else if (e.getSource() == vloginForm.getMntmGestionStock()) {
-			gestionStock();
-		} else if (e.getSource() == vloginForm.getMntmShop()) {
-			shop();
-		} else if (e.getSource() == vloginForm.getMntmCarrito()) {
-			// TODO: cargarPanel VCarrito
-			carrito();
+		} else if (src == vloginForm.getMntmGestionEmp()) {
+			vloginForm.cargarPanel(vgemp);
+		} else if (src == vloginForm.getMntmGestionProd()) {
+			vloginForm.cargarPanel(vgprod);
+		} else if (src == vloginForm.getMntmTransacciones()) {
+			vloginForm.cargarPanel(vtr);
+		} else if (src == vloginForm.getMntmGestionStock()) {
+			vloginForm.cargarPanel(vgstk);
+		} else if (src == vloginForm.getMntmShop()) {
+			vloginForm.cargarPanel(vsh);
+		} else if (src == vloginForm.getMntmCarrito()) {
+			vloginForm.cargarPanel(vca);
 		}
-	}
-
-	private void carrito() {
-		vloginForm.cargarPanel(vca);
-		//TODO: botones de la ventana
-	}
-
-	private void shop() {
-		vloginForm.cargarPanel(vsh);
-		//TODO: botones de la ventana
-	}
-
-	private void gestionStock() {
-		vloginForm.cargarPanel(vgstk);
-		//TODO: botones de la ventana
-	}
-
-	private void transacciones() {
-		vloginForm.cargarPanel(vtr);
-		//TODO: botones de la ventana
-	}
-
-	private void gestionProductos() {
-		vloginForm.cargarPanel(vgprod);
-		//TODO: botones de la ventana
-	}
-
-	private void gestionEmpresa() {
-		vloginForm.cargarPanel(vgemp);
-		//TODO: botones de la ventana
-	}
-	
-	private void registrarse() {
-		vloginForm.cargarPanel(vr);
-		//TODO: botones de la ventana
 	}
 
 

@@ -32,6 +32,7 @@ public class VTrans extends JPanel implements IPanels {
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
+		setName("VTrans");
 	}
 
 	@Override

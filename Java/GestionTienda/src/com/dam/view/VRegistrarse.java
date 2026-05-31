@@ -33,6 +33,7 @@ public class VRegistrarse extends JPanel implements IPanels {
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
+		setName("VRegistrarse");
 	}
 
 	@Override

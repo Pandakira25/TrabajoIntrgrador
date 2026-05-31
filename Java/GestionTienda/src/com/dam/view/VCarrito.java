@@ -36,6 +36,7 @@ public class VCarrito extends JPanel implements IPanels {
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
 		setPreferredSize(new Dimension(ANCHO, 590));
+		setName("VCarrito");
 	}
 	
 	@Override
@@ -126,6 +127,11 @@ public class VCarrito extends JPanel implements IPanels {
 	@Override
 	public void setControlador(Ctrl c) {
 		btnPagar.addActionListener(c);
+		btnPagar.setActionCommand(ConstantesBotones.PAGAR);
+	}
+
+	public JButton getBtnPagar() {
+		return btnPagar;
 	}
 
 }

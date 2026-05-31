@@ -9,7 +9,8 @@ public final class ConstantesBotones {
 	public static final String REGISTRARSE = "Registrarse";
 	public static final String INICIAR_SESION = "Iniciar Sesión";
 	public static final String PAGAR = "Pagar";
-	public static final String BUSCAR = "Buscar";
+	public static final String BUSCAR_PRODUCTO = "Buscar Producto";
+	public static final String BUSCAR_EMPLEADO = "Buscar Empleado";
 	public static final String VER_MAS = "Ver más";
 	public static final String VER_MENOS = "Ver menos";
 	public static final String MAS = "+";

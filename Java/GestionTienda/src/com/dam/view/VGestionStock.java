@@ -54,6 +54,7 @@ public class VGestionStock extends JPanel implements IPanels {
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
 		setPreferredSize(new Dimension(ANCHO, 620));
+		setName("VGestionStock");
 	}
 
 	@Override
@@ -97,8 +98,8 @@ public class VGestionStock extends JPanel implements IPanels {
 		cmbCategoria.setBounds(501, 79, 110, 26);
 		add(cmbCategoria);
 
-		btnBuscar = new JButton(ConstantesBotones.BUSCAR);
-		btnBuscar.setBounds(15, 118, 92, 26);
+		btnBuscar = new JButton(ConstantesBotones.BUSCAR_PRODUCTO);
+		btnBuscar.setBounds(15, 118, 115, 26);
 		add(btnBuscar);
 
 		// --- Tabla ---
@@ -214,6 +215,7 @@ public class VGestionStock extends JPanel implements IPanels {
 		txaDescripcion.setText(descripción);
 		
 		btnVerMas.setText(ConstantesBotones.VER_MENOS);
+		btnVerMas.setActionCommand(ConstantesBotones.VER_MENOS);
 	}
 	
 	public void hideDescripción() {
@@ -222,6 +224,7 @@ public class VGestionStock extends JPanel implements IPanels {
 		txaDescripcion.setText("");
 		
 		btnVerMas.setText(ConstantesBotones.VER_MAS);
+		btnVerMas.setActionCommand(ConstantesBotones.VER_MAS);
 	}
 	
 	public void setMenosStockEnabled(boolean b) {
@@ -253,11 +256,34 @@ public class VGestionStock extends JPanel implements IPanels {
 	@Override
 	public void setControlador(Ctrl c) {
 		btnBuscar.addActionListener(c);
+		btnBuscar.setActionCommand(ConstantesBotones.BUSCAR_PRODUCTO);
+		
 		btnMas.addActionListener(c);
+		btnMas.setActionCommand(ConstantesBotones.MAS);
+		
 		btnMenos.addActionListener(c);
+		btnMenos.setActionCommand(ConstantesBotones.MENOS);
+		
 		btnVerMas.addActionListener(c);
+		btnVerMas.setActionCommand(ConstantesBotones.VER_MAS);
 	}
 	
+	public JButton getBtnBuscar() {
+		return btnBuscar;
+	}
+
+	public JButton getBtnMas() {
+		return btnMas;
+	}
+
+	public JButton getBtnMenos() {
+		return btnMenos;
+	}
+
+	public JButton getBtnVerMas() {
+		return btnVerMas;
+	}
+
 	public String [] getConsulta() {
 		String consulta [] = {
 			txtBuscarNombre.getText(),

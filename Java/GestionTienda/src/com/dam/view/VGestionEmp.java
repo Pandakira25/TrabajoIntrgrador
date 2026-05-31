@@ -20,6 +20,8 @@ import javax.swing.table.DefaultTableModel;
 import com.dam.ctrl.Ctrl;
 import com.dam.model.pojos.Empleado;
 import com.dam.model.pojos.Producto;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class VGestionEmp extends JPanel implements IPanels {
 
@@ -40,6 +42,10 @@ public class VGestionEmp extends JPanel implements IPanels {
 	private JScrollPane scrpEmpleados;
 	private JButton btnEliminarEmp;
 	private JLabel lblListado;
+	private JTextField txtBuscarNombre;
+	private JLabel lblAutorizacion;
+	private JSpinner spnAutorizacion;
+	private JButton btnBuscarNombre;
 
 	public VGestionEmp() {
 		configurarVentana();
@@ -49,7 +55,7 @@ public class VGestionEmp extends JPanel implements IPanels {
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
-		
+		setName("VGestionEmp");
 	}
 
 	@Override
@@ -91,7 +97,7 @@ public class VGestionEmp extends JPanel implements IPanels {
 		add(lblNSeguridad);
 
 		txtNSeguridad = new JTextField();
-		txtNSeguridad.setBounds(468, 95, 150, 26);
+		txtNSeguridad.setBounds(455, 96, 150, 26);
 		add(txtNSeguridad);
 
 		JLabel lblIban = new JLabel("IBAN:");
@@ -99,7 +105,7 @@ public class VGestionEmp extends JPanel implements IPanels {
 		add(lblIban);
 
 		txtIban = new JTextField();
-		txtIban.setBounds(125, 133, 380, 26);
+		txtIban.setBounds(125, 133, 325, 26);
 		add(txtIban);
 
 		btnRegistrarEmp = new JButton(ConstantesBotones.REGISTRAR_EMPLEADO);
@@ -112,11 +118,12 @@ public class VGestionEmp extends JPanel implements IPanels {
 
 		
 		lblListado = new JLabel("Listado de Empleados:");
-		lblListado.setBounds(35, 228, 220, 20);
+		lblListado.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblListado.setBounds(35, 291, 220, 20);
 		add(lblListado);
 
 		scrpEmpleados = new JScrollPane();
-		scrpEmpleados.setBounds(35, 253, 710, 215);
+		scrpEmpleados.setBounds(35, 316, 710, 215);
 		add(scrpEmpleados);
 
 		tblEmpleados = new JTable();
@@ -125,9 +132,32 @@ public class VGestionEmp extends JPanel implements IPanels {
 		configurarTabla();
 
 		btnEliminarEmp = new JButton(ConstantesBotones.ELIMINAR_EMPLEADO);
-		btnEliminarEmp.setBounds(535, 480, 175, 30);
+		btnEliminarEmp.setBounds(535, 543, 175, 30);
 		btnEliminarEmp.setEnabled(false);
 		add(btnEliminarEmp);
+		
+		JLabel lblBuscarNombre = new JLabel("Nombre:");
+		lblBuscarNombre.setBounds(35, 269, 44, 12);
+		add(lblBuscarNombre);
+		
+		txtBuscarNombre = new JTextField();
+		txtBuscarNombre.setBounds(89, 263, 118, 18);
+		add(txtBuscarNombre);
+		txtBuscarNombre.setColumns(10);
+		
+		btnBuscarNombre = new JButton(ConstantesBotones.BUSCAR_EMPLEADO);
+		btnBuscarNombre.setBounds(227, 261, 118, 20);
+		add(btnBuscarNombre);
+		
+		lblAutorizacion = new JLabel("Autorización:");
+		lblAutorizacion.setBounds(465, 140, 60, 12);
+		add(lblAutorizacion);
+		
+		spnAutorizacion = new JSpinner();
+		spnAutorizacion.setModel(new SpinnerNumberModel(2, 1, 2, 1));
+		spnAutorizacion.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		spnAutorizacion.setBounds(535, 132, 44, 35);
+		add(spnAutorizacion);
 
 	}
 
@@ -190,6 +220,7 @@ public class VGestionEmp extends JPanel implements IPanels {
 		String telStr = txtTel.getText().trim();
 		String nSeguridad = txtNSeguridad.getText().trim();
 		String iban = txtIban.getText().trim();
+		int autorizacion = (int)spnAutorizacion.getValue();;
 		
 		boolean valid = true;
 		
@@ -217,7 +248,7 @@ public class VGestionEmp extends JPanel implements IPanels {
 		}
 
 		if(valid) {
-			return new Empleado(2,nombre,contra,Integer.parseInt(telStr), true, nSeguridad, iban);
+			return new Empleado(autorizacion,nombre,contra,Integer.parseInt(telStr), true, nSeguridad, iban);
 		}else {
 			return null;
 		}
@@ -234,12 +265,13 @@ public class VGestionEmp extends JPanel implements IPanels {
 	@Override
 	public void setControlador(Ctrl c) {
 		btnRegistrarEmp.addActionListener(c);
+		btnRegistrarEmp.setActionCommand(ConstantesBotones.REGISTRAR_EMPLEADO);
+		
 		btnLimpiar.addActionListener(c);
+		btnLimpiar.setActionCommand(ConstantesBotones.LIMPIAR);
+		
 		btnEliminarEmp.addActionListener(c);
-	}
-
-	public JTable getTblEmpleados() {
-		return tblEmpleados;
+		btnEliminarEmp.setActionCommand(ConstantesBotones.ELIMINAR_PRODUCTO);
 	}
 
 	public JButton getBtnRegistrarEmp() {
@@ -253,5 +285,8 @@ public class VGestionEmp extends JPanel implements IPanels {
 	public JButton getBtnEliminarEmp() {
 		return btnEliminarEmp;
 	}
-
+	
+	public JButton getBtnBuscarNombre() {
+		return btnBuscarNombre;
+	}
 }
