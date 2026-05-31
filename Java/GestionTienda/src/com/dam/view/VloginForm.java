@@ -94,6 +94,6 @@ public class VloginForm extends JPanel implements IPanels{
 	@Override
 	public void setControlador(Ctrl c) {
 		// TODO Auto-generated method stub
-		
+		//TODO: setActionComand de todo
 	}
 }

@@ -198,39 +198,49 @@ public class VGestionProd extends JPanel implements IPanels {
 	
 	//TODO: agregaría otro setUnabled para agregar producto cuando le demos a modificar
 
-	//TODO: corregir lo que retorna tiene que retornar un producto
-	public Object[] obtenerDatosFormulario() {
+	//TODO: corregir lo que retorna tiene que retornar un producto y validación de datos
+	public Producto obtenerDatosFormulario() {
 		String nombre = txtNombre.getText().trim();
 		String categoria = txtCategoria.getText().trim();
 		String precioStr = txtPrecio.getText().trim();
 		String stockStr = txtStock.getText().trim();
 		String descripcion = txtDescripcion.getText().trim();
+		
+		boolean valid = true;
 
 		if (nombre.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Error de datos",
 					JOptionPane.ERROR_MESSAGE);
-			return null;
+			valid = false;
 		}
+		
 		double precio = 0;
 		int stock = 0;
+		
 		try {
-			if (!precioStr.isEmpty())
+			if (!precioStr.isEmpty()) {
 				precio = Double.parseDouble(precioStr);
+			}
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(this, "El precio debe ser un número decimal.", "Error de datos",
 					JOptionPane.ERROR_MESSAGE);
-			return null;
+			valid = false;
 		}
 		try {
-			if (!stockStr.isEmpty())
+			if (!stockStr.isEmpty()) {
 				stock = Integer.parseInt(stockStr);
+			}
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(this, "El stock debe ser un número entero.", "Error de datos",
 					JOptionPane.ERROR_MESSAGE);
-			return null;
+			valid = false;
 		}
 
-		return new Object[] { nombre, categoria, precio, descripcion, stock };
+		if(valid) {
+			return new Producto(nombre, categoria, precio, stock, descripcion);
+		}else {
+			return null;
+		}
 	}
 
 	public void limpiarDatos() {
@@ -250,5 +260,7 @@ public class VGestionProd extends JPanel implements IPanels {
 		btnModificarProd.addActionListener(c);
 		btnLimpiar.addActionListener(c);
 		btnEliminarProd.addActionListener(c);
+		
+		//TODO: setActionComand de todo
 	}
 }

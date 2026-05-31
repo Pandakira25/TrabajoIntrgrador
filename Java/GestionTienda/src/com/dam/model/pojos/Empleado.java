@@ -12,6 +12,15 @@ public class Empleado extends Usuario{
 		this.iban = iban;
 	}
 	
+	public Empleado(int autorizacion, String nombre, String contrasenia, int tel, boolean activo, String nSeguridad,
+			String iban) {
+		super(autorizacion, nombre, contrasenia, tel, activo);
+		this.nSeguridad = nSeguridad;
+		this.iban = iban;
+	}
+
+
+
 	public String getnSeguridad() {
 		return nSeguridad;
 	}

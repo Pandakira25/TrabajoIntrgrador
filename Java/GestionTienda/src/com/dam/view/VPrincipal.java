@@ -153,7 +153,7 @@ public class VPrincipal extends JFrame implements IFrames {
 	@Override
 	public void setControlador(Ctrl c) {
 		// TODO Auto-generated method stub
-		
+		//TODO: setActionComand de todo
 	}
 
 }

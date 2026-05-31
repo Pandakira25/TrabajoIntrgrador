@@ -17,6 +17,14 @@ public class Producto {
 		this.descripcion = descripcion;
 		this.stock = stock;
 	}
+	public Producto(String nombre, String categoria, double precio, int stock, String descripcion) {
+		this.nombre = nombre;
+		this.categoria = categoria;
+		this.precio = precio;
+		this.stock = stock;
+		this.descripcion = descripcion;
+	}
+	
 	@Override
 	public String toString() {
 		return "Producto [id=" + productoId + ", nombre=" + nombre + ", categoria=" + categoria + ", precio=" + precio + ", descripcion=" + descripcion + ", stock=" + stock + "]";

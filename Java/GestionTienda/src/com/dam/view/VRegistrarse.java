@@ -10,6 +10,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.dam.ctrl.Ctrl;
+import com.dam.model.pojos.Comprador;
 
 public class VRegistrarse extends JPanel implements IPanels {
 
@@ -105,40 +106,48 @@ public class VRegistrarse extends JPanel implements IPanels {
 	public void setControlador(Ctrl c) {
 		btnRegistrar.addActionListener(c);
 		btnCancelar.addActionListener(c);
+		
+		//TODO: setActionComand de todo
 	}
 	
 	
-	//TODO: es mejor que devuelva un comprador y arreglar lo que retorna
-	public String[] obtenerDatos() {
+	//TODO: Comprobaciones
+	public Comprador obtenerDatos() {
 		String nombre    = txtNombre.getText().trim();
 		String contra    = new String(txtContrasenia.getPassword()).trim();
 		String telStr    = txtTel.getText().trim();
 		String direccion = txtDireccion.getText().trim();
 		String nTarjeta  = txtNTarjeta.getText().trim();
+		
+		boolean valid = true;
 
 		if (nombre.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "El nombre es obligatorio.",
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
-			return null;
+			valid = false;
 		}
 		if (contra.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.",
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
-			return null;
+			valid = false;
 		}
 		if (telStr.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "El teléfono es obligatorio.",
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
-			return null;
+			valid = false;
 		}
 		try {
 			Integer.parseInt(telStr);
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(this, "El teléfono debe ser un número.",
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
-			return null;
+			valid = false;
 		}
 
-		return new String[] { nombre, contra, telStr, direccion, nTarjeta };
+		if(valid) {
+			return new Comprador(nombre,contra, Integer.parseInt(telStr), direccion, nTarjeta);
+		}else {
+			return null;
+		}
 	}
 }

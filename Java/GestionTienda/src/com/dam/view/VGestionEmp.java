@@ -181,38 +181,44 @@ public class VGestionEmp extends JPanel implements IPanels {
 		btnEliminarEmp.setEnabled(b);
 	}
 	
-	//TODO: corregir lo que retorna tiene que retornar un Empleado
-	public String[] obtenerDatosFormulario() {
+	//TODO: corregir lo que retorna tiene que retornar un Empleado y validar datos
+	public Empleado obtenerDatosFormulario() {
 		String nombre = txtNombre.getText().trim();
 		String contra = new String(txtContrasenia.getPassword()).trim();
 		String telStr = txtTel.getText().trim();
 		String nSeguridad = txtNSeguridad.getText().trim();
 		String iban = txtIban.getText().trim();
-
+		
+		boolean valid = true;
+		
 		if (nombre.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Error de datos",
 					JOptionPane.ERROR_MESSAGE);
-			return null;
+			valid = false;
 		}
 		if (contra.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.", "Error de datos",
 					JOptionPane.ERROR_MESSAGE);
-			return null;
+			valid = false;
 		}
 		if (telStr.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "El teléfono es obligatorio.", "Error de datos",
 					JOptionPane.ERROR_MESSAGE);
-			return null;
+			valid = false;
 		}
 		try {
 			Integer.parseInt(telStr);
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(this, "El teléfono debe ser un número.", "Error de datos",
 					JOptionPane.ERROR_MESSAGE);
-			return null;
+			valid = false;
 		}
 
-		return new String[] { nombre, contra, telStr, nSeguridad, iban };
+		if(valid) {
+			return new Empleado(2,nombre,contra,Integer.parseInt(telStr), true, nSeguridad, iban);
+		}else {
+			return null;
+		}
 	}
 
 	public void limpiarDatos() {
@@ -228,6 +234,8 @@ public class VGestionEmp extends JPanel implements IPanels {
 		btnRegistrarEmp.addActionListener(c);
 		btnLimpiar.addActionListener(c);
 		btnEliminarEmp.addActionListener(c);
+		
+		//TODO: setActionComand de todo
 	}
 
 	public JTable getTblEmpleados() {

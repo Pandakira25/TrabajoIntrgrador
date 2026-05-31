@@ -45,7 +45,7 @@ public class VShop extends JPanel implements IPanels {
 		configurarVentana();
 		crearComponentes();
 	}
-	
+
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
@@ -61,7 +61,6 @@ public class VShop extends JPanel implements IPanels {
 		lblProductos.setBounds(15, 15, 100, 20);
 		add(lblProductos);
 
-		
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setBounds(15, 45, 60, 20);
 		add(lblNombre);
@@ -73,8 +72,8 @@ public class VShop extends JPanel implements IPanels {
 		JLabel lblPrecio = new JLabel("Precio:");
 		lblPrecio.setBounds(248, 45, 48, 20);
 		add(lblPrecio);
-		
-		//TODO: ver si queremos estos rangos
+
+		// TODO: ver si queremos estos rangos
 		cmbPrecio = new JComboBox<>(new String[] { "Todos", "< 10 €", "10 - 50 €", "> 50 €" });
 		cmbPrecio.setBounds(300, 42, 115, 26);
 		add(cmbPrecio);
@@ -93,7 +92,6 @@ public class VShop extends JPanel implements IPanels {
 		btnBuscar.setBounds(15, 80, 92, 26);
 		add(btnBuscar);
 
-
 		scrpProductos = new JScrollPane();
 		scrpProductos.setBounds(15, 115, 520, 415);
 		add(scrpProductos);
@@ -103,7 +101,6 @@ public class VShop extends JPanel implements IPanels {
 		scrpProductos.setViewportView(tblProductos);
 		configurarTabla();
 
-		
 		btnVerMas = new JButton("Ver más");
 		btnVerMas.setBounds(15, 542, 92, 28);
 		add(btnVerMas);
@@ -112,14 +109,13 @@ public class VShop extends JPanel implements IPanels {
 		btnCarrito.setBounds(115, 542, 92, 28);
 		add(btnCarrito);
 
-		//TODO: ver por que es visible
+		// TODO: ver por que es visible
 		lblDescripcion = new JLabel("Descripción");
 		lblDescripcion.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblDescripcion.setBounds(550, 115, 100, 20);
 		lblDescripcion.setVisible(false);
 		add(lblDescripcion);
-		
-		
+
 		txaDescripcion = new JTextArea();
 		txaDescripcion.setLineWrap(true);
 		txaDescripcion.setWrapStyleWord(true);
@@ -129,9 +125,9 @@ public class VShop extends JPanel implements IPanels {
 		scrpDescripcion.setBounds(550, 140, 235, 385);
 		scrpDescripcion.setVisible(false);
 		add(scrpDescripcion);
-		
+
 	}
-	
+
 	private void configurarTabla() {
 		dtmProductos = new DefaultTableModel() {
 			@Override
@@ -146,7 +142,8 @@ public class VShop extends JPanel implements IPanels {
 		dtmProductos.addColumn("");
 		dtmProductos.addColumn("");
 		dtmProductos.addColumn("");
-		//TODO: quisiera que tuviera la cantidad que vas agregando en tiempo real (preguntarle a pilar)
+		// TODO: quisiera que tuviera la cantidad que vas agregando en tiempo real
+		// (preguntarle a pilar)
 
 		tblProductos.getColumnModel().getColumn(0).setPreferredWidth(470);
 		tblProductos.getColumnModel().getColumn(1).setPreferredWidth(80);
@@ -154,32 +151,32 @@ public class VShop extends JPanel implements IPanels {
 		tblProductos.getColumnModel().getColumn(3).setPreferredWidth(50);
 		tblProductos.getColumnModel().getColumn(4).setPreferredWidth(80);
 	}
-	
-	
-	//corregir el cargar tabla: hecho
+
+	// corregir el cargar tabla: hecho
 	public void cargarTabla(ArrayList<Producto> productos) {
-		if(productos.size() != 0) {
+		if (productos.size() != 0) {
 			clearTable();
 			Object[] row = new Object[5];
-			for(Producto prod : productos) {
+			for (Producto prod : productos) {
 				row[0] = prod.getNombre();
 				row[1] = prod.getPrecio();
-				//TODO: preguntarle a pilar cómo hacerlo
+				// TODO: preguntarle a pilar cómo hacerlo
 				row[2] = "+";
 				row[3] = "-";
 				row[4] = "Eliminar";
-				
+
 				dtmProductos.addRow(row);
 			}
-		}else {
-			JOptionPane.showMessageDialog(this, "No se han encontrado items con los filtros seleccionados","Mensaje",JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(this, "No se han encontrado items con los filtros seleccionados", "Mensaje",
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
 	private void clearTable() {
 		int r = dtmProductos.getRowCount();
-		for(int i = 0; i < r; i++) {
-			//System.out.println(i);
+		for (int i = 0; i < r; i++) {
+			// System.out.println(i);
 			dtmProductos.removeRow(0);
 		}
 	}
@@ -191,38 +188,32 @@ public class VShop extends JPanel implements IPanels {
 			dcbmCategoria.addElement(cat);
 		}
 	}
+
+	public void verDescripcion(String descripción) {
+		lblDescripcion.setVisible(true);
+		scrpDescripcion.setVisible(true);
+		txaDescripcion.setText(descripción);
+		
+		btnVerMas.setText("Ver menos");
+		btnVerMas.setActionCommand("Ver menos");
+	}
 	
-	//TODO: la descripcion la pasamos desde el controlador solo tenemos que hacer que se haga visible y que cargue el texto
-	public void toggleDescripcion() {
-		boolean mostrar = !scrpDescripcion.isVisible();
-		if (mostrar) {
-			int fila = tblProductos.getSelectedRow();
-			Object desc = fila != -1 ? dtmProductos.getValueAt(fila, 6) : null;
-			txaDescripcion.setText(desc != null ? desc.toString() : "Sin descripción.");
-		}
-		lblDescripcion.setVisible(mostrar);
-		scrpDescripcion.setVisible(mostrar);
-		btnVerMas.setText(mostrar ? "Ver menos" : "Ver más");
+	public void hideDescripción() {
+		lblDescripcion.setVisible(false);
+		scrpDescripcion.setVisible(false);
+		txaDescripcion.setText("");
+		
+		btnVerMas.setText("Ver más");
+		btnVerMas.setActionCommand("Ver más");
 	}
 
-	//TODO: no podemos obtener así el id
-	public int getIdProductoSeleccionado() {
-		int fila = tblProductos.getSelectedRow();
-		if (fila == -1)
-			return -1;
-		return (int) dtmProductos.getValueAt(fila, 5);
-	}
-
-	public String getNombreFiltro() {
-		return txtBuscarNombre.getText().trim();
-	}
-
-	public String getPrecioFiltro() {
-		return (String) cmbPrecio.getSelectedItem();
-	}
-
-	public String getCategoriaFiltro() {
-		return (String) cmbCategoria.getSelectedItem();
+	public String [] getConsulta() {
+		String consulta [] = {
+			txtBuscarNombre.getText(),
+			(String)cmbCategoria.getSelectedItem(),
+			(String)cmbPrecio.getSelectedItem()
+		};
+		return consulta;
 	}
 
 	public void limpiarDatos() {
@@ -241,7 +232,8 @@ public class VShop extends JPanel implements IPanels {
 		btnBuscar.addActionListener(c);
 		btnVerMas.addActionListener(c);
 		btnCarrito.addActionListener(c);
+		
+		//TODO: setActionComand de todo
 	}
-
 
 }

@@ -83,7 +83,6 @@ public class VGestionStock extends JPanel implements IPanels {
 		lblPrecio.setBounds(248, 82, 48, 20);
 		add(lblPrecio);
 
-		// TODO: Ver si queremos otro rango?
 		cmbPrecio = new JComboBox<>(new String[] { "Todos", "< 10 €", "10 - 50 €", "> 50 €" });
 		cmbPrecio.setBounds(300, 79, 115, 26);
 		add(cmbPrecio);
@@ -92,7 +91,6 @@ public class VGestionStock extends JPanel implements IPanels {
 		lblCategoria.setBounds(430, 82, 68, 20);
 		add(lblCategoria);
 
-		// TODO: cargar las categorias
 		dcbmCategoria = new DefaultComboBoxModel<>();
 		dcbmCategoria.addElement("Todas");
 		cmbCategoria = new JComboBox<>(dcbmCategoria);
@@ -119,9 +117,8 @@ public class VGestionStock extends JPanel implements IPanels {
 		add(btnVerMas);
 
 		// --- Panel derecho: cantidad ---
-		// TODO: html?
-		JLabel lblCantInfo = new JLabel("<html>Ingrese la cantidad a<br>añadir/eliminar</html>");
-		lblCantInfo.setBounds(550, 185, 240, 42);
+		JLabel lblCantInfo = new JLabel("Ingrese la cantidad a añadir/eliminar");
+		lblCantInfo.setBounds(545, 204, 224, 26);
 		add(lblCantInfo);
 
 		txtCantidad = new JTextField("1");
@@ -129,15 +126,12 @@ public class VGestionStock extends JPanel implements IPanels {
 		txtCantidad.setBounds(550, 240, 62, 38);
 		add(txtCantidad);
 
-		// TODO: por que estan deshabilitados??
 		btnMas = new JButton("+");
 		btnMas.setBounds(622, 247, 38, 28);
-		btnMas.setEnabled(false);
 		add(btnMas);
 
 		btnMenos = new JButton("-");
 		btnMenos.setBounds(666, 247, 38, 28);
-		btnMenos.setEnabled(false);
 		add(btnMenos);
 
 		// --- Descripción (oculta por defecto) ---
@@ -227,20 +221,9 @@ public class VGestionStock extends JPanel implements IPanels {
 		revalidate();
 		repaint();
 	}
-
-	// TODO: deberiamos hacer un método para habilitar y deshabilitar el de menos
-	// dependiendo de la cantidad de stock
-	public void setStockButtonsEnabled(boolean b) {
+	
+	public void setMenosStockEnabled(boolean b) {
 		btnMas.setEnabled(b);
-		btnMenos.setEnabled(b);
-	}
-
-	// TODO: no deberíamos obtener asi el id
-	public int getIdProductoSeleccionado() {
-		int fila = tblProductos.getSelectedRow();
-		if (fila == -1)
-			return -1;
-		return (int) dtmProductos.getValueAt(fila, 4);
 	}
 
 	public int getCantidad() {
@@ -249,18 +232,6 @@ public class VGestionStock extends JPanel implements IPanels {
 		} catch (NumberFormatException e) {
 			return 1;
 		}
-	}
-
-	public String getNombreFiltro() {
-		return txtBuscarNombre.getText().trim();
-	}
-
-	public String getPrecioFiltro() {
-		return (String) cmbPrecio.getSelectedItem();
-	}
-
-	public String getCategoriaFiltro() {
-		return (String) cmbCategoria.getSelectedItem();
 	}
 
 	public void limpiarDatos() {
@@ -283,6 +254,17 @@ public class VGestionStock extends JPanel implements IPanels {
 		btnMas.addActionListener(c);
 		btnMenos.addActionListener(c);
 		btnVerMas.addActionListener(c);
+		
+		//TODO: setActionComand de todo
+	}
+	
+	public String [] getConsulta() {
+		String consulta [] = {
+			txtBuscarNombre.getText(),
+			(String)cmbCategoria.getSelectedItem(),
+			(String)cmbPrecio.getSelectedItem()
+		};
+		return consulta;
 	}
 
 }
