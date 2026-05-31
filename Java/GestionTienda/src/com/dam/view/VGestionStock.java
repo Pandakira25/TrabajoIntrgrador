@@ -208,18 +208,20 @@ public class VGestionStock extends JPanel implements IPanels {
 		}
 	}
 
-	public void toggleDescripcion() {
-		boolean mostrar = !scrpDescripcion.isVisible();
-		if (mostrar) {
-			int fila = tblProductos.getSelectedRow();
-			Object desc = fila != -1 ? dtmProductos.getValueAt(fila, 5) : null;
-			txaDescripcion.setText(desc != null ? desc.toString() : "Sin descripción.");
-		}
-		lblDescripcion.setVisible(mostrar);
-		scrpDescripcion.setVisible(mostrar);
-		btnVerMas.setText(mostrar ? ConstantesBotones.VER_MENOS : ConstantesBotones.VER_MAS);
-		revalidate();
-		repaint();
+	public void verDescripcion(String descripción) {
+		lblDescripcion.setVisible(true);
+		scrpDescripcion.setVisible(true);
+		txaDescripcion.setText(descripción);
+		
+		btnVerMas.setText(ConstantesBotones.VER_MENOS);
+	}
+	
+	public void hideDescripción() {
+		lblDescripcion.setVisible(false);
+		scrpDescripcion.setVisible(false);
+		txaDescripcion.setText("");
+		
+		btnVerMas.setText(ConstantesBotones.VER_MAS);
 	}
 	
 	public void setMenosStockEnabled(boolean b) {

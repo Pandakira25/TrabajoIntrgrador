@@ -195,8 +195,7 @@ public class VShop extends JPanel implements IPanels {
 		scrpDescripcion.setVisible(true);
 		txaDescripcion.setText(descripción);
 		
-		btnVerMas.setText("Ver menos");
-		btnVerMas.setActionCommand("Ver menos");
+		btnVerMas.setText(ConstantesBotones.VER_MENOS);
 	}
 	
 	public void hideDescripción() {
@@ -204,8 +203,7 @@ public class VShop extends JPanel implements IPanels {
 		scrpDescripcion.setVisible(false);
 		txaDescripcion.setText("");
 		
-		btnVerMas.setText("Ver más");
-		btnVerMas.setActionCommand("Ver más");
+		btnVerMas.setText(ConstantesBotones.VER_MAS);
 	}
 
 	public String [] getConsulta() {

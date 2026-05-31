@@ -59,25 +59,56 @@ public class Ctrl implements ActionListener {
 		} else if (e.getSource() == vloginForm.getMntmCerrarSesion()) {
 			cerrarSesion();
 		} else if (e.getSource() == vloginForm.getMntmGestionEmp()) {
-			// TODO: cargarPanel VGestionEmp
-			vloginForm.cargarPanel(vgemp);
+			gestionEmpresa();
 		} else if (e.getSource() == vloginForm.getMntmGestionProd()) {
-			// TODO: cargarPanel VGestionProd
-			vloginForm.cargarPanel(vgprod);
+			gestionProductos();
 		} else if (e.getSource() == vloginForm.getMntmTransacciones()) {
-			// TODO: cargarPanel VTrans
-			vloginForm.cargarPanel(vtr);
+			transacciones();
 		} else if (e.getSource() == vloginForm.getMntmGestionStock()) {
-			// TODO: cargarPanel VGestionStock
-			vloginForm.cargarPanel(vgstk);
+			gestionStock();
 		} else if (e.getSource() == vloginForm.getMntmShop()) {
-			// TODO: cargarPanel VShop
-			vloginForm.cargarPanel(vsh);
+			shop();
 		} else if (e.getSource() == vloginForm.getMntmCarrito()) {
 			// TODO: cargarPanel VCarrito
-			vloginForm.cargarPanel(vca);
+			carrito();
 		}
 	}
+
+	private void carrito() {
+		vloginForm.cargarPanel(vca);
+		//TODO: botones de la ventana
+	}
+
+	private void shop() {
+		vloginForm.cargarPanel(vsh);
+		//TODO: botones de la ventana
+	}
+
+	private void gestionStock() {
+		vloginForm.cargarPanel(vgstk);
+		//TODO: botones de la ventana
+	}
+
+	private void transacciones() {
+		vloginForm.cargarPanel(vtr);
+		//TODO: botones de la ventana
+	}
+
+	private void gestionProductos() {
+		vloginForm.cargarPanel(vgprod);
+		//TODO: botones de la ventana
+	}
+
+	private void gestionEmpresa() {
+		vloginForm.cargarPanel(vgemp);
+		//TODO: botones de la ventana
+	}
+	
+	private void registrarse() {
+		vloginForm.cargarPanel(vr);
+		//TODO: botones de la ventana
+	}
+
 
 	private void entrar() {
 		String nombre = vloginForm.getTxtuser().getText().trim();
@@ -106,11 +137,7 @@ public class Ctrl implements ActionListener {
 		usuarioLogueado = u;
 		vloginForm.autorizacionesMenu(u.getAutorizacion());
 	}
-
-	private void registrarse() {
-		// TODO: abrir VRegistrarse
-	}
-
+	
 	private void cerrarSesion() {
 		usuarioLogueado = null;
 		vloginForm.quitarMenu();
