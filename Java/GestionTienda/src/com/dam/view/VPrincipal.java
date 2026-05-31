@@ -140,12 +140,6 @@ public class VPrincipal extends JFrame implements IFrames {
 		
 	}
 
-	@Override
-	public void crearMenu() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	private void crearMenuBase() {
 		menuBar = new JMenuBar();
 		menuH = menuBar.getPreferredSize().height;

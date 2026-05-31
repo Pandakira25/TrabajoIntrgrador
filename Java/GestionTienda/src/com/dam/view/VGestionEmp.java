@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -23,6 +25,8 @@ public class VGestionEmp extends JPanel implements IPanels {
 	private static final int ALTO = VPrincipal.ALTO - VPrincipal.insetsT - VPrincipal.insetsB - VPrincipal.menuH;
 
 	private JTextField txtNombre;
+	private JMenuBar mnBarraMenu;
+	private JMenuItem mntmGestionStock;
 	private JPasswordField txtContrasenia;
 	private JTextField txtTel;
 	private JTextField txtNSeguridad;
@@ -122,7 +126,7 @@ public class VGestionEmp extends JPanel implements IPanels {
 		btnEliminarEmp.setBounds(535, 480, 175, 30);
 		btnEliminarEmp.setEnabled(false);
 		add(btnEliminarEmp);
-		
+
 	}
 
 	private void configurarTabla() {

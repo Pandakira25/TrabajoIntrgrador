@@ -11,13 +11,8 @@ public class Ctrl implements ActionListener {
 
 	public Ctrl() {
 		vloginForm = new VloginForm();
-		registrarListeners();
+		vloginForm.setControlador(this);
 		vloginForm.hacerVisible();
-	}
-
-	private void registrarListeners() {
-		vloginForm.getBtnEntrar().addActionListener(this);
-		vloginForm.getBtnregister().addActionListener(this);
 	}
 
 	@Override
@@ -26,18 +21,41 @@ public class Ctrl implements ActionListener {
 			entrar();
 		} else if (e.getSource() == vloginForm.getBtnregister()) {
 			registrarse();
+		} else if (e.getSource() == vloginForm.getMntmCerrarSesion()) {
+			cerrarSesion();
+		} else if (e.getSource() == vloginForm.getMntmGestionEmp()) {
+			// TODO: cargarPanel VGestionEmp
+		} else if (e.getSource() == vloginForm.getMntmGestionProd()) {
+			// TODO: cargarPanel VGestionProd
+		} else if (e.getSource() == vloginForm.getMntmTransacciones()) {
+			// TODO: cargarPanel VTrans
+		} else if (e.getSource() == vloginForm.getMntmGestionStock()) {
+			// TODO: cargarPanel VGestionStock
+		} else if (e.getSource() == vloginForm.getMntmShop()) {
+			// TODO: cargarPanel VShop
+		} else if (e.getSource() == vloginForm.getMntmCarrito()) {
+			// TODO: cargarPanel VCarrito
 		}
 	}
 
 	private void entrar() {
-		String usuario = vloginForm.getTxtuser().getText();
+		String usuario = vloginForm.getTxtuser().getText().trim();
 		String pwd = new String(vloginForm.getTxtpwd().getPassword());
-		// TODO: validar credenciales y abrir ventana principal
+		// TODO: validar credenciales con BD y usar usuario.getAutorizacion()
+		if (usuario.isEmpty() || pwd.isEmpty()) {
+			return;
+		}
+
+		// Provisional hasta tener login en BD
+		vloginForm.autorizacionesMenu(VloginForm.ADMIN);
 	}
 
 	private void registrarse() {
-		
 		// TODO: abrir VRegistrarse
+	}
+
+	private void cerrarSesion() {
+		vloginForm.quitarMenu();
 	}
 
 }
