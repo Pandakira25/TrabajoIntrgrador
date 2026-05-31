@@ -105,8 +105,6 @@ public class VRegistrarse extends JPanel implements IPanels {
 	public void setControlador(Ctrl c) {
 		btnRegistrar.addActionListener(c);
 		btnCancelar.addActionListener(c);
-		
-		//TODO: setActionComand de todo
 	}
 	
 	

@@ -258,7 +258,5 @@ public class VGestionProd extends JPanel implements IPanels {
 		btnModificarProd.addActionListener(c);
 		btnLimpiar.addActionListener(c);
 		btnEliminarProd.addActionListener(c);
-		
-		//TODO: setActionComand de todo
 	}
 }

@@ -254,8 +254,6 @@ public class VGestionStock extends JPanel implements IPanels {
 		btnMas.addActionListener(c);
 		btnMenos.addActionListener(c);
 		btnVerMas.addActionListener(c);
-		
-		//TODO: setActionComand de todo
 	}
 	
 	public String [] getConsulta() {

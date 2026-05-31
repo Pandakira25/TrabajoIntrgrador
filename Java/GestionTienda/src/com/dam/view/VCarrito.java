@@ -126,8 +126,6 @@ public class VCarrito extends JPanel implements IPanels {
 	@Override
 	public void setControlador(Ctrl c) {
 		btnPagar.addActionListener(c);
-		
-		//TODO: setActionComand de todo
 	}
 
 }

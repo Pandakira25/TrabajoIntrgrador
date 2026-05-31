@@ -233,8 +233,6 @@ public class VShop extends JPanel implements IPanels {
 		btnBuscar.addActionListener(c);
 		btnVerMas.addActionListener(c);
 		btnCarrito.addActionListener(c);
-		
-		//TODO: setActionComand de todo
 	}
 
 }

@@ -236,8 +236,6 @@ public class VGestionEmp extends JPanel implements IPanels {
 		btnRegistrarEmp.addActionListener(c);
 		btnLimpiar.addActionListener(c);
 		btnEliminarEmp.addActionListener(c);
-		
-		//TODO: setActionComand de todo
 	}
 
 	public JTable getTblEmpleados() {
