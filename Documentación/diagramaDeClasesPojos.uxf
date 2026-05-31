@@ -1,0 +1,66 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>650</x><y>410</y><w>260</w><h>160</h></coordinates><panel_attributes>Carrito
+--
+	-carritoId: int
+	-productos: HashMap&lt;Producto, Integer&gt;
+--
+	+ Carrito
+	+ toString() String
+	+addP(Prodcuto p, int cant): void
+	+dellP(Producto p): void
+	+restCant(Producto p,int cantR): void
+	+clearCarrito(): void
+//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>290</x><y>410</y><w>270</w><h>110</h></coordinates><panel_attributes>Comprador
+--
+	- direccion: String
+	- nTarjeta: String
+	-carrito: Carrito
+--
++ Comprador(String direccion, String nTarjeta)
++ getCarrito(): Carrito
+//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>40</x><y>410</y><w>180</w><h>110</h></coordinates><panel_attributes>Empleado
+--
+	- String nSeguridad
+	- String iban
+--
++ toString() String
+//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>710</x><y>160</y><w>260</w><h>180</h></coordinates><panel_attributes>Producto
+--
+	- int id;
+	- String nombre;
+	- String categoria;
+	- double precio;
+	- String descripcion
+	- int stock
+--
++ Producto()
++ toString() String
++ getters
+//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>360</x><y>580</y><w>190</w><h>140</h></coordinates><panel_attributes>Transaccion
+--
+	- compradorId: int
+	- empleadoId: int
+	- carritoId: int
+	-fecha: String
+	-importe: double
+--
+	+ toString()
+	+ Transaccion()
+//TODO
+		</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>130</x><y>100</y><w>260</w><h>240</h></coordinates><panel_attributes>Usuario
+--
+	-userId: int
+	- int autorizacion;
+	- String nombre;
+	- String contrasenia
+	- int tel
+	-activo: boolean
+--
+	+ Usuario()
+	+ toString() String 
+	+getId(): int
+	+getAutorización(): int
+	+getNombre(): String
+	+getContrasenia(): String
+	+getTel(): int
+	+isActivo(): boolean	
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>110</x><y>330</y><w>90</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;80;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>340</x><y>330</y><w>140</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>120;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>550</x><y>470</y><w>120</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>780</x><y>330</y><w>30</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element></diagram>

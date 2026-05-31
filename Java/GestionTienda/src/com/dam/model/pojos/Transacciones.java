@@ -2,19 +2,24 @@ package com.dam.model.pojos;
 
 public class Transacciones {
 
-	private int id;
-	private Comprador co;
-	private Empleado e;
-	private Carrito ca;
-
-	public Transacciones(int id, Comprador co, Empleado e, Carrito ca) {
-		this.id = id;
-		this.co = co;
-		this.e = e;
-		this.ca = ca;
+	private int comptradorId;
+	private int empleadoId;
+	private int carritoId;
+	private String fecha;
+	private double importe;
+	
+	public Transacciones(int comptradorId, int empleadoId, int carritoId, String fecha, double importe) {
+		this.comptradorId = comptradorId;
+		this.empleadoId = empleadoId;
+		this.carritoId = carritoId;
+		this.fecha = fecha;
+		this.importe = importe;
 	}
+	
+	
 	@Override
 	public String toString() {
-		return "Transacciones [id=" + id + ", co=" + co + ", e=" + e + ", ca=" + ca + "]";
+		return "Transacciones [comptradorId=" + comptradorId + ", empleadoId=" + empleadoId + ", carritoId=" + carritoId
+				+ ", fecha=" + fecha + ", importe=" + importe + "]";
 	}
 }
