@@ -21,6 +21,7 @@ import com.dam.ctrl.Ctrl;
 import com.dam.model.pojos.Producto;
 
 public class VShop extends JPanel implements IPanels {
+	public static final String NAME = "VShop";
 
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
 	private static final int ALTO = VPrincipal.ALTO - VPrincipal.insetsT - VPrincipal.insetsB - VPrincipal.menuH;
@@ -50,7 +51,7 @@ public class VShop extends JPanel implements IPanels {
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
 		setPreferredSize(new Dimension(ANCHO, 600));
-		setName("VShop");
+		setName(NAME);
 	}
 
 	@Override
@@ -232,6 +233,8 @@ public class VShop extends JPanel implements IPanels {
 		btnBuscar.addActionListener(c);
 		btnVerMas.addActionListener(c);
 		btnCarrito.addActionListener(c);
+		tblProductos.addMouseListener(c);
+		
 	}
 
 }

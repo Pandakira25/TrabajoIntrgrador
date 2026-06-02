@@ -24,4 +24,9 @@ public final class ConstantesBotones {
 	public static final String ADD_PRODUCTO = "Agregar Producto";
 	public static final String MODIFICAR_PRODUCTO = "Modificar Producto";
 	public static final String ELIMINAR_PRODUCTO = "Eliminar Producto";
+	public static final String CERRAR_SESION = "Cerrar Sesión";
+	public static final String GESTION_EMPLEADOS = "Gestión de Empleados";
+	public static final String GESTION_PRODUCTOS = "Gestión de Productos";
+	public static final String VER_TRANSACCIONES = "Ver Transacciones";
+	public static final String COMPRAR = "Comprar";
 }

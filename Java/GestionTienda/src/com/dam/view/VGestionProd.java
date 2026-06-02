@@ -22,6 +22,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSeparator;
 
 public class VGestionProd extends JPanel implements IPanels {
+	public static final String NAME = "VGestionProd";
 
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
 	private static final int ALTO = VPrincipal.ALTO - VPrincipal.insetsT - VPrincipal.insetsB - VPrincipal.menuH;
@@ -52,7 +53,7 @@ public class VGestionProd extends JPanel implements IPanels {
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
-		setName("VGestionProd");
+		setName(NAME);
 	}
 
 	@Override
@@ -319,26 +320,4 @@ public class VGestionProd extends JPanel implements IPanels {
 		btnEliminarProd.addActionListener(c);
 		btnEliminarProd.setActionCommand(ConstantesBotones.ELIMINAR_PRODUCTO);
 	}
-
-	public JButton getBtnAgregarProd() {
-		return btnAgregarProd;
-	}
-
-	public JButton getBtnModificarProd() {
-		return btnModificarProd;
-	}
-
-	public JButton getBtnLimpiar() {
-		return btnLimpiar;
-	}
-
-	public JButton getBtnEliminarProd() {
-		return btnEliminarProd;
-	}
-
-	public JButton getBtnBuscar() {
-		return btnBuscar;
-	}
-	
-	
 }

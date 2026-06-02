@@ -22,6 +22,7 @@ import com.dam.ctrl.Ctrl;
 import com.dam.model.pojos.Producto;
 
 public class VGestionStock extends JPanel implements IPanels {
+	public static final String NAME = "VGestionStock";
 
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
 	private static final int ALTO = VPrincipal.ALTO - VPrincipal.insetsT - VPrincipal.insetsB - VPrincipal.menuH;
@@ -54,7 +55,7 @@ public class VGestionStock extends JPanel implements IPanels {
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
 		setPreferredSize(new Dimension(ANCHO, 620));
-		setName("VGestionStock");
+		setName(NAME);
 	}
 
 	@Override
@@ -266,22 +267,6 @@ public class VGestionStock extends JPanel implements IPanels {
 		
 		btnVerMas.addActionListener(c);
 		btnVerMas.setActionCommand(ConstantesBotones.VER_MAS);
-	}
-	
-	public JButton getBtnBuscar() {
-		return btnBuscar;
-	}
-
-	public JButton getBtnMas() {
-		return btnMas;
-	}
-
-	public JButton getBtnMenos() {
-		return btnMenos;
-	}
-
-	public JButton getBtnVerMas() {
-		return btnVerMas;
 	}
 
 	public String [] getConsulta() {

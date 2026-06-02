@@ -13,7 +13,7 @@ public class TableUsuarioDAO {
 
 	private static final String COL_USUARIO_ID = "usuario_id";
 	private static final String COL_AUTORIZACION = "autorizacion";
-	private static final String COL_USUARIO = "usuario";
+	private static final String COL_NOMBRE = "nombre";
 	private static final String COL_CONTRASENIA = "contrasenia";
 	private static final String COL_ACTIVO = "activo";
 	private static final String COL_TEL = "tel";
@@ -23,8 +23,8 @@ public class TableUsuarioDAO {
 	}
 
 	public Usuario login(String usuario, String contrasenia) {
-		String sql = "SELECT " + COL_USUARIO_ID + ", " + COL_AUTORIZACION + ", " + COL_USUARIO + ", "
-				+ COL_CONTRASENIA + ", " + COL_TEL + ", " + COL_ACTIVO + " FROM usuario WHERE " + COL_USUARIO
+		String sql = "SELECT " + COL_USUARIO_ID + ", " + COL_AUTORIZACION + ", " + COL_NOMBRE + ", "
+				+ COL_CONTRASENIA + ", " + COL_TEL + ", " + COL_ACTIVO + " FROM usuario WHERE " + COL_NOMBRE
 				+ " = ? AND " + COL_CONTRASENIA + " = ?";
 
 		try (Connection con = acc.getConnection();
@@ -38,7 +38,7 @@ public class TableUsuarioDAO {
 					return new Usuario(
 							rs.getInt(COL_USUARIO_ID),
 							rs.getInt(COL_AUTORIZACION),
-							rs.getString(COL_USUARIO),
+							rs.getString(COL_NOMBRE),
 							rs.getString(COL_CONTRASENIA),
 							rs.getInt(COL_TEL),
 							rs.getInt(COL_ACTIVO) == 1);

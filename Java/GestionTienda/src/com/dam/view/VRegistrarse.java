@@ -13,6 +13,7 @@ import com.dam.ctrl.Ctrl;
 import com.dam.model.pojos.Comprador;
 
 public class VRegistrarse extends JPanel implements IPanels {
+	public static final String NAME = "VRegistrarse";
 
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
 	private static final int ALTO  = VPrincipal.ALTO  - VPrincipal.insetsT - VPrincipal.insetsB;
@@ -33,7 +34,7 @@ public class VRegistrarse extends JPanel implements IPanels {
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
-		setName("VRegistrarse");
+		setName(NAME);
 	}
 
 	@Override

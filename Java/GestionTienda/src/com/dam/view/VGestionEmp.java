@@ -24,6 +24,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 public class VGestionEmp extends JPanel implements IPanels {
+	public static final String NAME = "VGestionEmp";
 
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
 	private static final int ALTO = VPrincipal.ALTO - VPrincipal.insetsT - VPrincipal.insetsB - VPrincipal.menuH;
@@ -55,7 +56,7 @@ public class VGestionEmp extends JPanel implements IPanels {
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
-		setName("VGestionEmp");
+		setName(NAME);
 	}
 
 	@Override
@@ -272,21 +273,5 @@ public class VGestionEmp extends JPanel implements IPanels {
 		
 		btnEliminarEmp.addActionListener(c);
 		btnEliminarEmp.setActionCommand(ConstantesBotones.ELIMINAR_PRODUCTO);
-	}
-
-	public JButton getBtnRegistrarEmp() {
-		return btnRegistrarEmp;
-	}
-
-	public JButton getBtnLimpiar() {
-		return btnLimpiar;
-	}
-
-	public JButton getBtnEliminarEmp() {
-		return btnEliminarEmp;
-	}
-	
-	public JButton getBtnBuscarNombre() {
-		return btnBuscarNombre;
 	}
 }

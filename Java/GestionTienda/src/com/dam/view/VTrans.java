@@ -16,6 +16,7 @@ import com.dam.model.pojos.Producto;
 import com.dam.model.pojos.Transacciones;
 
 public class VTrans extends JPanel implements IPanels {
+	public static final String NAME = "VTrans";
 
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
 	private static final int ALTO = VPrincipal.ALTO - VPrincipal.insetsT - VPrincipal.insetsB - VPrincipal.menuH;
@@ -32,7 +33,7 @@ public class VTrans extends JPanel implements IPanels {
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
-		setName("VTrans");
+		setName(NAME);
 	}
 
 	@Override

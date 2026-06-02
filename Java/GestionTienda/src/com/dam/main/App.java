@@ -1,5 +1,7 @@
 package com.dam.main;
 
+import java.awt.EventQueue;
+
 import com.dam.ctrl.Ctrl;
 import com.dam.model.acessbd.TableCarritoDAO;
 import com.dam.model.acessbd.TableCarritoProductoDAO;
@@ -11,6 +13,7 @@ import com.dam.view.VCarrito;
 import com.dam.view.VGestionEmp;
 import com.dam.view.VGestionProd;
 import com.dam.view.VGestionStock;
+import com.dam.view.VPrincipal;
 import com.dam.view.VRegistrarse;
 import com.dam.view.VShop;
 import com.dam.view.VTrans;
@@ -19,34 +22,43 @@ import com.dam.view.VloginForm;
 public class App {
 
 	public static void main(String[] args) {
-		TableCarritoDAO tca = new TableCarritoDAO();
-		TableCarritoProductoDAO tcap = new TableCarritoProductoDAO();
-		TableCompradorDAO tco = new TableCompradorDAO();
-		TableEmpleadoDAO te = new TableEmpleadoDAO();
-		TableProductoDAO tp = new TableProductoDAO();
-		TableTransaccionesDAO ttr = new TableTransaccionesDAO();
-		
-		VloginForm vlf = new VloginForm();
-		VCarrito vca = new VCarrito();
-		VGestionProd vgprod = new VGestionProd();
-		VGestionStock vgstk = new VGestionStock();
-		VGestionEmp vgemp = new VGestionEmp();
-		VRegistrarse vr = new VRegistrarse();
-		VShop vsh = new VShop();
-		VTrans vtr = new VTrans();
-		
-		Ctrl c = new Ctrl(vlf, vca, vgemp, vgprod, vgstk, vr, vsh, vtr);
-		
-		vlf.setControlador(c);
-		vca.setControlador(c);
-		vgprod.setControlador(c);
-		vgstk.setControlador(c);
-		vgemp.setControlador(c);
-		vr.setControlador(c);
-		vsh.setControlador(c);
-		vtr.setControlador(c);
-		
-		vlf.hacerVisible();
+		EventQueue.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				TableCarritoDAO tca = new TableCarritoDAO();
+				TableCarritoProductoDAO tcap = new TableCarritoProductoDAO();
+				TableCompradorDAO tco = new TableCompradorDAO();
+				TableEmpleadoDAO te = new TableEmpleadoDAO();
+				TableProductoDAO tp = new TableProductoDAO();
+				TableTransaccionesDAO ttr = new TableTransaccionesDAO();
+				
+				VPrincipal vp = new VPrincipal();
+				VloginForm vlf = new VloginForm();
+				VCarrito vca = new VCarrito();
+				VGestionProd vgprod = new VGestionProd();
+				VGestionStock vgstk = new VGestionStock();
+				VGestionEmp vgemp = new VGestionEmp();
+				VRegistrarse vr = new VRegistrarse();
+				VShop vsh = new VShop();
+				VTrans vtr = new VTrans();
+				
+				Ctrl c = new Ctrl(vp,vlf, vca, vgemp, vgprod, vgstk, vr, vsh, vtr);
+				
+				vp.setControlador(c);
+				vlf.setControlador(c);
+				vca.setControlador(c);
+				vgprod.setControlador(c);
+				vgstk.setControlador(c);
+				vgemp.setControlador(c);
+				vr.setControlador(c);
+				vsh.setControlador(c);
+				vtr.setControlador(c);
+				
+				vp.hacerVisible();
+				
+			}
+		});
 	}
 
 }

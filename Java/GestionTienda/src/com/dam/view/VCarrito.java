@@ -18,6 +18,7 @@ import com.dam.ctrl.Ctrl;
 import com.dam.model.pojos.Producto;
 
 public class VCarrito extends JPanel implements IPanels {
+	public static final String NAME = "VCarrito";
 
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
 	private static final int ALTO = VPrincipal.ALTO - VPrincipal.insetsT - VPrincipal.insetsB - VPrincipal.menuH;
@@ -36,7 +37,7 @@ public class VCarrito extends JPanel implements IPanels {
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
 		setPreferredSize(new Dimension(ANCHO, 590));
-		setName("VCarrito");
+		setName(NAME);
 	}
 	
 	@Override
@@ -128,10 +129,6 @@ public class VCarrito extends JPanel implements IPanels {
 	public void setControlador(Ctrl c) {
 		btnPagar.addActionListener(c);
 		btnPagar.setActionCommand(ConstantesBotones.PAGAR);
-	}
-
-	public JButton getBtnPagar() {
-		return btnPagar;
 	}
 
 }
