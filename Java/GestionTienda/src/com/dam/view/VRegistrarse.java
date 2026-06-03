@@ -128,23 +128,36 @@ public class VRegistrarse extends JPanel implements IPanels {
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
 			valid = false;
 		}
-		if (contra.isEmpty()) {
+		else if (contra.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.",
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
 			valid = false;
 		}
-		if (telStr.isEmpty()) {
+		else if (telStr.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "El teléfono es obligatorio.",
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
 			valid = false;
 		}
-		try {
-			Integer.parseInt(telStr);
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "El teléfono debe ser un número.",
+		else if(direccion.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "La direccion es obligatoria.",
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
 			valid = false;
 		}
+		else if(nTarjeta.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Debe ingresar una tarjeta.",
+					"Error de datos", JOptionPane.ERROR_MESSAGE);
+			valid = false;
+		}
+		else if(!telStr.isEmpty()) {
+			try {
+				Integer.parseInt(telStr);
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(this, "El teléfono debe ser un número.",
+						"Error de datos", JOptionPane.ERROR_MESSAGE);
+				valid = false;
+			}
+		}
+		
 
 		if(valid) {
 			return new Comprador(nombre,contra, Integer.parseInt(telStr), direccion, nTarjeta);

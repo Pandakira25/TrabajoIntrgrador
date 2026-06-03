@@ -94,6 +94,10 @@ public class VloginForm extends JPanel implements IPanels {
 	public JTextField getTxtUsuario() {
 		return txtUsuario;
 	}
+	
+	public void setTxtUsuario(String txt) {
+		txtUsuario.setText(txt);
+	}
 
 	public JPasswordField getTxtContrasenia() {
 		return txtContrasenia;

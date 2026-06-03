@@ -60,4 +60,8 @@ public class Usuario {
 	public void darDeBaja() {
 		activo = false; 
 	}
+	
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 }	

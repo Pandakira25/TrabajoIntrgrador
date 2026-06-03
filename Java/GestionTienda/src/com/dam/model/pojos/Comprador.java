@@ -29,4 +29,14 @@ public class Comprador extends Usuario{
 	public Carrito getCarrito() {
 		return carrito;
 	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public String getnTarjeta() {
+		return nTarjeta;
+	}
+	
+	
 }

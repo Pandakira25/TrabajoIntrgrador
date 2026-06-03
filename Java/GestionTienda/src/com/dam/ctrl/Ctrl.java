@@ -21,6 +21,8 @@ import com.dam.model.acessbd.TableEmpleadoDAO;
 import com.dam.model.acessbd.TableProductoDAO;
 import com.dam.model.acessbd.TableTransaccionesDAO;
 import com.dam.model.acessbd.TableUsuarioDAO;
+import com.dam.model.pojos.Comprador;
+import com.dam.model.pojos.Empleado;
 import com.dam.model.pojos.Producto;
 import com.dam.model.pojos.Usuario;
 import com.dam.view.VCarrito;
@@ -173,13 +175,28 @@ public class Ctrl implements ActionListener, MouseListener {
 
 	private void acVGE(String ac) {
 		switch (ac) {
-
+		case ConstantesBotones.BUSCAR_EMPLEADO:
+			ArrayList<Empleado> emp = usuarioDAO.selectAllEmpleados();
+			vgemp.cargarTabla(emp);
 		}
 	}
 
 	private void acVR(String ac) {
 		switch (ac) {
 		case ConstantesBotones.REGISTRARSE:
+			if(vr.obtenerDatos() != null) {
+				Comprador compr = vr.obtenerDatos();
+				int nuevoId = usuarioDAO.insertUsr(compr);
+				if(nuevoId > -1) {
+					compr.setUserId(nuevoId);
+					compradorDAO.insertUsr(compr);
+					vp.cargarPanel(vlf);
+					vlf.setTxtUsuario(compr.getNombre());
+				}
+			}else {
+				JOptionPane.showMessageDialog(vr, "El teléfono es obligatorio.",
+						"Error de datos", JOptionPane.ERROR_MESSAGE);
+			}
 			break;
 		case ConstantesBotones.CANCELAR:
 			int respuesta = JOptionPane.showConfirmDialog(vp, "¿Seguro que desea cancelar?",

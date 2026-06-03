@@ -186,6 +186,9 @@ public class VGestionEmp extends JPanel implements IPanels {
 
 	// corregir cargar tabla: hecho
 	public void cargarTabla(ArrayList<Empleado> empleados) {
+		tblEmpleados.clearSelection();
+		dtmEmpleados.getDataVector().clear();
+		
 		if(empleados.size() != 0) {
 			clearTable();
 			Object[] row = new Object[5];
