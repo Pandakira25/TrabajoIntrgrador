@@ -86,7 +86,7 @@ public class VRegistrarse extends JPanel implements IPanels {
 		txtNTarjeta.setBounds(165, 222, 250, 26);
 		add(txtNTarjeta);
 
-		btnRegistrar = new JButton(ConstantesBotones.REGISTRAR);
+		btnRegistrar = new JButton(ConstantesBotones.REGISTRARSE);
 		btnRegistrar.setBounds(185, 285, 130, 30);
 		add(btnRegistrar);
 
@@ -106,7 +106,10 @@ public class VRegistrarse extends JPanel implements IPanels {
 	@Override
 	public void setControlador(Ctrl c) {
 		btnRegistrar.addActionListener(c);
+		btnRegistrar.setActionCommand(ConstantesBotones.REGISTRARSE);
+		
 		btnCancelar.addActionListener(c);
+		btnCancelar.setActionCommand(ConstantesBotones.CANCELAR);
 	}
 	
 	
@@ -149,7 +152,4 @@ public class VRegistrarse extends JPanel implements IPanels {
 			return null;
 		}
 	}
-
-	public JButton getBtnRegistrar() { return btnRegistrar; }
-	public JButton getBtnCancelar()  { return btnCancelar; }
 }

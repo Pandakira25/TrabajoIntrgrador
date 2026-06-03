@@ -75,7 +75,6 @@ public class VShop extends JPanel implements IPanels {
 		lblPrecio.setBounds(248, 45, 48, 20);
 		add(lblPrecio);
 
-		// TODO: ver si queremos estos rangos
 		cmbPrecio = new JComboBox<>(new String[] { "Todos", "< 10 €", "10 - 50 €", "> 50 €" });
 		cmbPrecio.setBounds(300, 42, 115, 26);
 		add(cmbPrecio);
@@ -103,7 +102,6 @@ public class VShop extends JPanel implements IPanels {
 		scrpProductos.setViewportView(tblProductos);
 		configurarTabla();
 
-		
 		btnVerMas = new JButton(ConstantesBotones.VER_MAS);
 		btnVerMas.setBounds(15, 542, 92, 28);
 		add(btnVerMas);
@@ -112,7 +110,6 @@ public class VShop extends JPanel implements IPanels {
 		btnCarrito.setBounds(115, 542, 92, 28);
 		add(btnCarrito);
 
-		// TODO: ver por que es visible
 		lblDescripcion = new JLabel("Descripción");
 		lblDescripcion.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblDescripcion.setBounds(550, 115, 100, 20);
@@ -146,7 +143,9 @@ public class VShop extends JPanel implements IPanels {
 		dtmProductos.addColumn("");
 		dtmProductos.addColumn("");
 		// TODO: quisiera que tuviera la cantidad que vas agregando en tiempo real
-		// (preguntarle a pilar)
+		// Idea mía: podria poner en el mouse listener un contador y pasarlo a la tabla
+		// y que cuando se le de al mas
+		// o al menos se sume o reste y se recargue la tabla
 
 		tblProductos.getColumnModel().getColumn(0).setPreferredWidth(470);
 		tblProductos.getColumnModel().getColumn(1).setPreferredWidth(80);
@@ -163,7 +162,6 @@ public class VShop extends JPanel implements IPanels {
 			for (Producto prod : productos) {
 				row[0] = prod.getNombre();
 				row[1] = prod.getPrecio();
-				// TODO: preguntarle a pilar cómo hacerlo
 				row[2] = "+";
 				row[3] = "-";
 				row[4] = "Eliminar";
@@ -196,24 +194,21 @@ public class VShop extends JPanel implements IPanels {
 		lblDescripcion.setVisible(true);
 		scrpDescripcion.setVisible(true);
 		txaDescripcion.setText(descripción);
-		
+
 		btnVerMas.setText(ConstantesBotones.VER_MENOS);
 	}
-	
+
 	public void hideDescripción() {
 		lblDescripcion.setVisible(false);
 		scrpDescripcion.setVisible(false);
 		txaDescripcion.setText("");
-		
+
 		btnVerMas.setText(ConstantesBotones.VER_MAS);
 	}
 
-	public String [] getConsulta() {
-		String consulta [] = {
-			txtBuscarNombre.getText(),
-			(String)cmbCategoria.getSelectedItem(),
-			(String)cmbPrecio.getSelectedItem()
-		};
+	public String[] getConsulta() {
+		String consulta[] = { txtBuscarNombre.getText(), (String) cmbCategoria.getSelectedItem(),
+				(String) cmbPrecio.getSelectedItem() };
 		return consulta;
 	}
 
@@ -231,10 +226,15 @@ public class VShop extends JPanel implements IPanels {
 	@Override
 	public void setControlador(Ctrl c) {
 		btnBuscar.addActionListener(c);
+		btnBuscar.setActionCommand(ConstantesBotones.BUSCAR_PRODUCTO);
+
 		btnVerMas.addActionListener(c);
+		btnVerMas.setActionCommand(ConstantesBotones.VER_MAS);
+
 		btnCarrito.addActionListener(c);
+		btnCarrito.setActionCommand(ConstantesBotones.CARRITO);
+
 		tblProductos.addMouseListener(c);
-		
 	}
 
 }

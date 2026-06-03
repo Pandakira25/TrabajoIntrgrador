@@ -179,7 +179,15 @@ public class Ctrl implements ActionListener, MouseListener {
 
 	private void acVR(String ac) {
 		switch (ac) {
-
+		case ConstantesBotones.REGISTRARSE:
+			break;
+		case ConstantesBotones.CANCELAR:
+			int respuesta = JOptionPane.showConfirmDialog(vp, "¿Seguro que desea cancelar?",
+					"Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+			if(respuesta == JOptionPane.YES_OPTION) {
+				vp.cargarPanel(vlf);
+			}
+			break;
 		}
 	}
 
@@ -230,6 +238,12 @@ public class Ctrl implements ActionListener, MouseListener {
 			vp.cargarPanel(vgemp);
 			//vp.crearMenuBase();
 			
+			//Prueba tabla
+			ArrayList<Producto> ps = new ArrayList<Producto>();
+			ps.add(new Producto("prueba", "", 2, 2, ""));
+			
+			vgprod.cargarTabla(ps);
+			
 			break;
 		case EMPLEADO:
 			vp.crearMenuBase();
@@ -240,7 +254,7 @@ public class Ctrl implements ActionListener, MouseListener {
 			vp.cargarPanel(vsh);
 			
 			//Prueba tabla
-			ArrayList<Producto> ps = new ArrayList<Producto>();
+			ps = new ArrayList<Producto>();
 			ps.add(new Producto("prueba", "", 2, 2, ""));
 			
 			vsh.cargarTabla(ps);
@@ -288,7 +302,7 @@ public class Ctrl implements ActionListener, MouseListener {
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+		System.out.println("over");
 	}
 
 	@Override

@@ -2,10 +2,10 @@ package com.dam.view;
 
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -128,16 +128,16 @@ public class VGestionStock extends JPanel implements IPanels {
 		txtCantidad.setBounds(550, 240, 62, 38);
 		add(txtCantidad);
 
-		btnMas = new JButton(ConstantesBotones.MAS);
+		btnMas = new JButton(new ImageIcon(ConstantesBotones.MASICONO));
+		btnMas.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnMas.setBounds(622, 247, 38, 28);
 		add(btnMas);
 
-		btnMenos = new JButton(ConstantesBotones.MENOS);
+		btnMenos = new JButton(new ImageIcon(ConstantesBotones.MENOSICONO));
 		btnMenos.setBounds(666, 247, 38, 28);
 		add(btnMenos);
 
 		// --- Descripción (oculta por defecto) ---
-		// TODO: ver por que no se oculta
 		lblDescripcion = new JLabel("Descripción");
 		lblDescripcion.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblDescripcion.setBounds(550, 315, 100, 20);

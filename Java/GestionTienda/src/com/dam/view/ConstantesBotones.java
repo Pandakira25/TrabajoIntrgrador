@@ -13,8 +13,10 @@ public final class ConstantesBotones {
 	public static final String BUSCAR_EMPLEADO = "Buscar Empleado";
 	public static final String VER_MAS = "Ver más";
 	public static final String VER_MENOS = "Ver menos";
-	public static final String MAS = "+";
-	public static final String MENOS = "-";
+	public static final String MASICONO = "Iconos/icons8-más-30.png";
+	public static final String MAS = "mas";
+	public static final String MENOSICONO = "Iconos/icons8-subtract-30.png";
+	public static final String MENOS = "menos";
 	public static final String CARRITO = "Carrito";
 	public static final String REGISTRAR = "Registrar";
 	public static final String CANCELAR = "Cancelar";

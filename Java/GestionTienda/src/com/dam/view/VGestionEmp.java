@@ -214,7 +214,7 @@ public class VGestionEmp extends JPanel implements IPanels {
 		btnEliminarEmp.setEnabled(b);
 	}
 	
-	//TODO: corregir lo que retorna tiene que retornar un Empleado y validar datos
+	//TODO: validar datos
 	public Empleado obtenerDatosFormulario() {
 		String nombre = txtNombre.getText().trim();
 		String contra = new String(txtContrasenia.getPassword()).trim();

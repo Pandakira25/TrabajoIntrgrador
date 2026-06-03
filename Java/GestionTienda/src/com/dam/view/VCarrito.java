@@ -80,6 +80,8 @@ public class VCarrito extends JPanel implements IPanels {
 		dtmCarrito.addColumn("");
 		dtmCarrito.addColumn("");
 		//TODO: quisiera que tuviera la cantidad que vas agregando en tiempo real (preguntarle a pilar)
+		//Idea mía: podria poner en el mouse listener un contador y pasarlo a la tabla y que cuando se le de al mas
+		//o al menos se sume o reste y se recargue la tabla
 
 		tblCarrito.getColumnModel().getColumn(0).setPreferredWidth(470);
 		tblCarrito.getColumnModel().getColumn(1).setPreferredWidth(80);
@@ -97,7 +99,6 @@ public class VCarrito extends JPanel implements IPanels {
 			for(Producto prod : productos) {
 				row[0] = prod.getNombre();
 				row[1] = prod.getPrecio();
-				//TODO: preguntarle a pilar cómo hacerlo
 				row[2] = "+";
 				row[3] = "-";
 				row[4] = "Eliminar";
@@ -129,6 +130,8 @@ public class VCarrito extends JPanel implements IPanels {
 	public void setControlador(Ctrl c) {
 		btnPagar.addActionListener(c);
 		btnPagar.setActionCommand(ConstantesBotones.PAGAR);
+		
+		tblCarrito.addMouseListener(c);
 	}
 
 }

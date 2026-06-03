@@ -250,7 +250,7 @@ public class VGestionProd extends JPanel implements IPanels {
 	
 	public void setAgregarEnabled(boolean b) {btnAgregarProd.setEnabled(b);}
 
-	//TODO: corregir lo que retorna tiene que retornar un producto y validación de datos
+	//TODO: validación de datos
 	public Producto obtenerDatosFormulario() {
 		String nombre = txtNombre.getText().trim();
 		String categoria = txtCategoria.getText().trim();
@@ -319,5 +319,7 @@ public class VGestionProd extends JPanel implements IPanels {
 		
 		btnEliminarProd.addActionListener(c);
 		btnEliminarProd.setActionCommand(ConstantesBotones.ELIMINAR_PRODUCTO);
+		
+		tblProductos.addMouseListener(c);
 	}
 }
