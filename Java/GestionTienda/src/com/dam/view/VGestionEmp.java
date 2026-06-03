@@ -276,5 +276,8 @@ public class VGestionEmp extends JPanel implements IPanels {
 		
 		btnEliminarEmp.addActionListener(c);
 		btnEliminarEmp.setActionCommand(ConstantesBotones.ELIMINAR_PRODUCTO);
+		
+		btnBuscarNombre.addActionListener(c);
+		btnBuscarNombre.setActionCommand(ConstantesBotones.BUSCAR_EMPLEADO);
 	}
 }

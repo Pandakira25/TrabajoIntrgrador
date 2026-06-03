@@ -128,56 +128,84 @@ public class Ctrl implements ActionListener, MouseListener {
 				acVGP(ac);
 				break;
 			case VGestionStock.NAME:
-				acVGS(ac);
+				acVGSt(ac);
 				break;
 			case VTrans.NAME:
 				acVT(ac);
 				break;
 			case VCarrito.NAME:
-				acVC(ac);
+				acVCa(ac);
 				break;
 			case VShop.NAME:
-				acVS(ac);
+				acVSh(ac);
 				break;
 			}
 		}
 	}
 
-	private void acVS(String ac) {
+	private void acVSh(String ac) {
 		switch (ac) {
-
+		case ConstantesBotones.BUSCAR_PRODUCTO:
+			break;
+		case ConstantesBotones.VER_MAS:
+			break;
+		case ConstantesBotones.CARRITO:
+			vp.cargarPanel(vca);
+			break;
 		}
 	}
 
-	private void acVC(String ac) {
+	private void acVCa(String ac) {
 		switch (ac) {
-
+		case ConstantesBotones.PAGAR:
+			break;
 		}
 	}
 
 	private void acVT(String ac) {
 		switch (ac) {
-
+		
 		}
 	}
 
-	private void acVGS(String ac) {
+	private void acVGSt(String ac) {
 		switch (ac) {
-
+		case ConstantesBotones.BUSCAR_PRODUCTO:
+			break;
+		case ConstantesBotones.MAS:
+			break;
+		case ConstantesBotones.MENOS:
+			break;
+		case ConstantesBotones.VER_MAS:
+			break;
 		}
 	}
 
 	private void acVGP(String ac) {
 		switch (ac) {
-
+		case ConstantesBotones.ADD_PRODUCTO:
+			break;
+		case ConstantesBotones.MODIFICAR_PRODUCTO:
+			break;
+		case ConstantesBotones.LIMPIAR:
+			break;
+		case ConstantesBotones.BUSCAR_PRODUCTO:
+			break;
+		case ConstantesBotones.ELIMINAR_PRODUCTO:
+			break;
 		}
 	}
 
 	private void acVGE(String ac) {
 		switch (ac) {
 		case ConstantesBotones.BUSCAR_EMPLEADO:
-			ArrayList<Empleado> emp = usuarioDAO.selectAllEmpleados();
-			vgemp.cargarTabla(emp);
+			break;
+		case ConstantesBotones.REGISTRAR_EMPLEADO:
+			break;
+		case ConstantesBotones.LIMPIAR:
+			break;
+		case ConstantesBotones.ELIMINAR_EMPLEADO:
+			break;
 		}
 	}
 
@@ -256,11 +284,13 @@ public class Ctrl implements ActionListener, MouseListener {
 			//vp.crearMenuBase();
 			
 			//Prueba tabla
-			ArrayList<Producto> ps = new ArrayList<Producto>();
-			ps.add(new Producto("prueba", "", 2, 2, ""));
 			
-			vgprod.cargarTabla(ps);
+			//ArrayList<Producto> ps = new ArrayList<Producto>();
+			//ps.add(new Producto("prueba", "", 2, 2, ""));
 			
+			//vgprod.cargarTabla(ps);
+			ArrayList<Empleado> emp = usuarioDAO.selectAllEmpleados();
+			vgemp.cargarTabla(emp);
 			break;
 		case EMPLEADO:
 			vp.crearMenuBase();
@@ -271,10 +301,10 @@ public class Ctrl implements ActionListener, MouseListener {
 			vp.cargarPanel(vsh);
 			
 			//Prueba tabla
-			ps = new ArrayList<Producto>();
-			ps.add(new Producto("prueba", "", 2, 2, ""));
+			//ps = new ArrayList<Producto>();
+			//ps.add(new Producto("prueba", "", 2, 2, ""));
 			
-			vsh.cargarTabla(ps);
+			//vsh.cargarTabla(ps);
 			break;
 		default:
 			vp.quitarMenu();
@@ -292,6 +322,7 @@ public class Ctrl implements ActionListener, MouseListener {
 		vlf.getTxtUsuario().setText("");
 		vlf.getTxtContrasenia().setText("");
 		vp.cargarPanel(vlf);
+		vlf.getRootPane().setDefaultButton(vlf.getBtnEntrar());
 	}
 
 	public Usuario getUsuarioLogueado() {

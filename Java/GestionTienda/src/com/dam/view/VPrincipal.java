@@ -114,7 +114,7 @@ public class VPrincipal extends JFrame implements IFrames {
 	}
 
 	public void crearMenuBase() {
-
+		menuBar.setVisible(true);
 		menuBar.add(mntmCerrarSesion);
 	}
 
@@ -166,7 +166,10 @@ public class VPrincipal extends JFrame implements IFrames {
 	*/
 
 	public void quitarMenu() {
+		menuBar.removeAll();
 		menuBar.setVisible(false);
+		menuBar.revalidate();
+		menuBar.repaint();
 	}
 
 	@Override
