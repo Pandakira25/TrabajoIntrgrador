@@ -47,11 +47,11 @@ public class AccessDBProp {
 	public void ejecutarScript(String rutaScript) {
 	    try (Connection con = getConnection()) {
 	        String sql = new String(Files.readAllBytes(Paths.get(rutaScript)));
-	        // Dividir por ";" para ejecutar cada sentencia por separado
 	        String[] sentencias = sql.split(";");
 	        for (String sentencia : sentencias) {
 	            String s = sentencia.trim();
-	            if (!s.isEmpty()) {
+	            // ignorar líneas vacías y comentarios
+	            if (!s.isEmpty() && !s.startsWith("--")) {
 	                try (Statement stmt = con.createStatement()) {
 	                    stmt.execute(s);
 	                }

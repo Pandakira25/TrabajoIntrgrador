@@ -609,12 +609,18 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 					vsh.verDescripcion(vsh.getProductoEnFila(fila).getDescripcion());
 				}
 			} else if (src == vgstk.getTblProductos().getSelectionModel()) {
-				int fila = vgstk.getTblProductos().getSelectedRow();
-				if (fila != -1) {
-					vgstk.setVerMasEnabled(true);
-				} else {
-					vgstk.setVerMasEnabled(false);
-				}
+			    int fila = vgstk.getTblProductos().getSelectedRow();
+			    if (fila != -1) {
+			        vgstk.setVerMasEnabled(true);
+			        vgstk.setBtnMenosEnabled(true);
+			        if (vgstk.isDescripcionVisible()) {
+			            vgstk.verDescripcion(vgstk.getProductoEnFila(fila).getDescripcion());
+			        }
+			    } else {
+			        vgstk.setVerMasEnabled(false);
+			        vgstk.setBtnMenosEnabled(false);
+			        vgstk.hideDescripcion();
+			    }
 			}
 
 		}

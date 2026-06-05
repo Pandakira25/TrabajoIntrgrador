@@ -25,9 +25,9 @@ public class App {
 
 	public static void main(String[] args) {
 		AccessDBProp acc = new AccessDBProp();
-		File dbFile = new File("ruta/a/tu/base.db");
+		File dbFile = new File("DB/tiendaFnac.db");
 		if (!dbFile.exists()) {
-		    acc.ejecutarScript("ruta/a/init.sql");
+		    acc.ejecutarScript("DB/init.sql");
 		}
 		
 		EventQueue.invokeLater(new Runnable() {
