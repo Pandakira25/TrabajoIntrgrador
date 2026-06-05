@@ -102,11 +102,12 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 			case ConstantesBotones.GESTION_PRODUCTOS:
 				vp.cargarPanel(vgprod);
 				vgprod.cargarCategorias(productoDAO.selectCategorias());
-				// vgprod.cargarTabla(productoDAO.selectProductos(null, null, null,false));
+				if(productoDAO.selectProductos(null, null, null,false) != null) vgprod.cargarTabla(productoDAO.selectProductos(null, null, null,false));
+				vgprod.hideDescripcion();
 				break;
 			case ConstantesBotones.VER_TRANSACCIONES:
 				vp.cargarPanel(vtr);
-				vtr.cargarTabla(transaccionesDAO.selectTransacciones());
+				if(transaccionesDAO.selectTransacciones() != null) vtr.cargarTabla(transaccionesDAO.selectTransacciones());
 				break;
 			case ConstantesBotones.COMPRAR:
 				vp.cargarPanel(vsh);
@@ -184,12 +185,9 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 					JOptionPane.YES_NO_OPTION);
 			if (confirm == JOptionPane.YES_OPTION) {
 				Integer empleadoId = vca.getEmpleadoSeleccionado();
-				
+
 				for (Map.Entry<Producto, Integer> entry : vca.getCantidades().entrySet()) {
-				    productoDAO.decrementarStock(
-				        entry.getKey().getId(),
-				        entry.getValue()
-				    );
+					productoDAO.decrementarStock(entry.getKey().getId(), entry.getValue());
 				}
 				String resultado = transaccionesDAO.insertTransaccion(usuarioLogueado.getUserId(), carritoActivoId,
 						empleadoId);
@@ -204,14 +202,14 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 
 	private void acVT(String ac) {
 		switch (ac) {
-		
+
 		}
 	}
 
 	private void acVGSt(String ac) {
 		switch (ac) {
 		case ConstantesBotones.BUSCAR_PRODUCTO:
-			//System.out.println("xd");
+			// System.out.println("xd");
 			String[] consulta = vgstk.getConsulta();
 			System.out.println(consulta);
 			if (consulta == null) {
@@ -221,33 +219,33 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 			}
 			break;
 		case ConstantesBotones.MAS:
-		    int filaMas = vgstk.getTblProductos().getSelectedRow();
-		    if (filaMas != -1) {
-		        int cantidad = vgstk.getCantidad();
-		        Producto p = vgstk.getProductoEnFila(filaMas);
-		        productoDAO.incrementarStock(p.getId(), cantidad);
-		        vgstk.cargarTabla(productoDAO.selectProductos(null, null, null, false));
-		    }
-		    break;
+			int filaMas = vgstk.getTblProductos().getSelectedRow();
+			if (filaMas != -1) {
+				int cantidad = vgstk.getCantidad();
+				Producto p = vgstk.getProductoEnFila(filaMas);
+				productoDAO.incrementarStock(p.getId(), cantidad);
+				vgstk.cargarTabla(productoDAO.selectProductos(null, null, null, false));
+			}
+			break;
 		case ConstantesBotones.MENOS:
-		    int filaMenos = vgstk.getTblProductos().getSelectedRow();
-		    if (filaMenos != -1) {
-		        int cantidad = vgstk.getCantidad();
-		        Producto p = vgstk.getProductoEnFila(filaMenos);
-		        if (cantidad > p.getStock()) {
-		            JOptionPane.showMessageDialog(vgstk, 
-		                "No puedes restar más stock del disponible. Stock actual: " + p.getStock(), 
-		                "Stock insuficiente", JOptionPane.WARNING_MESSAGE);
-		        } else {
-		            productoDAO.decrementarStock(p.getId(), cantidad);
-		            vgstk.cargarTabla(productoDAO.selectProductos(null, null, null, false));
-		        }
-		    }
-		    break;
+			int filaMenos = vgstk.getTblProductos().getSelectedRow();
+			if (filaMenos != -1) {
+				int cantidad = vgstk.getCantidad();
+				Producto p = vgstk.getProductoEnFila(filaMenos);
+				if (cantidad > p.getStock()) {
+					JOptionPane.showMessageDialog(vgstk,
+							"No puedes restar más stock del disponible. Stock actual: " + p.getStock(),
+							"Stock insuficiente", JOptionPane.WARNING_MESSAGE);
+				} else {
+					productoDAO.decrementarStock(p.getId(), cantidad);
+					vgstk.cargarTabla(productoDAO.selectProductos(null, null, null, false));
+				}
+			}
+			break;
 		case ConstantesBotones.VER_MAS:
-			//System.out.println("noc");
+			// System.out.println("noc");
 			int fila = vgstk.getTblProductos().getSelectedRow();
-			
+
 			if (fila != -1) {
 				vgstk.verDescripcion(vgstk.getProductoEnFila(fila).getDescripcion());
 			}
@@ -283,7 +281,7 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 			vgprod.limpiarDatos();
 			break;
 		case ConstantesBotones.BUSCAR_PRODUCTO:
-			//System.out.println("xd");
+			// System.out.println("xd");
 			String[] consulta = vgprod.getConsulta();
 			if (consulta == null) {
 				vgprod.cargarTabla(productoDAO.selectProductos(null, null, null, false));
@@ -309,6 +307,15 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 				vgprod.cargarTabla(productoDAO.selectProductos(null, null, null, false));
 			}
 			break;
+		case ConstantesBotones.VER_MAS:
+			int fila = vgemp.getTblProductos().getSelectedRow();
+
+			if (fila != -1) {
+				vgprod.verDescripcion(vgstk.getProductoEnFila(fila).getDescripcion());
+			}
+			break;
+		case ConstantesBotones.VER_MENOS:
+			vgprod.hideDescripcion();
 		}
 	}
 
@@ -421,7 +428,7 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 			vp.menuAdmin();
 			vp.cargarPanel(vgemp);
 			ArrayList<Empleado> emp = usuarioDAO.selectEmpleados(null);
-			vgemp.cargarTabla(emp);
+			if(emp != null) vgemp.cargarTabla(emp);
 			break;
 		case EMPLEADO:
 			vp.crearMenuBase();
@@ -447,9 +454,10 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 	}
 
 	private void cerrarSesion() {
-		if(usuarioLogueado.getAutorizacion() == 3) {
-			int res = JOptionPane.showConfirmDialog(vp, "¿Seguro que desea cerrar sesion? su carrito será descartado","Confirmación",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE);
-			if(res == JOptionPane.YES_OPTION) {
+		if (usuarioLogueado.getAutorizacion() == 3) {
+			int res = JOptionPane.showConfirmDialog(vp, "¿Seguro que desea cerrar sesion? su carrito será descartado",
+					"Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+			if (res == JOptionPane.YES_OPTION) {
 				carritoActivoId = -1;
 				vca.limpiarCarrito();
 			}
@@ -476,28 +484,29 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 			if (fila != -1) {
 				switch (columna) {
 				case 3: // +
-				    if (!vca.sumarCantidad(fila)) {
-				        JOptionPane.showMessageDialog(vca, "No hay más stock disponible.", "Stock agotado", JOptionPane.WARNING_MESSAGE);
-				    } else {
-				        Producto p = vca.getProductoEnFila(fila);
-				        carritoProductoDAO.upsertProducto(carritoActivoId, p.getId(), vca.getCantidadEnFila(fila));
-				    }
-				    break;
+					if (!vca.sumarCantidad(fila)) {
+						JOptionPane.showMessageDialog(vca, "No hay más stock disponible.", "Stock agotado",
+								JOptionPane.WARNING_MESSAGE);
+					} else {
+						Producto p = vca.getProductoEnFila(fila);
+						carritoProductoDAO.upsertProducto(carritoActivoId, p.getId(), vca.getCantidadEnFila(fila));
+					}
+					break;
 				case 4: // -
-				    Producto p = vca.getProductoEnFila(fila);
-				    vca.restarCantidad(fila);
-				    int nuevaCant = vca.getCantidadEnFila(fila);
-				    if (nuevaCant == 0) {
-				        carritoProductoDAO.eliminarProducto(carritoActivoId, p.getId());
-				    } else {
-				        carritoProductoDAO.upsertProducto(carritoActivoId, p.getId(), nuevaCant);
-				    }
-				    break;
+					Producto p = vca.getProductoEnFila(fila);
+					vca.restarCantidad(fila);
+					int nuevaCant = vca.getCantidadEnFila(fila);
+					if (nuevaCant == 0) {
+						carritoProductoDAO.eliminarProducto(carritoActivoId, p.getId());
+					} else {
+						carritoProductoDAO.upsertProducto(carritoActivoId, p.getId(), nuevaCant);
+					}
+					break;
 				case 5: // Eliminar
-				    Producto pe = vca.getProductoEnFila(fila);
-				    carritoProductoDAO.eliminarProducto(carritoActivoId, pe.getId());
-				    vca.eliminarProducto(fila);
-				    break;
+					Producto pe = vca.getProductoEnFila(fila);
+					carritoProductoDAO.eliminarProducto(carritoActivoId, pe.getId());
+					vca.eliminarProducto(fila);
+					break;
 				}
 			}
 		} else if (src == vsh.getTblProductos()) {
@@ -581,6 +590,8 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 					vgprod.setHabilitarEnabled(!activo);
 					vgprod.setModificarEnabled(true);
 					vgprod.cargarProductoEnForm(); // carga datos en formulario
+					vgprod.verDescripcion(vgprod.getProductoEnFila(fila).getDescripcion());
+					vgprod.setVerMasEnabled(true);
 				} else {
 					vgprod.setEliminarEnabled(false);
 					vgprod.setHabilitarEnabled(false);
@@ -593,14 +604,14 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 					vsh.verDescripcion(vsh.getProductoEnFila(fila).getDescripcion());
 				}
 			} else if (src == vgstk.getTblProductos().getSelectionModel()) {
-			    int fila = vgstk.getTblProductos().getSelectedRow();
-			    if (fila != -1) {
-			        vgstk.setVerMasEnabled(true);
-			    } else {
-			        vgstk.setVerMasEnabled(false);
-			    }
+				int fila = vgstk.getTblProductos().getSelectedRow();
+				if (fila != -1) {
+					vgstk.setVerMasEnabled(true);
+				} else {
+					vgstk.setVerMasEnabled(false);
+				}
 			}
-			
+
 		}
 	}
 

@@ -329,4 +329,8 @@ public class VGestionEmp extends JPanel implements IPanels {
 		
 		tblEmpleados.getSelectionModel().addListSelectionListener(c);
 	}
+
+	public JTable getTblProductos() {
+		return tblEmpleados;
+	}
 }
