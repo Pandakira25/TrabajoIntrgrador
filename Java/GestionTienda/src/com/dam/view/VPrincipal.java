@@ -84,6 +84,8 @@ public class VPrincipal extends JFrame implements IFrames {
 		
 		mntmGestionProd = new JMenuItem(ConstantesBotones.GESTION_PRODUCTOS);
 		
+		mntmGestionStock = new JMenuItem(ConstantesBotones.GESTION_STOCK);
+		
 		mntmTransacciones = new JMenuItem(ConstantesBotones.VER_TRANSACCIONES);
 		
 		mntmShop = new JMenuItem(ConstantesBotones.COMPRAR);
@@ -128,6 +130,7 @@ public class VPrincipal extends JFrame implements IFrames {
 		menuBar.add(mnProductos, 1);
 		
 		mnProductos.add(mntmGestionProd);
+		mnProductos.add(mntmGestionStock);
 
 		menuBar.add(mnTransacciones, 2);
 		
@@ -144,26 +147,6 @@ public class VPrincipal extends JFrame implements IFrames {
 		
 		mnTienda.add(mntmCarrito);
 	}
-
-	//Corregirlo para que esté en el controlador
-	/*
-	public void autorizacionesMenu(int autorizacion) {
-		switch (autorizacion) {
-		case ADMIN:
-			menuAdmin();
-			break;
-		case EMPLEADO:
-			crearMenuBase();
-			break;
-		case COMPRADOR:
-			menuComprador();
-			break;
-		default:
-			quitarMenu();
-			break;
-		}
-	}
-	*/
 
 	public void quitarMenu() {
 		menuBar.removeAll();
@@ -196,6 +179,9 @@ public class VPrincipal extends JFrame implements IFrames {
 		
 		mntmTransacciones.addActionListener(c);
 		mntmTransacciones.setActionCommand(ConstantesBotones.VER_TRANSACCIONES);
+		
+		mntmGestionStock.addActionListener(c);
+		mntmGestionStock.setActionCommand(ConstantesBotones.GESTION_STOCK);
 		
 		mntmShop.addActionListener(c);
 		mntmShop.setActionCommand(ConstantesBotones.COMPRAR);

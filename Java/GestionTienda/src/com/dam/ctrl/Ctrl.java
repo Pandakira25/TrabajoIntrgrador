@@ -105,6 +105,11 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 				if(productoDAO.selectProductos(null, null, null,false) != null) vgprod.cargarTabla(productoDAO.selectProductos(null, null, null,false));
 				vgprod.hideDescripcion();
 				break;
+			case ConstantesBotones.GESTION_STOCK:
+				vp.cargarPanel(vgstk);
+				if(productoDAO.selectProductos(null, null, null, true) != null) vgstk.cargarTabla(productoDAO.selectProductos(null, null, null, false));
+				vgstk.cargarCategorias(productoDAO.selectCategorias());
+				break;
 			case ConstantesBotones.VER_TRANSACCIONES:
 				vp.cargarPanel(vtr);
 				if(transaccionesDAO.selectTransacciones() != null) vtr.cargarTabla(transaccionesDAO.selectTransacciones());
@@ -433,7 +438,7 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		case EMPLEADO:
 			vp.crearMenuBase();
 			vp.cargarPanel(vgstk);
-			vgstk.cargarTabla(productoDAO.selectProductos(null, null, null, false));
+			if(productoDAO.selectProductos(null, null, null, true) != null) vgstk.cargarTabla(productoDAO.selectProductos(null, null, null, false));
 			vgstk.cargarCategorias(productoDAO.selectCategorias());
 			break;
 		case COMPRADOR:
