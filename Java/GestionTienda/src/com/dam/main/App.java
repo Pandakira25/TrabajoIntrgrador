@@ -1,8 +1,10 @@
 package com.dam.main;
 
 import java.awt.EventQueue;
+import java.io.File;
 
 import com.dam.ctrl.Ctrl;
+import com.dam.model.acessbd.AccessDBProp;
 import com.dam.model.acessbd.TableCarritoDAO;
 import com.dam.model.acessbd.TableCarritoProductoDAO;
 import com.dam.model.acessbd.TableCompradorDAO;
@@ -22,6 +24,12 @@ import com.dam.view.VloginForm;
 public class App {
 
 	public static void main(String[] args) {
+		AccessDBProp acc = new AccessDBProp();
+		File dbFile = new File("ruta/a/tu/base.db");
+		if (!dbFile.exists()) {
+		    acc.ejecutarScript("ruta/a/init.sql");
+		}
+		
 		EventQueue.invokeLater(new Runnable() {
 			
 			@Override

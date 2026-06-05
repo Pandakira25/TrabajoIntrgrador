@@ -4,9 +4,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 public class AccessDBProp {
@@ -39,5 +42,25 @@ public class AccessDBProp {
 		Connection con = DriverManager.getConnection(url);
 		
 		return con;
+	}
+	
+	public void ejecutarScript(String rutaScript) {
+	    try (Connection con = getConnection()) {
+	        String sql = new String(Files.readAllBytes(Paths.get(rutaScript)));
+	        // Dividir por ";" para ejecutar cada sentencia por separado
+	        String[] sentencias = sql.split(";");
+	        for (String sentencia : sentencias) {
+	            String s = sentencia.trim();
+	            if (!s.isEmpty()) {
+	                try (Statement stmt = con.createStatement()) {
+	                    stmt.execute(s);
+	                }
+	            }
+	        }
+	        System.out.println("Script ejecutado correctamente");
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("Error al ejecutar el script");
+	    }
 	}
 }
