@@ -2,6 +2,7 @@ package com.dam.view;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -28,6 +29,8 @@ public class VGestionEmp extends JPanel implements IPanels {
 
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
 	private static final int ALTO = VPrincipal.ALTO - VPrincipal.insetsT - VPrincipal.insetsB - VPrincipal.menuH;
+	
+	private ArrayList<Empleado> empleadosCargados = new ArrayList<>();
 
 	private JTextField txtNombre;
 	private JMenuBar mnBarraMenu;
@@ -127,10 +130,22 @@ public class VGestionEmp extends JPanel implements IPanels {
 		scrpEmpleados.setBounds(35, 316, 710, 215);
 		add(scrpEmpleados);
 
-		tblEmpleados = new JTable();
+		tblEmpleados = new JTable(){
+		    @Override
+		    public String getToolTipText(MouseEvent e) {
+		        int fila = rowAtPoint(e.getPoint());
+		        if (fila != -1 && empleadosCargados != null && fila < empleadosCargados.size()) {
+		            int autorizacion = empleadosCargados.get(fila).getAutorizacion();
+		            return autorizacion == Ctrl.ADMIN ? "Administrador" : "Empleado";
+		        }
+		        return null;
+		    }
+		};
 		tblEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrpEmpleados.setViewportView(tblEmpleados);
 		configurarTabla();
+		
+		
 
 		btnEliminarEmp = new JButton(ConstantesBotones.ELIMINAR_EMPLEADO);
 		btnEliminarEmp.setBounds(535, 543, 175, 30);
@@ -138,16 +153,16 @@ public class VGestionEmp extends JPanel implements IPanels {
 		add(btnEliminarEmp);
 		
 		JLabel lblBuscarNombre = new JLabel("Nombre:");
-		lblBuscarNombre.setBounds(35, 269, 44, 12);
+		lblBuscarNombre.setBounds(35, 269, 60, 12);
 		add(lblBuscarNombre);
 		
 		txtBuscarNombre = new JTextField();
-		txtBuscarNombre.setBounds(89, 263, 118, 18);
+		txtBuscarNombre.setBounds(103, 267, 118, 18);
 		add(txtBuscarNombre);
 		txtBuscarNombre.setColumns(10);
 		
 		btnBuscarNombre = new JButton(ConstantesBotones.BUSCAR_EMPLEADO);
-		btnBuscarNombre.setBounds(227, 261, 118, 20);
+		btnBuscarNombre.setBounds(229, 263, 143, 20);
 		add(btnBuscarNombre);
 		
 		lblAutorizacion = new JLabel("Autorización:");
@@ -188,6 +203,7 @@ public class VGestionEmp extends JPanel implements IPanels {
 	public void cargarTabla(ArrayList<Empleado> empleados) {
 		tblEmpleados.clearSelection();
 		dtmEmpleados.getDataVector().clear();
+		empleadosCargados = empleados; 
 		
 		if(empleados.size() != 0) {
 			clearTable();
@@ -233,23 +249,36 @@ public class VGestionEmp extends JPanel implements IPanels {
 					JOptionPane.ERROR_MESSAGE);
 			valid = false;
 		}
-		if (contra.isEmpty()) {
+		else if (contra.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.", "Error de datos",
 					JOptionPane.ERROR_MESSAGE);
 			valid = false;
 		}
-		if (telStr.isEmpty()) {
+		else if (telStr.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "El teléfono es obligatorio.", "Error de datos",
 					JOptionPane.ERROR_MESSAGE);
 			valid = false;
 		}
-		try {
-			Integer.parseInt(telStr);
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "El teléfono debe ser un número.", "Error de datos",
+		else if(nSeguridad.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "El número de seguridad social es obligatorio.", "Error de datos",
 					JOptionPane.ERROR_MESSAGE);
 			valid = false;
 		}
+		else if(iban.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "El IBAN es obligatorio.", "Error de datos",
+					JOptionPane.ERROR_MESSAGE);
+			valid = false;
+		}
+		else if(!telStr.isEmpty()) {
+			try {
+				Integer.parseInt(telStr);
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(this, "El teléfono debe ser un número.", "Error de datos",
+						JOptionPane.ERROR_MESSAGE);
+				valid = false;
+			}
+		}
+		
 
 		if(valid) {
 			return new Empleado(autorizacion,nombre,contra,Integer.parseInt(telStr), true, nSeguridad, iban);
@@ -265,7 +294,24 @@ public class VGestionEmp extends JPanel implements IPanels {
 		txtNSeguridad.setText("");
 		txtIban.setText("");
 	}
-
+	
+	public String getConsulta() {
+		return txtBuscarNombre.getText();
+	}
+	
+	public JTable getTblEmpleados() {
+		return tblEmpleados;
+	}
+	
+	public ListSelectionModel getSelectionModel() {
+		return tblEmpleados.getSelectionModel();
+	}
+	
+	// En VGestionEmp
+	public String getNombreSeleccionado() {
+	    return (String) tblEmpleados.getValueAt(tblEmpleados.getSelectedRow(), 0);
+	}
+	
 	@Override
 	public void setControlador(Ctrl c) {
 		btnRegistrarEmp.addActionListener(c);
@@ -275,9 +321,11 @@ public class VGestionEmp extends JPanel implements IPanels {
 		btnLimpiar.setActionCommand(ConstantesBotones.LIMPIAR);
 		
 		btnEliminarEmp.addActionListener(c);
-		btnEliminarEmp.setActionCommand(ConstantesBotones.ELIMINAR_PRODUCTO);
+		btnEliminarEmp.setActionCommand(ConstantesBotones.ELIMINAR_EMPLEADO);
 		
 		btnBuscarNombre.addActionListener(c);
 		btnBuscarNombre.setActionCommand(ConstantesBotones.BUSCAR_EMPLEADO);
+		
+		tblEmpleados.getSelectionModel().addListSelectionListener(c);
 	}
 }

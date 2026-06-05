@@ -178,6 +178,9 @@ public class VGestionStock extends JPanel implements IPanels {
 
 	// corregir el cargar tabla: hecho
 	public void cargarTabla(ArrayList<Producto> productos) {
+		tblProductos.clearSelection();
+		dtmProductos.getDataVector().clear();
+		
 		if (productos.size() != 0) {
 			clearTable();
 			Object[] row = new Object[3];

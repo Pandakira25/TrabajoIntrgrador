@@ -86,6 +86,9 @@ public class VTrans extends JPanel implements IPanels {
 	 * }
 	 * */
 	public void cargarTabla(String infoTransaccion [][]) {
+		tblTransacciones.clearSelection();
+		dtmTransacciones.getDataVector().clear();
+		
 		if(infoTransaccion.length != 0) {
 			clearTable();
 			Object[] row = new Object[3];

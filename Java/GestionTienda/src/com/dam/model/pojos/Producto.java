@@ -8,6 +8,7 @@ public class Producto {
 	private double precio;
 	private String descripcion;
 	private int stock;
+	private boolean activo;
 
 	public Producto(int id, String nombre, String categoria, double precio, String descripcion, int stock) {
 		this.productoId = id;
@@ -46,5 +47,9 @@ public class Producto {
 	}
 	public int getStock() {
 		return stock;
+	}
+	
+	public boolean isActivo() {
+		return activo;
 	}
 }

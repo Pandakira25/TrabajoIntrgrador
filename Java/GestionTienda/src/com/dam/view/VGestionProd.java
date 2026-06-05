@@ -39,9 +39,9 @@ public class VGestionProd extends JPanel implements IPanels {
 	private DefaultTableModel dtmProductos;
 	private JScrollPane scrpProductos;
 	private JButton btnEliminarProd;
-	private JTextField textField;
-	private JComboBox<String> cmbPrecio;
-	private JComboBox<String> cmbCategoria;
+	private JTextField txtNombreBuscar;
+	private JComboBox<String> cmbPrecioBuscar;
+	private JComboBox<String> cmbCategoriaBuscar;
 	private DefaultComboBoxModel<String> dcbmCategoria;
 	private JButton btnBuscar;
 
@@ -136,9 +136,9 @@ public class VGestionProd extends JPanel implements IPanels {
 		btnEliminarProd.setEnabled(false);
 		add(btnEliminarProd);
 		
-		textField = new JTextField();
-		textField.setBounds(98, 228, 155, 26);
-		add(textField);
+		txtNombreBuscar = new JTextField();
+		txtNombreBuscar.setBounds(98, 228, 155, 26);
+		add(txtNombreBuscar);
 		
 		JLabel lblNombre_1 = new JLabel("Nombre:");
 		lblNombre_1.setBounds(35, 231, 60, 20);
@@ -148,9 +148,9 @@ public class VGestionProd extends JPanel implements IPanels {
 		lblPrecio_1.setBounds(268, 231, 48, 20);
 		add(lblPrecio_1);
 		
-		cmbPrecio = new JComboBox<>(new String[] { "Todos", "< 10 €", "10 - 50 €", "> 50 €" });
-		cmbPrecio.setBounds(313, 227, 115, 26);
-		add(cmbPrecio);
+		cmbPrecioBuscar = new JComboBox<>(new String[] { "Todos", "< 10 €", "10 - 50 €", "> 50 €" });
+		cmbPrecioBuscar.setBounds(313, 227, 115, 26);
+		add(cmbPrecioBuscar);
 		
 		JLabel lblCategoria_1 = new JLabel("Categoría:");
 		lblCategoria_1.setBounds(450, 231, 68, 20);
@@ -158,9 +158,9 @@ public class VGestionProd extends JPanel implements IPanels {
 		
 		dcbmCategoria = new DefaultComboBoxModel<>();
 		dcbmCategoria.addElement("Todas");
-		cmbCategoria = new JComboBox<>(dcbmCategoria);
-		cmbCategoria.setBounds(515, 227, 110, 26);
-		add(cmbCategoria);
+		cmbCategoriaBuscar = new JComboBox<>(dcbmCategoria);
+		cmbCategoriaBuscar.setBounds(515, 227, 110, 26);
+		add(cmbCategoriaBuscar);
 		
 		btnBuscar = new JButton(ConstantesBotones.BUSCAR_PRODUCTO);
 		btnBuscar.setBounds(35, 267, 115, 26);
@@ -203,6 +203,9 @@ public class VGestionProd extends JPanel implements IPanels {
 	
 	
 	public void cargarTabla(ArrayList<Producto> productos) {
+		tblProductos.clearSelection();
+		dtmProductos.getDataVector().clear();
+		
 		if (productos.size() != 0) {
 			clearTable();
 			Object[] row = new Object[5];
@@ -305,6 +308,25 @@ public class VGestionProd extends JPanel implements IPanels {
 		btnModificarProd.setEnabled(false);
 		btnEliminarProd.setEnabled(false);
 	}
+	
+	public String[] getConsulta() {
+	    String nombre = txtNombreBuscar.getText().trim();
+	    String precio = (String) cmbPrecioBuscar.getSelectedItem();
+	    String categoria = (String) cmbCategoriaBuscar.getSelectedItem();
+
+	    // Si no hay ningún filtro activo devuelve null
+	    if (nombre.isEmpty() && precio.equals("Todos") && categoria.equals("Todas")) {
+	        return null;
+	    }
+
+	    return new String[] {
+	        nombre.isEmpty() ? null : nombre,
+	        precio.equals("Todos") ? null : precio,
+	        categoria.equals("Todas") ? null : categoria
+	    };
+	}
+	
+	
 
 	@Override
 	public void setControlador(Ctrl c) {
@@ -320,6 +342,18 @@ public class VGestionProd extends JPanel implements IPanels {
 		btnEliminarProd.addActionListener(c);
 		btnEliminarProd.setActionCommand(ConstantesBotones.ELIMINAR_PRODUCTO);
 		
+		btnBuscar.addActionListener(c);
+		btnBuscar.setActionCommand(ConstantesBotones.BUSCAR_PRODUCTO);
+		
 		tblProductos.addMouseListener(c);
+		tblProductos.getSelectionModel().addListSelectionListener(c);
+	}
+
+	public Object getSelectedModel() {
+		return tblProductos.getSelectionModel();
+	}
+	
+	public JTable getTblProductos() {
+	    return tblProductos;
 	}
 }
