@@ -13,7 +13,7 @@ public class TableUsuarioDAO {
 
 	private static final String COL_USUARIO_ID = "usuario_id";
 	private static final String COL_AUTORIZACION = "autorizacion";
-	private static final String COL_USUARIO = "usuario";
+	private static final String COL_USUARIO = "nombre";
 	private static final String COL_CONTRASENIA = "contrasenia";
 	private static final String COL_ACTIVO = "activo";
 	private static final String COL_TEL = "tel";

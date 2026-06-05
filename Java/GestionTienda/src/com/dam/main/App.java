@@ -6,10 +6,12 @@ import com.dam.model.acessbd.TableCompradorDAO;
 import com.dam.model.acessbd.TableEmpleadoDAO;
 import com.dam.model.acessbd.TableProductoDAO;
 import com.dam.model.acessbd.TableTransaccionesDAO;
+import com.dam.ctrl.Ctrl;
 
 public class App {
 
 	public static void main(String[] args) {
+		Ctrl ctrl = new Ctrl();
 		TableCarritoDAO tca = new TableCarritoDAO();
 		TableCarritoProductoDAO tcap = new TableCarritoProductoDAO();
 		TableCompradorDAO tco = new TableCompradorDAO();

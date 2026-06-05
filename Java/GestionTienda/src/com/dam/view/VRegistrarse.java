@@ -14,7 +14,7 @@ import com.dam.ctrl.Ctrl;
 public class VRegistrarse extends JPanel implements IPanels {
 
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
-	private static final int ALTO  = VPrincipal.ALTO  - VPrincipal.insetsT - VPrincipal.insetsB;
+	private static final int ALTO = VPrincipal.ALTO - VPrincipal.insetsT - VPrincipal.insetsB;
 
 	private JTextField txtNombre;
 	private JPasswordField txtContrasenia;
@@ -107,38 +107,41 @@ public class VRegistrarse extends JPanel implements IPanels {
 	}
 
 	public String[] obtenerDatos() {
-		String nombre    = txtNombre.getText().trim();
-		String contra    = new String(txtContrasenia.getPassword()).trim();
-		String telStr    = txtTel.getText().trim();
-		String direccion = txtDireccion.getText().trim();
-		String nTarjeta  = txtNTarjeta.getText().trim();
-
-		if (nombre.isEmpty()) {
+		if (txtNombre.getText().trim().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "El nombre es obligatorio.",
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		if (contra.isEmpty()) {
+		if (new String(txtContrasenia.getPassword()).trim().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.",
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		if (telStr.isEmpty()) {
+		if (txtTel.getText().trim().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "El teléfono es obligatorio.",
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		try {
-			Integer.parseInt(telStr);
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "El teléfono debe ser un número.",
+		if (txtDireccion.getText().trim().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "La dirección es obligatoria.",
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-
-		return new String[] { nombre, contra, telStr, direccion, nTarjeta };
+		if (txtNTarjeta.getText().trim().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "El número de tarjeta es obligatorio.",
+					"Error de datos", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		if (!txtNTarjeta.getText().trim().matches("\\d{16}")) {
+			JOptionPane.showMessageDialog(this, "El número de tarjeta debe tener 16 dígitos.",
+					"Error de datos", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		return new String[] { txtNombre.getText().trim(), new String(txtContrasenia.getPassword()).trim(),
+				txtTel.getText().trim(), txtDireccion.getText().trim(), txtNTarjeta.getText().trim() };
 	}
 
 	public JButton getBtnRegistrar() { return btnRegistrar; }
+
 	public JButton getBtnCancelar()  { return btnCancelar; }
 }

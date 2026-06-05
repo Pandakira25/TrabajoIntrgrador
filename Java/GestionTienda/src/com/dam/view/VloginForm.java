@@ -89,7 +89,7 @@ public class VloginForm extends JFrame implements IFrames {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setSize(400, 250);
 		setLocationRelativeTo(null);
-		setResizable(false);
+		setResizable(true);
 	}
 
 	private void crearMenuBase() {
