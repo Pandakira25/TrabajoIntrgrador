@@ -10,8 +10,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.dam.ctrl.Ctrl;
+import com.dam.model.pojos.Comprador;
 
 public class VRegistrarse extends JPanel implements IPanels {
+	public static final String NAME = "VRegistrarse";
 
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
 	private static final int ALTO = VPrincipal.ALTO - VPrincipal.insetsT - VPrincipal.insetsB;
@@ -32,6 +34,7 @@ public class VRegistrarse extends JPanel implements IPanels {
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
+		setName(NAME);
 	}
 
 	@Override
@@ -83,7 +86,7 @@ public class VRegistrarse extends JPanel implements IPanels {
 		txtNTarjeta.setBounds(165, 222, 250, 26);
 		add(txtNTarjeta);
 
-		btnRegistrar = new JButton(ConstantesBotones.REGISTRAR);
+		btnRegistrar = new JButton(ConstantesBotones.REGISTRARSE);
 		btnRegistrar.setBounds(185, 285, 130, 30);
 		add(btnRegistrar);
 
@@ -103,45 +106,55 @@ public class VRegistrarse extends JPanel implements IPanels {
 	@Override
 	public void setControlador(Ctrl c) {
 		btnRegistrar.addActionListener(c);
+		btnRegistrar.setActionCommand(ConstantesBotones.REGISTRARSE);
+
 		btnCancelar.addActionListener(c);
+		btnCancelar.setActionCommand(ConstantesBotones.CANCELAR);
 	}
 
-	public String[] obtenerDatos() {
-		if (txtNombre.getText().trim().isEmpty()) {
+	public Comprador obtenerDatos() {
+		String nombre    = txtNombre.getText().trim();
+		String contra    = new String(txtContrasenia.getPassword()).trim();
+		String telStr    = txtTel.getText().trim();
+		String direccion = txtDireccion.getText().trim();
+		String nTarjeta  = txtNTarjeta.getText().trim();
+
+		boolean valid = true;
+
+		if (nombre.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "El nombre es obligatorio.",
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-		if (new String(txtContrasenia.getPassword()).trim().isEmpty()) {
+			valid = false;
+		} else if (contra.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.",
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-		if (txtTel.getText().trim().isEmpty()) {
+			valid = false;
+		} else if (telStr.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "El teléfono es obligatorio.",
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-		if (txtDireccion.getText().trim().isEmpty()) {
+			valid = false;
+		} else if (direccion.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "La dirección es obligatoria.",
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-		if (txtNTarjeta.getText().trim().isEmpty()) {
-			JOptionPane.showMessageDialog(this, "El número de tarjeta es obligatorio.",
+			valid = false;
+		} else if (nTarjeta.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Debe ingresar una tarjeta.",
 					"Error de datos", JOptionPane.ERROR_MESSAGE);
+			valid = false;
+		} else {
+			try {
+				Integer.parseInt(telStr);
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(this, "El teléfono debe ser un número.",
+						"Error de datos", JOptionPane.ERROR_MESSAGE);
+				valid = false;
+			}
+		}
+
+		if (valid) {
+			return new Comprador(nombre, contra, Integer.parseInt(telStr), direccion, nTarjeta);
+		} else {
 			return null;
 		}
-		if (!txtNTarjeta.getText().trim().matches("\\d{16}")) {
-			JOptionPane.showMessageDialog(this, "El número de tarjeta debe tener 16 dígitos.",
-					"Error de datos", JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-		return new String[] { txtNombre.getText().trim(), new String(txtContrasenia.getPassword()).trim(),
-				txtTel.getText().trim(), txtDireccion.getText().trim(), txtNTarjeta.getText().trim() };
 	}
-
-	public JButton getBtnRegistrar() { return btnRegistrar; }
-
-	public JButton getBtnCancelar()  { return btnCancelar; }
 }

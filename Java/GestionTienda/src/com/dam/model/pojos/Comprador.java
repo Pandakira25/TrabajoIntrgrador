@@ -14,6 +14,13 @@ public class Comprador extends Usuario{
 		carrito = new Carrito();
 	}
 	
+	public Comprador(String nombre, String contrasenia, int tel, String direccion, String nTarjeta) {
+		super(3, nombre, contrasenia, tel, true);
+		this.direccion = direccion;
+		this.nTarjeta = nTarjeta;
+		carrito = new Carrito();
+	}
+
 	@Override
 	public String toString() {
 		return "Comprador [direccion=" + direccion + ", nTarjeta=" + nTarjeta + ", toString()=" + super.toString() + "]";
@@ -22,4 +29,14 @@ public class Comprador extends Usuario{
 	public Carrito getCarrito() {
 		return carrito;
 	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public String getnTarjeta() {
+		return nTarjeta;
+	}
+	
+	
 }

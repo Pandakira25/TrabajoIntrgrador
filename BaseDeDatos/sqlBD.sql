@@ -40,7 +40,8 @@ CREATE TABLE producto(
 	categoria TEXT NOT NULL,
 	precio REAL NOT NULL,
 	descripcion TEXT,
-	stock INTEGER NOT NULL DEFAULT 0
+	stock INTEGER NOT NULL DEFAULT 0,
+	activo INTEGER NOT NULL DEFAULT 1 CHECK (activo IN (0, 1))
 );
 
 

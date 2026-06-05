@@ -2,29 +2,21 @@ package com.dam.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Toolkit;
-import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 import com.dam.ctrl.Ctrl;
 
 public class VPrincipal extends JFrame implements IFrames {
-
-	public static final int ALTO = 600;
-	public static final int ANCHO = 800;
+	public static final int ANCHO = 1440;
+	public static final int ALTO = 1024;
 
 	public static int insetsR;
 	public static int insetsL;
@@ -32,11 +24,9 @@ public class VPrincipal extends JFrame implements IFrames {
 	public static int insetsB;
 	public static int menuH;
 
-	private JPanel pnlLogin;
-	private JTextField txtUsuario;
-	private JPasswordField txtContrasenia;
-	private JButton btnIniciarSesion;
-	private JButton btnRegistrarse;
+	public static final int ADMIN = 1;
+	public static final int EMPLEADO = 2;
+	public static final int COMPRADOR = 3;
 
 	private JMenuBar menuBar;
 	private JMenuItem mntmShop;
@@ -46,156 +36,145 @@ public class VPrincipal extends JFrame implements IFrames {
 	private JMenuItem mntmGestionStock;
 	private JMenuItem mntmTransacciones;
 	private JMenuItem mntmCerrarSesion;
+	private JScrollPane scrlCont;
 
-	private JScrollPane scrpContenedor;
+	private JMenu mnTienda;
+
+	private JMenu mnEmpleados;
+
+	private JMenu mnProductos;
+
+	private JMenu mnTransacciones;
 
 	public VPrincipal() {
-		super("* * T I E N D A  O N L I N E * *");
 		configurarVentana();
-		mostrarLogin();
+		crearMenu();
+		crearComponentes();
 	}
 
-	public void configurarVentana() {
-		setSize(ANCHO, ALTO);
-		insetsR = getInsets().right;
-		insetsL = getInsets().left;
-		insetsT = getInsets().top;
-		insetsB = getInsets().bottom;
-
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		getContentPane().setLayout(new BorderLayout(0, 0));
-
-		scrpContenedor = new JScrollPane();
-		getContentPane().add(scrpContenedor, BorderLayout.CENTER);
-
-		centrarVentana();
-	}
-
-	private void centrarVentana() {
-		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-		setLocation((pantalla.width - ANCHO) / 2, (pantalla.height - ALTO) / 2);
-	}
-
-	public void mostrarLogin() {
-		if (menuBar != null) {
-			setJMenuBar(null);
-			menuBar = null;
-			menuH = 0;
-			mntmShop = null;
-			mntmCarrito = null;
-			mntmGestionEmp = null;
-			mntmGestionProd = null;
-			mntmGestionStock = null;
-			mntmTransacciones = null;
-			mntmCerrarSesion = null;
-		}
-		crearPanelLogin();
-		scrpContenedor.setViewportView(pnlLogin);
-		revalidate();
-		repaint();
-	}
-
-	private void crearPanelLogin() {
-		pnlLogin = new JPanel(null);
-		pnlLogin.setPreferredSize(new Dimension(ANCHO, ALTO));
-
-		JLabel lblTitulo = new JLabel("Iniciar Sesión");
-		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 22));
-		lblTitulo.setBounds(275, 120, 260, 30);
-		pnlLogin.add(lblTitulo);
-
-		JLabel lblUsuario = new JLabel("Usuario:");
-		lblUsuario.setBounds(215, 195, 100, 25);
-		pnlLogin.add(lblUsuario);
-
-		txtUsuario = new JTextField();
-		txtUsuario.setBounds(330, 192, 220, 26);
-		pnlLogin.add(txtUsuario);
-
-		JLabel lblContrasenia = new JLabel("Contraseña:");
-		lblContrasenia.setBounds(215, 238, 100, 25);
-		pnlLogin.add(lblContrasenia);
-
-		txtContrasenia = new JPasswordField();
-		txtContrasenia.setBounds(330, 235, 220, 26);
-		pnlLogin.add(txtContrasenia);
-
-		btnIniciarSesion = new JButton(ConstantesBotones.INICIAR_SESION);
-		btnIniciarSesion.setBounds(255, 295, 155, 30);
-		pnlLogin.add(btnIniciarSesion);
-
-		btnRegistrarse = new JButton(ConstantesBotones.REGISTRARSE);
-		btnRegistrarse.setBounds(430, 295, 130, 30);
-		pnlLogin.add(btnRegistrarse);
-
-		JLabel lblInfo = new JLabel("¿No tienes cuenta?");
-		lblInfo.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		lblInfo.setBounds(433, 330, 150, 20);
-		pnlLogin.add(lblInfo);
-	}
-	
 	@Override
 	public void crearComponentes() {
-		// TODO Auto-generated method stub
+		scrlCont = new JScrollPane();
+		getContentPane().add(scrlCont, BorderLayout.CENTER);
+		
+		
 		
 	}
 
-	private void crearMenuBase() {
+	private void crearMenu() {
+		
+		
+		//--------------------------------------------------
 		menuBar = new JMenuBar();
-		menuH = menuBar.getPreferredSize().height;
+		
 		setJMenuBar(menuBar);
+		
+		mnTienda = new JMenu("Menú");
+		
+		mnEmpleados = new JMenu("Empleados");
+		
+		mnProductos = new JMenu("Productos");
+		
+		mnTransacciones = new JMenu("Transacciones");
+		
+		//-------------------------------------------------------
+		mntmCerrarSesion = new JMenuItem(ConstantesBotones.CERRAR_SESION);
+		
+		mntmGestionEmp = new JMenuItem(ConstantesBotones.GESTION_EMPLEADOS);
+		
+		mntmGestionProd = new JMenuItem(ConstantesBotones.GESTION_PRODUCTOS);
+		
+		mntmTransacciones = new JMenuItem(ConstantesBotones.VER_TRANSACCIONES);
+		
+		mntmShop = new JMenuItem(ConstantesBotones.COMPRAR);
+		
+		mntmCarrito = new JMenuItem(ConstantesBotones.CARRITO);
+	}
 
-		mntmCerrarSesion = new JMenuItem("Cerrar Sesión");
+	@Override
+	public void configurarVentana() {
+		setTitle("Gestión tienda");
+
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+		setSize(ANCHO, ALTO);
+
+		insetsR = this.getInsets().right;
+		insetsL = this.getInsets().left;
+		insetsT = this.getInsets().top;
+		insetsB = this.getInsets().bottom;
+
+		centerWindow();
+	}
+	
+	private void centerWindow() {
+		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+		Dimension ventana = new Dimension(ANCHO, ALTO);
+		setLocation((pantalla.width - ventana.width) / 2, (pantalla.height - ventana.height) / 2);
+	}
+
+	public void crearMenuBase() {
+		menuBar.setVisible(true);
 		menuBar.add(mntmCerrarSesion);
 	}
 
-	public void configurarMenuEmpleado() {
+	public void menuAdmin() {
 		crearMenuBase();
+		
+		menuBar.add(mnEmpleados, 0);
+		
+		mnEmpleados.add(mntmGestionEmp);
 
-		JMenu mnGestion = new JMenu("Gestión");
-		menuBar.add(mnGestion, 0);
+		menuBar.add(mnProductos, 1);
+		
+		mnProductos.add(mntmGestionProd);
 
-		mntmGestionStock = new JMenuItem("Gestión de Stock");
-		mnGestion.add(mntmGestionStock);
+		menuBar.add(mnTransacciones, 2);
+		
+		mnTransacciones.add(mntmTransacciones);
+		
 	}
 
-	public void configurarMenuComprador() {
+	public void menuComprador() {
 		crearMenuBase();
 
-		JMenu mnTienda = new JMenu("Menú");
 		menuBar.add(mnTienda, 0);
-
-		mntmShop = new JMenuItem("Comprar");
+		
 		mnTienda.add(mntmShop);
-
-		mntmCarrito = new JMenuItem("Carrito");
+		
 		mnTienda.add(mntmCarrito);
 	}
 
-	public void configurarMenuAdmin() {
-		crearMenuBase();
+	//Corregirlo para que esté en el controlador
+	/*
+	public void autorizacionesMenu(int autorizacion) {
+		switch (autorizacion) {
+		case ADMIN:
+			menuAdmin();
+			break;
+		case EMPLEADO:
+			crearMenuBase();
+			break;
+		case COMPRADOR:
+			menuComprador();
+			break;
+		default:
+			quitarMenu();
+			break;
+		}
+	}
+	*/
 
-		JMenu mnEmpleados = new JMenu("Empleados");
-		menuBar.add(mnEmpleados, 0);
-		mntmGestionEmp = new JMenuItem("Gestión de Empleados");
-		mnEmpleados.add(mntmGestionEmp);
-
-		JMenu mnProductos = new JMenu("Productos");
-		menuBar.add(mnProductos, 1);
-		mntmGestionProd = new JMenuItem("Gestión de Productos");
-		mnProductos.add(mntmGestionProd);
-
-		JMenu mnTransacciones = new JMenu("Transacciones");
-		menuBar.add(mnTransacciones, 2);
-		mntmTransacciones = new JMenuItem("Ver Transacciones");
-		mnTransacciones.add(mntmTransacciones);
+	public void quitarMenu() {
+		menuBar.removeAll();
+		menuBar.setVisible(false);
+		menuBar.revalidate();
+		menuBar.repaint();
 	}
 
 	@Override
 	public void cargarPanel(JPanel panel) {
-		scrpContenedor.setViewportView(panel);
-		revalidate();
-		repaint();
+		scrlCont.setViewportView(panel);
 	}
 
 	@Override
@@ -203,50 +182,26 @@ public class VPrincipal extends JFrame implements IFrames {
 		setVisible(true);
 	}
 
-	public void confirmarSalida() {
-		int opcion = JOptionPane.showConfirmDialog(this, "¿Desea cerrar la sesión actual?", "Confirmar",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		if (opcion == JOptionPane.YES_OPTION) {
-			mostrarLogin();
-		}
-	}
-
-	public void setControladorLogin(ActionListener controlador) {
-		btnIniciarSesion.addActionListener(controlador);
-		btnRegistrarse.addActionListener(controlador);
-	}
-
-	public void setControladorMenu(ActionListener controlador) {
-		if (mntmCerrarSesion != null)
-			mntmCerrarSesion.addActionListener(controlador);
-		if (mntmShop != null)
-			mntmShop.addActionListener(controlador);
-		if (mntmCarrito != null)
-			mntmCarrito.addActionListener(controlador);
-		if (mntmGestionEmp != null)
-			mntmGestionEmp.addActionListener(controlador);
-		if (mntmGestionProd != null)
-			mntmGestionProd.addActionListener(controlador);
-		if (mntmGestionStock != null)
-			mntmGestionStock.addActionListener(controlador);
-		if (mntmTransacciones != null)
-			mntmTransacciones.addActionListener(controlador);
-	}
-
-	public JTextField getTxtUsuario() {
-		return txtUsuario;
-	}
-
-	public JPasswordField getTxtContrasenia() {
-		return txtContrasenia;
-	}
-
-	public JButton getBtnIniciarSesion() {
-		return btnIniciarSesion;
-	}
-
-	public JButton getBtnRegistrarse() {
-		return btnRegistrarse;
+	@Override
+	public void setControlador(Ctrl c) {
+		
+		mntmCerrarSesion.addActionListener(c);
+		mntmCerrarSesion.setActionCommand(ConstantesBotones.CERRAR_SESION);
+		
+		mntmGestionEmp.addActionListener(c);
+		mntmGestionEmp.setActionCommand(ConstantesBotones.GESTION_EMPLEADOS);
+		
+		mntmGestionProd.addActionListener(c);
+		mntmGestionProd.setActionCommand(ConstantesBotones.GESTION_PRODUCTOS);
+		
+		mntmTransacciones.addActionListener(c);
+		mntmTransacciones.setActionCommand(ConstantesBotones.VER_TRANSACCIONES);
+		
+		mntmShop.addActionListener(c);
+		mntmShop.setActionCommand(ConstantesBotones.COMPRAR);
+		
+		mntmCarrito.addActionListener(c);
+		mntmCarrito.setActionCommand(ConstantesBotones.CARRITO);
 	}
 
 	public JMenuItem getMntmShop() {
@@ -275,11 +230,5 @@ public class VPrincipal extends JFrame implements IFrames {
 
 	public JMenuItem getMntmCerrarSesion() {
 		return mntmCerrarSesion;
-	}
-
-	@Override
-	public void setControlador(Ctrl c) {
-		// TODO Auto-generated method stub
-		
 	}
 }

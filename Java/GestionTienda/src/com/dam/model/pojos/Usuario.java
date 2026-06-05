@@ -18,6 +18,17 @@ public class Usuario {
 		this.activo = activo;
 	}
 	
+	public Usuario(int autorizacion, String nombre, String contrasenia, int tel, boolean activo) {
+		super();
+		this.autorizacion = autorizacion;
+		this.nombre = nombre;
+		this.contrasenia = contrasenia;
+		this.tel = tel;
+		this.activo = activo;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Usuario [id=" + userId + ", autorizacion=" + autorizacion + ", nombre=" + nombre + ", contrasenia=" + contrasenia + ", tel=" + tel + "]";
@@ -44,5 +55,13 @@ public class Usuario {
 	}
 	public boolean isActivo() {
 		return activo;
+	}
+	
+	public void darDeBaja() {
+		activo = false; 
+	}
+	
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 }	

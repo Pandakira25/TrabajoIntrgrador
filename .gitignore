@@ -1,3 +1,7 @@
 /.metadata/
+**/.metadata/
 *.bkp
 *.class
+*.db
+*.db-shm
+*.db-wal

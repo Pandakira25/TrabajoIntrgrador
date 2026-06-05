@@ -2,13 +2,14 @@ package com.dam.view;
 
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -18,8 +19,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import com.dam.ctrl.Ctrl;
+import com.dam.model.pojos.Producto;
 
 public class VGestionStock extends JPanel implements IPanels {
+	public static final String NAME = "VGestionStock";
 
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
 	private static final int ALTO = VPrincipal.ALTO - VPrincipal.insetsT - VPrincipal.insetsB - VPrincipal.menuH;
@@ -42,16 +45,19 @@ public class VGestionStock extends JPanel implements IPanels {
 	private JTextArea txaDescripcion;
 	private JScrollPane scrpDescripcion;
 	private JButton btnVerMas;
+	
+	private ArrayList<Producto> productosCargados = new ArrayList<>();
 
 	public VGestionStock() {
 		configurarVentana();
 		crearComponentes();
 	}
-	
+
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
 		setPreferredSize(new Dimension(ANCHO, 620));
+		setName(NAME);
 	}
 
 	@Override
@@ -95,8 +101,8 @@ public class VGestionStock extends JPanel implements IPanels {
 		cmbCategoria.setBounds(501, 79, 110, 26);
 		add(cmbCategoria);
 
-		btnBuscar = new JButton(ConstantesBotones.BUSCAR);
-		btnBuscar.setBounds(15, 118, 92, 26);
+		btnBuscar = new JButton(ConstantesBotones.BUSCAR_PRODUCTO);
+		btnBuscar.setBounds(15, 118, 115, 26);
 		add(btnBuscar);
 
 		// --- Tabla ---
@@ -115,8 +121,8 @@ public class VGestionStock extends JPanel implements IPanels {
 		add(btnVerMas);
 
 		// --- Panel derecho: cantidad ---
-		JLabel lblCantInfo = new JLabel("<html>Ingrese la cantidad a<br>añadir/eliminar</html>");
-		lblCantInfo.setBounds(550, 185, 240, 42);
+		JLabel lblCantInfo = new JLabel("Ingrese la cantidad a añadir/eliminar");
+		lblCantInfo.setBounds(545, 204, 224, 26);
 		add(lblCantInfo);
 
 		txtCantidad = new JTextField("1");
@@ -124,14 +130,13 @@ public class VGestionStock extends JPanel implements IPanels {
 		txtCantidad.setBounds(550, 240, 62, 38);
 		add(txtCantidad);
 
-		btnMas = new JButton(ConstantesBotones.MAS);
+		btnMas = new JButton(new ImageIcon(ConstantesBotones.MASICONO));
+		btnMas.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnMas.setBounds(622, 247, 38, 28);
-		btnMas.setEnabled(false);
 		add(btnMas);
 
-		btnMenos = new JButton(ConstantesBotones.MENOS);
+		btnMenos = new JButton(new ImageIcon(ConstantesBotones.MENOSICONO));
 		btnMenos.setBounds(666, 247, 38, 28);
-		btnMenos.setEnabled(false);
 		add(btnMenos);
 
 		// --- Descripción (oculta por defecto) ---
@@ -150,9 +155,11 @@ public class VGestionStock extends JPanel implements IPanels {
 		scrpDescripcion.setBounds(550, 340, 230, 190);
 		scrpDescripcion.setVisible(false);
 		add(scrpDescripcion);
-		
+
 	}
 
+	// corregir: hecho
+	// No se debería cargar el id
 	private void configurarTabla() {
 		dtmProductos = new DefaultTableModel() {
 			@Override
@@ -160,38 +167,50 @@ public class VGestionStock extends JPanel implements IPanels {
 				return false;
 			}
 		};
+		tblProductos.getTableHeader().setReorderingAllowed(false);
+		
 		tblProductos.setModel(dtmProductos);
 
-		// Columnas modelo: 0=Nombre, 1=Precio, 2=Stock, 3=Categoría, 4=ID (oculto),
-		// 5=Descripción (oculta)
 		dtmProductos.addColumn("Nombre");
 		dtmProductos.addColumn("Precio (€)");
 		dtmProductos.addColumn("Stock");
-		dtmProductos.addColumn("Categoría");
-		dtmProductos.addColumn("ID");
-		dtmProductos.addColumn("Descripción");
 
-		// Ocultar columnas ID y Descripción de la vista (datos siguen en el modelo)
-		tblProductos.removeColumn(tblProductos.getColumnModel().getColumn(5));
-		tblProductos.removeColumn(tblProductos.getColumnModel().getColumn(4));
-
-		tblProductos.getColumnModel().getColumn(0).setPreferredWidth(200);
-		tblProductos.getColumnModel().getColumn(1).setPreferredWidth(75);
-		tblProductos.getColumnModel().getColumn(2).setPreferredWidth(55);
-		tblProductos.getColumnModel().getColumn(3).setPreferredWidth(120);
+		tblProductos.getColumnModel().getColumn(0).setPreferredWidth(470);
+		tblProductos.getColumnModel().getColumn(1).setPreferredWidth(80);
+		tblProductos.getColumnModel().getColumn(2).setPreferredWidth(50);
 	}
 
-	/**
-	 * Cada Object[] contiene: [0] nombre, [1] precio, [2] stock, [3] categoria, [4]
-	 * id, [5] descripcion
-	 */
-	public void cargarTabla(ArrayList<Object[]> lista) {
+	// corregir el cargar tabla: hecho
+	public void cargarTabla(ArrayList<Producto> productos) {
+		tblProductos.clearSelection();
 		dtmProductos.getDataVector().clear();
-		for (Object[] fila : lista) {
-			dtmProductos.addRow(fila);
+		productosCargados = productos;
+        btnVerMas.setEnabled(false);
+        hideDescripcion();
+		
+		if (productos.size() != 0) {
+			clearTable();
+			Object[] row = new Object[3];
+			for (Producto prod : productos) {
+				row[0] = prod.getNombre();
+				row[1] = prod.getPrecio();
+				row[2] = prod.getStock();
+
+				dtmProductos.addRow(row);
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "No se han encontrado items con los filtros seleccionados", "Mensaje",
+					JOptionPane.INFORMATION_MESSAGE);
 		}
-		dtmProductos.fireTableDataChanged();
 	}
+
+	private void clearTable() {
+		int r = dtmProductos.getRowCount();
+		for(int i = 0; i < r; i++) {
+			//System.out.println(i);
+			dtmProductos.removeRow(0);
+		}
+	}	
 
 	public void cargarCategorias(ArrayList<String> categorias) {
 		dcbmCategoria.removeAllElements();
@@ -201,31 +220,31 @@ public class VGestionStock extends JPanel implements IPanels {
 		}
 	}
 
-	public void toggleDescripcion() {
-		boolean mostrar = !scrpDescripcion.isVisible();
-		if (mostrar) {
-			int fila = tblProductos.getSelectedRow();
-			Object desc = fila != -1 ? dtmProductos.getValueAt(fila, 5) : null;
-			txaDescripcion.setText(desc != null ? desc.toString() : "Sin descripción.");
-		}
-		lblDescripcion.setVisible(mostrar);
-		scrpDescripcion.setVisible(mostrar);
-		btnVerMas.setText(mostrar ? ConstantesBotones.VER_MENOS : ConstantesBotones.VER_MAS);
-		revalidate();
-		repaint();
+	public void verDescripcion(String descripción) {
+		lblDescripcion.setVisible(true);
+		scrpDescripcion.setVisible(true);
+		txaDescripcion.setText(descripción);
+		
+		btnVerMas.setText(ConstantesBotones.VER_MENOS);
+		btnVerMas.setActionCommand(ConstantesBotones.VER_MENOS);
 	}
-
-	public void setStockButtonsEnabled(boolean b) {
-		btnMas.setEnabled(b);
-		btnMenos.setEnabled(b);
+	
+	public void hideDescripcion() {
+		lblDescripcion.setVisible(false);
+		scrpDescripcion.setVisible(false);
+		txaDescripcion.setText("");
+		
+		btnVerMas.setText(ConstantesBotones.VER_MAS);
+		btnVerMas.setActionCommand(ConstantesBotones.VER_MAS);
 	}
-
-	public int getIdProductoSeleccionado() {
-		int fila = tblProductos.getSelectedRow();
-		if (fila == -1)
-			return -1;
-		return (int) dtmProductos.getValueAt(fila, 4);
-	}
+	
+    public void setVerMasEnabled(boolean b) {
+        btnVerMas.setEnabled(b);
+    }
+	
+    public void setBtnMenosEnabled(boolean b) {
+        btnMenos.setEnabled(b);
+    }
 
 	public int getCantidad() {
 		try {
@@ -233,18 +252,6 @@ public class VGestionStock extends JPanel implements IPanels {
 		} catch (NumberFormatException e) {
 			return 1;
 		}
-	}
-
-	public String getNombreFiltro() {
-		return txtBuscarNombre.getText().trim();
-	}
-
-	public String getPrecioFiltro() {
-		return (String) cmbPrecio.getSelectedItem();
-	}
-
-	public String getCategoriaFiltro() {
-		return (String) cmbCategoria.getSelectedItem();
 	}
 
 	public void limpiarDatos() {
@@ -264,29 +271,45 @@ public class VGestionStock extends JPanel implements IPanels {
 	@Override
 	public void setControlador(Ctrl c) {
 		btnBuscar.addActionListener(c);
+		btnBuscar.setActionCommand(ConstantesBotones.BUSCAR_PRODUCTO);
+		
 		btnMas.addActionListener(c);
+		btnMas.setActionCommand(ConstantesBotones.MAS);
+		
 		btnMenos.addActionListener(c);
+		btnMenos.setActionCommand(ConstantesBotones.MENOS);
+		
 		btnVerMas.addActionListener(c);
+		btnVerMas.setActionCommand(ConstantesBotones.VER_MAS);
+		
+		tblProductos.getSelectionModel().addListSelectionListener(c);
+	}
+
+	public String [] getConsulta() {
+		String nombre = txtBuscarNombre.getText().trim();
+        String precio = (String) cmbPrecio.getSelectedItem();
+        String categoria = (String) cmbCategoria.getSelectedItem();
+
+        if (nombre.isEmpty() && precio.equals("Todos") && categoria.equals("Todas")) {
+            return null;
+        }
+
+        return new String[] {
+            nombre.isEmpty() ? null : nombre,
+            precio.equals("Todos") ? null : precio,
+            categoria.equals("Todas") ? null : categoria
+        };	}
+
+	public boolean isDescripcionVisible() {
+		return scrpDescripcion.isVisible();
 	}
 
 	public JTable getTblProductos() {
 		return tblProductos;
 	}
 
-	public JButton getBtnBuscar() {
-		return btnBuscar;
-	}
-
-	public JButton getBtnMas() {
-		return btnMas;
-	}
-
-	public JButton getBtnMenos() {
-		return btnMenos;
-	}
-
-	public JButton getBtnVerMas() {
-		return btnVerMas;
+	public Producto getProductoEnFila(int fila) {
+		return productosCargados.get(fila);
 	}
 
 }
