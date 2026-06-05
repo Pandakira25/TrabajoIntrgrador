@@ -186,6 +186,7 @@ public class VGestionEmp extends JPanel implements IPanels {
 				return false;
 			}
 		};
+		tblEmpleados.getTableHeader().setReorderingAllowed(false);
 		tblEmpleados.setModel(dtmEmpleados);
 
 		dtmEmpleados.addColumn("Nombre");

@@ -31,6 +31,7 @@ public final class ConstantesBotones {
 	public static final String GESTION_PRODUCTOS = "Gestión de Productos";
 	public static final String VER_TRANSACCIONES = "Ver Transacciones";
 	public static final String COMPRAR = "Comprar";
-	
+	public static final String HABILITAR_PRODUCTO = "Habilitar Producto";
+	public static final String DESHABILITAR_PRODUCTO = "Deshabilitar Producto";
 	
 }

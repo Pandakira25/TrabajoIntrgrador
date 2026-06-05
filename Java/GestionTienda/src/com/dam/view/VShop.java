@@ -41,6 +41,9 @@ public class VShop extends JPanel implements IPanels {
 	private JScrollPane scrpDescripcion;
 	private JButton btnVerMas;
 	private JButton btnCarrito;
+	
+	private ArrayList<Producto> productosCargados = new ArrayList<>();
+
 
 	public VShop() {
 		configurarVentana();
@@ -129,53 +132,51 @@ public class VShop extends JPanel implements IPanels {
 	}
 
 	private void configurarTabla() {
-		dtmProductos = new DefaultTableModel() {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-		tblProductos.setModel(dtmProductos);
+        dtmProductos = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tblProductos.getTableHeader().setReorderingAllowed(false);
+        tblProductos.setModel(dtmProductos);
 
-		dtmProductos.addColumn("Nombre");
-		dtmProductos.addColumn("Precio (€)");
-		dtmProductos.addColumn("");
-		dtmProductos.addColumn("");
-		dtmProductos.addColumn("");
-		// TODO: quisiera que tuviera la cantidad que vas agregando en tiempo real
-		// Idea mía: podria poner en el mouse listener un contador y pasarlo a la tabla
-		// y que cuando se le de al mas
-		// o al menos se sume o reste y se recargue la tabla
+        dtmProductos.addColumn("Nombre");
+        dtmProductos.addColumn("Precio (€)");
+        dtmProductos.addColumn("Cantidad");
+        dtmProductos.addColumn("+");
+        dtmProductos.addColumn("-");
 
-		tblProductos.getColumnModel().getColumn(0).setPreferredWidth(470);
-		tblProductos.getColumnModel().getColumn(1).setPreferredWidth(80);
-		tblProductos.getColumnModel().getColumn(2).setPreferredWidth(50);
-		tblProductos.getColumnModel().getColumn(3).setPreferredWidth(50);
-		tblProductos.getColumnModel().getColumn(4).setPreferredWidth(80);
-	}
+        tblProductos.getColumnModel().getColumn(0).setPreferredWidth(270);
+        tblProductos.getColumnModel().getColumn(1).setPreferredWidth(80);
+        tblProductos.getColumnModel().getColumn(2).setPreferredWidth(70);
+        tblProductos.getColumnModel().getColumn(3).setPreferredWidth(50);
+        tblProductos.getColumnModel().getColumn(4).setPreferredWidth(50);
+    }
 
-	// corregir el cargar tabla: hecho
-	public void cargarTabla(ArrayList<Producto> productos) {
-		tblProductos.clearSelection();
-		dtmProductos.getDataVector().clear();
-		
-		if (productos.size() != 0) {
-			clearTable();
-			Object[] row = new Object[5];
-			for (Producto prod : productos) {
-				row[0] = prod.getNombre();
-				row[1] = prod.getPrecio();
-				row[2] = "+";
-				row[3] = "-";
-				row[4] = "Eliminar";
+    public void cargarTabla(ArrayList<Producto> productos) {
+        tblProductos.clearSelection();
+        dtmProductos.getDataVector().clear();
+        productosCargados = productos;
+        btnVerMas.setEnabled(false);
+        hideDescripcion();
 
-				dtmProductos.addRow(row);
-			}
-		} else {
-			JOptionPane.showMessageDialog(this, "No se han encontrado items con los filtros seleccionados", "Mensaje",
-					JOptionPane.INFORMATION_MESSAGE);
-		}
-	}
+        if (productos.size() != 0) {
+            clearTable();
+            Object[] row = new Object[5];
+            for (Producto prod : productos) {
+                row[0] = prod.getNombre();
+                row[1] = prod.getPrecio();
+                row[2] = 0;
+                row[3] = "+";
+                row[4] = "-";
+                dtmProductos.addRow(row);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se han encontrado items con los filtros seleccionados", "Mensaje",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
 
 	private void clearTable() {
 		int r = dtmProductos.getRowCount();
@@ -185,59 +186,105 @@ public class VShop extends JPanel implements IPanels {
 		}
 	}
 
-	public void cargarCategorias(ArrayList<String> categorias) {
-		dcbmCategoria.removeAllElements();
-		dcbmCategoria.addElement("Todas");
-		for (String cat : categorias) {
-			dcbmCategoria.addElement(cat);
-		}
+	public boolean sumarCantidad(int fila) {
+	    int cant = (int) dtmProductos.getValueAt(fila, 2);
+	    int stock = productosCargados.get(fila).getStock();
+	    if (cant < stock) {
+	        dtmProductos.setValueAt(cant + 1, fila, 2);
+	        return true;
+	    }
+	    return false;
 	}
 
-	public void verDescripcion(String descripción) {
-		lblDescripcion.setVisible(true);
-		scrpDescripcion.setVisible(true);
-		txaDescripcion.setText(descripción);
+    public void restarCantidad(int fila) {
+        int cant = (int) dtmProductos.getValueAt(fila, 2);
+        if (cant > 0) {
+            dtmProductos.setValueAt(cant - 1, fila, 2);
+        }
+    }
 
-		btnVerMas.setText(ConstantesBotones.VER_MENOS);
-	}
+    public int getCantidadEnFila(int fila) {
+        return (int) dtmProductos.getValueAt(fila, 2);
+    }
 
-	public void hideDescripción() {
-		lblDescripcion.setVisible(false);
-		scrpDescripcion.setVisible(false);
-		txaDescripcion.setText("");
+    public Producto getProductoEnFila(int fila) {
+        return productosCargados.get(fila);
+    }
 
-		btnVerMas.setText(ConstantesBotones.VER_MAS);
-	}
+    public JTable getTblProductos() {
+        return tblProductos;
+    }
 
-	public String[] getConsulta() {
-		String consulta[] = { txtBuscarNombre.getText(), (String) cmbCategoria.getSelectedItem(),
-				(String) cmbPrecio.getSelectedItem() };
-		return consulta;
-	}
+    public void verDescripcion(String descripcion) {
+        lblDescripcion.setVisible(true);
+        scrpDescripcion.setVisible(true);
+        txaDescripcion.setText(descripcion);
+        btnVerMas.setText(ConstantesBotones.VER_MENOS);
+    }
 
-	public void limpiarDatos() {
-		dtmProductos.getDataVector().clear();
-		dtmProductos.fireTableDataChanged();
-		txtBuscarNombre.setText("");
-		cmbPrecio.setSelectedIndex(0);
-		cmbCategoria.setSelectedIndex(0);
-		lblDescripcion.setVisible(false);
-		scrpDescripcion.setVisible(false);
-		btnVerMas.setText(ConstantesBotones.VER_MAS);
-	}
+    public void hideDescripcion() {
+        lblDescripcion.setVisible(false);
+        scrpDescripcion.setVisible(false);
+        txaDescripcion.setText("");
+        btnVerMas.setText(ConstantesBotones.VER_MAS);
+    }
 
-	@Override
-	public void setControlador(Ctrl c) {
-		btnBuscar.addActionListener(c);
-		btnBuscar.setActionCommand(ConstantesBotones.BUSCAR_PRODUCTO);
+    public boolean isDescripcionVisible() {
+        return scrpDescripcion.isVisible();
+    }
 
-		btnVerMas.addActionListener(c);
-		btnVerMas.setActionCommand(ConstantesBotones.VER_MAS);
+    public void setVerMasEnabled(boolean b) {
+        btnVerMas.setEnabled(b);
+    }
 
-		btnCarrito.addActionListener(c);
-		btnCarrito.setActionCommand(ConstantesBotones.CARRITO);
+    public String[] getConsulta() {
+        String nombre = txtBuscarNombre.getText().trim();
+        String precio = (String) cmbPrecio.getSelectedItem();
+        String categoria = (String) cmbCategoria.getSelectedItem();
 
-		tblProductos.addMouseListener(c);
-	}
+        if (nombre.isEmpty() && precio.equals("Todos") && categoria.equals("Todas")) {
+            return null;
+        }
+
+        return new String[] {
+            nombre.isEmpty() ? null : nombre,
+            precio.equals("Todos") ? null : precio,
+            categoria.equals("Todas") ? null : categoria
+        };
+    }
+
+    public void cargarCategorias(ArrayList<String> categorias) {
+        dcbmCategoria.removeAllElements();
+        dcbmCategoria.addElement("Todas");
+        for (String cat : categorias) {
+            dcbmCategoria.addElement(cat);
+        }
+    }
+
+    public void limpiarDatos() {
+        dtmProductos.getDataVector().clear();
+        dtmProductos.fireTableDataChanged();
+        productosCargados.clear();
+        txtBuscarNombre.setText("");
+        cmbPrecio.setSelectedIndex(0);
+        cmbCategoria.setSelectedIndex(0);
+        hideDescripcion();
+        btnVerMas.setEnabled(false);
+    }
+
+    @Override
+    public void setControlador(Ctrl c) {
+        btnBuscar.addActionListener(c);
+        btnBuscar.setActionCommand(ConstantesBotones.BUSCAR_PRODUCTO);
+
+        btnVerMas.addActionListener(c);
+        btnVerMas.setActionCommand(ConstantesBotones.VER_MAS);
+
+        btnCarrito.addActionListener(c);
+        btnCarrito.setActionCommand(ConstantesBotones.CARRITO);
+
+        tblProductos.addMouseListener(c);
+        tblProductos.getSelectionModel().addListSelectionListener(c);
+    }
 
 }

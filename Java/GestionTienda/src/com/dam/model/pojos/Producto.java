@@ -10,13 +10,14 @@ public class Producto {
 	private int stock;
 	private boolean activo;
 
-	public Producto(int id, String nombre, String categoria, double precio, String descripcion, int stock) {
+	public Producto(int id, String nombre, String categoria, double precio, String descripcion, int stock,boolean activo) {
 		this.productoId = id;
 		this.nombre = nombre;
 		this.categoria = categoria;
 		this.precio = precio;
 		this.descripcion = descripcion;
 		this.stock = stock;
+		this.activo = activo;
 	}
 	public Producto(String nombre, String categoria, double precio, int stock, String descripcion) {
 		this.nombre = nombre;

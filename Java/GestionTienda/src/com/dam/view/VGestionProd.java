@@ -1,7 +1,7 @@
 package com.dam.view;
 
 import java.awt.Font;
-import java.text.CollationElementIterator;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -26,6 +26,9 @@ public class VGestionProd extends JPanel implements IPanels {
 
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
 	private static final int ALTO = VPrincipal.ALTO - VPrincipal.insetsT - VPrincipal.insetsB - VPrincipal.menuH;
+	
+	private ArrayList<Producto> productosCargados = new ArrayList<>();
+	private int idSeleccionado = -1;
 
 	private JTextField txtNombre;
 	private JTextField txtCategoria;
@@ -38,12 +41,13 @@ public class VGestionProd extends JPanel implements IPanels {
 	private JTable tblProductos;
 	private DefaultTableModel dtmProductos;
 	private JScrollPane scrpProductos;
-	private JButton btnEliminarProd;
+	private JButton btnDeshabilitarProd;
 	private JTextField txtNombreBuscar;
 	private JComboBox<String> cmbPrecioBuscar;
 	private JComboBox<String> cmbCategoriaBuscar;
 	private DefaultComboBoxModel<String> dcbmCategoria;
 	private JButton btnBuscar;
+	private JButton btnHabilitarProd;
 
 	public VGestionProd() {
 		configurarVentana();
@@ -126,15 +130,29 @@ public class VGestionProd extends JPanel implements IPanels {
 		scrpProductos.setBounds(33, 331, 710, 200);
 		add(scrpProductos);
 
-		tblProductos = new JTable();
+		tblProductos = new JTable(){
+		    @Override
+		    public String getToolTipText(MouseEvent e) {
+		        int fila = rowAtPoint(e.getPoint());
+		        if (fila != -1 && productosCargados != null && fila < productosCargados.size()) {
+		            return productosCargados.get(fila).isActivo() ? "Activo" : "Inactivo";
+		        }
+		        return null;
+		    }
+		};
 		tblProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrpProductos.setViewportView(tblProductos);
 		configurarTabla();
 
-		btnEliminarProd = new JButton(ConstantesBotones.ELIMINAR_PRODUCTO);
-		btnEliminarProd.setBounds(541, 543, 163, 30);
-		btnEliminarProd.setEnabled(false);
-		add(btnEliminarProd);
+		btnDeshabilitarProd = new JButton(ConstantesBotones.DESHABILITAR_PRODUCTO);
+		btnDeshabilitarProd.setBounds(541, 543, 163, 30);
+		btnDeshabilitarProd.setEnabled(false);
+		add(btnDeshabilitarProd);
+		
+		btnHabilitarProd = new JButton(ConstantesBotones.HABILITAR_PRODUCTO);
+		btnHabilitarProd.setBounds(365, 543, 163, 30);
+		btnHabilitarProd.setEnabled(false);
+		add(btnHabilitarProd);
 		
 		txtNombreBuscar = new JTextField();
 		txtNombreBuscar.setBounds(98, 228, 155, 26);
@@ -186,6 +204,7 @@ public class VGestionProd extends JPanel implements IPanels {
 				return false;
 			}
 		};
+		tblProductos.getTableHeader().setReorderingAllowed(false);
 		tblProductos.setModel(dtmProductos);
 
 		dtmProductos.addColumn("Nombre");
@@ -205,6 +224,7 @@ public class VGestionProd extends JPanel implements IPanels {
 	public void cargarTabla(ArrayList<Producto> productos) {
 		tblProductos.clearSelection();
 		dtmProductos.getDataVector().clear();
+		productosCargados = productos;
 		
 		if (productos.size() != 0) {
 			clearTable();
@@ -219,8 +239,8 @@ public class VGestionProd extends JPanel implements IPanels {
 				dtmProductos.addRow(row);
 			}
 		} else {
-			JOptionPane.showMessageDialog(this, "No se han encontrado items con los filtros seleccionados", "Mensaje",
-					JOptionPane.INFORMATION_MESSAGE);
+			//JOptionPane.showMessageDialog(this, "No se han encontrado items con los filtros seleccionados", "Mensaje",
+				//	JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
@@ -234,13 +254,35 @@ public class VGestionProd extends JPanel implements IPanels {
 	
 	//Para cuando tengamos que modificar un producto
 	public void cargarProductoEnForm() {
-		int fila = tblProductos.getSelectedRow();
-		
-		txtNombre.setText((String) tblProductos.getValueAt(fila, 1));
-		txtCategoria.setText((String) tblProductos.getValueAt(fila, 2));
-		txtPrecio.setText(String.valueOf(tblProductos.getValueAt(fila, 3)));
-		txtStock.setText(String.valueOf(tblProductos.getValueAt(fila, 4)));
-		txtDescripcion.setText((String) tblProductos.getValueAt(fila, 5));
+	    int fila = tblProductos.getSelectedRow();
+	    Producto prod = productosCargados.get(fila);
+	    
+	    idSeleccionado = prod.getId();
+	    txtNombre.setText(prod.getNombre());
+	    txtCategoria.setText(prod.getCategoria());
+	    txtPrecio.setText(String.valueOf(prod.getPrecio()));
+	    txtStock.setText(String.valueOf(prod.getStock()));
+	    txtDescripcion.setText(prod.getDescripcion());
+	    
+	    btnAgregarProd.setEnabled(false);
+	}
+
+	public int getIdSeleccionado() {
+	    return idSeleccionado;
+	}
+
+	public void limpiarDatos() {
+	    idSeleccionado = -1;
+	    txtNombre.setText("");
+	    txtCategoria.setText("");
+	    txtPrecio.setText("");
+	    txtStock.setText("");
+	    txtDescripcion.setText("");
+	    tblProductos.clearSelection();
+	    btnAgregarProd.setEnabled(true);
+	    btnModificarProd.setEnabled(false);
+	    btnDeshabilitarProd.setEnabled(false);
+	    btnHabilitarProd.setEnabled(false);
 	}
 
 	public void setModificarEnabled(boolean b) {
@@ -248,7 +290,11 @@ public class VGestionProd extends JPanel implements IPanels {
 	}
 
 	public void setEliminarEnabled(boolean b) {
-		btnEliminarProd.setEnabled(b);
+		btnDeshabilitarProd.setEnabled(b);
+	}
+	
+	public void setHabilitarEnabled(boolean b) {
+	    btnHabilitarProd.setEnabled(b);
 	}
 	
 	public void setAgregarEnabled(boolean b) {btnAgregarProd.setEnabled(b);}
@@ -291,22 +337,11 @@ public class VGestionProd extends JPanel implements IPanels {
 			valid = false;
 		}
 
-		if(valid) {
-			return new Producto(nombre, categoria, precio, stock, descripcion);
-		}else {
-			return null;
+		if (valid) {
+		    return new Producto(idSeleccionado, nombre, categoria, precio, descripcion, stock, true);
+		} else {
+		    return null;
 		}
-	}
-
-	public void limpiarDatos() {
-		txtNombre.setText("");
-		txtCategoria.setText("");
-		txtPrecio.setText("");
-		txtStock.setText("");
-		txtDescripcion.setText("");
-		tblProductos.clearSelection();
-		btnModificarProd.setEnabled(false);
-		btnEliminarProd.setEnabled(false);
 	}
 	
 	public String[] getConsulta() {
@@ -339,8 +374,11 @@ public class VGestionProd extends JPanel implements IPanels {
 		btnLimpiar.addActionListener(c);
 		btnLimpiar.setActionCommand(ConstantesBotones.LIMPIAR);
 		
-		btnEliminarProd.addActionListener(c);
-		btnEliminarProd.setActionCommand(ConstantesBotones.ELIMINAR_PRODUCTO);
+		btnDeshabilitarProd.addActionListener(c);
+		btnDeshabilitarProd.setActionCommand(ConstantesBotones.DESHABILITAR_PRODUCTO);
+		
+		btnHabilitarProd.addActionListener(c);
+		btnHabilitarProd.setActionCommand(ConstantesBotones.HABILITAR_PRODUCTO);
 		
 		btnBuscar.addActionListener(c);
 		btnBuscar.setActionCommand(ConstantesBotones.BUSCAR_PRODUCTO);
@@ -355,5 +393,13 @@ public class VGestionProd extends JPanel implements IPanels {
 	
 	public JTable getTblProductos() {
 	    return tblProductos;
+	}
+	
+	public String getNombreSeleccionado() {
+	    return (String) tblProductos.getValueAt(tblProductos.getSelectedRow(), 0);
+	}
+	
+	public Producto getProductoEnFila(int fila) {
+	    return productosCargados.get(fila);
 	}
 }

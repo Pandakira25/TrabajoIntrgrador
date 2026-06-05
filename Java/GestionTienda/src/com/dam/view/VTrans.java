@@ -68,6 +68,7 @@ public class VTrans extends JPanel implements IPanels {
 				return false;
 			}
 		};
+		tblTransacciones.getTableHeader().setReorderingAllowed(false);
 		tblTransacciones.setModel(dtmTransacciones);
 
 		dtmTransacciones.addColumn("Comprador");

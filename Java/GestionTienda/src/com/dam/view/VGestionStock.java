@@ -45,6 +45,8 @@ public class VGestionStock extends JPanel implements IPanels {
 	private JTextArea txaDescripcion;
 	private JScrollPane scrpDescripcion;
 	private JButton btnVerMas;
+	
+	private ArrayList<Producto> productosCargados = new ArrayList<>();
 
 	public VGestionStock() {
 		configurarVentana();
@@ -165,6 +167,8 @@ public class VGestionStock extends JPanel implements IPanels {
 				return false;
 			}
 		};
+		tblProductos.getTableHeader().setReorderingAllowed(false);
+		
 		tblProductos.setModel(dtmProductos);
 
 		dtmProductos.addColumn("Nombre");
@@ -180,6 +184,9 @@ public class VGestionStock extends JPanel implements IPanels {
 	public void cargarTabla(ArrayList<Producto> productos) {
 		tblProductos.clearSelection();
 		dtmProductos.getDataVector().clear();
+		productosCargados = productos;
+        btnVerMas.setEnabled(false);
+        hideDescripcion();
 		
 		if (productos.size() != 0) {
 			clearTable();
@@ -222,7 +229,7 @@ public class VGestionStock extends JPanel implements IPanels {
 		btnVerMas.setActionCommand(ConstantesBotones.VER_MENOS);
 	}
 	
-	public void hideDescripción() {
+	public void hideDescripcion() {
 		lblDescripcion.setVisible(false);
 		scrpDescripcion.setVisible(false);
 		txaDescripcion.setText("");
@@ -231,9 +238,13 @@ public class VGestionStock extends JPanel implements IPanels {
 		btnVerMas.setActionCommand(ConstantesBotones.VER_MAS);
 	}
 	
-	public void setMenosStockEnabled(boolean b) {
-		btnMas.setEnabled(b);
-	}
+    public void setVerMasEnabled(boolean b) {
+        btnVerMas.setEnabled(b);
+    }
+	
+    public void setBtnMenosEnabled(boolean b) {
+        btnMenos.setEnabled(b);
+    }
 
 	public int getCantidad() {
 		try {
@@ -270,15 +281,35 @@ public class VGestionStock extends JPanel implements IPanels {
 		
 		btnVerMas.addActionListener(c);
 		btnVerMas.setActionCommand(ConstantesBotones.VER_MAS);
+		
+		tblProductos.getSelectionModel().addListSelectionListener(c);
 	}
 
 	public String [] getConsulta() {
-		String consulta [] = {
-			txtBuscarNombre.getText(),
-			(String)cmbCategoria.getSelectedItem(),
-			(String)cmbPrecio.getSelectedItem()
-		};
-		return consulta;
+		String nombre = txtBuscarNombre.getText().trim();
+        String precio = (String) cmbPrecio.getSelectedItem();
+        String categoria = (String) cmbCategoria.getSelectedItem();
+
+        if (nombre.isEmpty() && precio.equals("Todos") && categoria.equals("Todas")) {
+            return null;
+        }
+
+        return new String[] {
+            nombre.isEmpty() ? null : nombre,
+            precio.equals("Todos") ? null : precio,
+            categoria.equals("Todas") ? null : categoria
+        };	}
+
+	public boolean isDescripcionVisible() {
+		return scrpDescripcion.isVisible();
+	}
+
+	public JTable getTblProductos() {
+		return tblProductos;
+	}
+
+	public Producto getProductoEnFila(int fila) {
+		return productosCargados.get(fila);
 	}
 
 }
