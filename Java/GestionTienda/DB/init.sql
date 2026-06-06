@@ -70,24 +70,24 @@ CREATE TABLE transacciones(
     CONSTRAINT pk_CoCaEm PRIMARY KEY (comprador_id, carrito_id)
 );
 
--- Usuarios (usuario_id 1=admin, 2=Zoe, 3=empleado, 4=comprador)
+
 INSERT INTO usuario (autorizacion, nombre, contrasenia, activo, tel) VALUES
     (1, 'admin',     'admin',     1, 600111111),
     (1, 'Zoe',       '1234',      1, 123456789),
     (2, 'empleado',  'empleado',  1, 600222222),
     (3, 'comprador', 'comprador', 1, 600333333);
 
--- Empleados (admin y Zoe son autorizacion 1 pero tambien empleados, empleado es autorizacion 2)
+
 INSERT INTO empleado (empleado_id, n_seg_social, iban) VALUES
     (1, '28/111111111/01', 'ES8023100001180000011111'),
     (2, '123456789',       'ES1234567890123456789012'),
     (3, '28/987654321/02', 'ES8023100001180000012345');
 
--- Comprador
+
 INSERT INTO comprador (comprador_id, direccion, n_tarjeta) VALUES
     (4, 'Calle Mayor 10, Madrid', '4111111111111111');
 
--- Productos
+
 INSERT INTO producto (nombre, categoria, precio, descripcion, stock, activo) VALUES
     ('The Last of Us Part II', 'Videojuego',     49.99,  'PS4/PS5',            30, 1),
     ('Sony WH-1000XM5',        'Audio',          349.99, 'Auriculares ANC',    12, 1),
@@ -95,14 +95,14 @@ INSERT INTO producto (nombre, categoria, precio, descripcion, stock, activo) VAL
     ('Logitech MX Master 3S',  'Periférico',     99.99,  'Ratón inalámbrico',  20, 1),
     ('Samsung 970 EVO 1TB',    'Almacenamiento', 89.99,  'NVMe M.2',            0, 1);
 
--- Carrito del comprador (ya pagado, aparecerá en transacciones)
+
 INSERT INTO carrito (comprador_id) VALUES (4);
 
--- Líneas del carrito
+
 INSERT INTO carrito_producto (carrito_id, producto_id, cantidad_p) VALUES
     (1, 1, 1),
     (1, 4, 1);
 
--- Transacción
+
 INSERT INTO transacciones (comprador_id, carrito_id, empleado_id) VALUES
     (4, 1, 3);

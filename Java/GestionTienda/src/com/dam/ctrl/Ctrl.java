@@ -125,7 +125,7 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 				break;
 			case ConstantesBotones.MI_CUENTA:
 				vp.cargarPanel(vcuenta);
-				System.out.println(usuarioLogueado.getUserId());
+				System.out.println(usuarioLogueado.getUserId()); // = 5
 				Comprador comp = usuarioDAO.selectComprador(usuarioLogueado.getUserId());
 				
 				System.out.println(comp);
@@ -181,12 +181,23 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 	        }
 	        break;
 	    case ConstantesBotones.DARSE_DE_BAJA:
-	        int x = JOptionPane.showConfirmDialog(vcuenta, "¿Seguro que desea darse de baja?", "Confirmación",
-	                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-	        if (x == JOptionPane.YES_OPTION) {
-	            usuarioDAO.darDeBaja(usuarioLogueado.getUserId());
-	            cerrarSesion();
-	        }
+	    	int res = JOptionPane.showConfirmDialog(vp, "¿Seguro que desea darse de baja?",
+					"Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+			if (res == JOptionPane.YES_OPTION) {
+				JOptionPane.showMessageDialog(vcuenta, usuarioDAO.darDeBaja(usuarioLogueado.getUserId()),
+	                    "Resultado", JOptionPane.INFORMATION_MESSAGE);
+	           
+				carritoActivoId = -1;
+				vca.limpiarCarrito();
+				
+				usuarioLogueado = null;
+				vp.quitarMenu();
+				vlf.getTxtUsuario().setText("");
+				vlf.getTxtContrasenia().setText("");
+				vp.cargarPanel(vlf);
+				vlf.getRootPane().setDefaultButton(vlf.getBtnEntrar());
+				
+			}
 	        break;
 	    }
 	}

@@ -223,8 +223,8 @@ public class TableUsuarioDAO {
 	        rslt = pstmt.executeQuery();
 
 	        if (rslt.next()) {
-	        	System.out.println(rslt.getInt(COL_COMPRADOR_ID));
-	            return new Comprador(rslt.getInt(COL_COMPRADOR_ID), rslt.getInt("autorizacion"),
+	        	System.out.println(rslt.getInt(COL_USUARIO_ID));
+	            return new Comprador(rslt.getInt(COL_USUARIO_ID), rslt.getInt("autorizacion"),
 	                    rslt.getString("nombre"), rslt.getString("contrasenia"),
 	                    rslt.getInt("tel"), rslt.getBoolean("activo"),
 	                    rslt.getString("direccion"), rslt.getString("n_tarjeta"));

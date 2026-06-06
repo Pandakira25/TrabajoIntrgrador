@@ -50,8 +50,7 @@ public class AccessDBProp {
 	        String[] sentencias = sql.split(";");
 	        for (String sentencia : sentencias) {
 	            String s = sentencia.trim();
-	            // ignorar líneas vacías y comentarios
-	            if (!s.isEmpty() && !s.startsWith("--")) {
+	            if (!s.isEmpty()) {
 	                try (Statement stmt = con.createStatement()) {
 	                    stmt.execute(s);
 	                }
