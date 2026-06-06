@@ -282,9 +282,45 @@ public class TableUsuarioDAO {
 	        }
 	    }
 	}
+	
+	public ArrayList<Usuario> selectAllUsuarios() {
+	    ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 
-	public String darDeBaja(int id) {
-	    String sen = "UPDATE " + NOM_TAB + " SET activo = 0 WHERE " + COL_USUARIO_ID + " = ?";
+	    String sen = "SELECT * FROM " + NOM_TAB;
+
+	    Connection con = null;
+	    Statement stmt = null;
+	    ResultSet rslt = null;
+
+	    try {
+	        con = acc.getConnection();
+	        stmt = con.createStatement();
+	        rslt = stmt.executeQuery(sen);
+
+	        while (rslt.next()) {
+	            usuarios.add(new Usuario(rslt.getInt(COL_USUARIO_ID), rslt.getInt(COL_AUTORIZACION),
+	                    rslt.getString(COL_NOMBRE), rslt.getString(COL_CONTRASENIA),
+	                    rslt.getInt(COL_TEL), rslt.getBoolean(COL_ACTIVO)));
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("Error: se ha producido un error al establecer la conexion con la base de datos");
+	    } finally {
+	        try {
+	            if (rslt != null) rslt.close();
+	            if (stmt != null) stmt.close();
+	            if (con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return usuarios;
+	}
+
+	public String habilitarUsuario(int id) {
+	    String sen = "UPDATE " + NOM_TAB + " SET " + COL_ACTIVO + " = 1 WHERE " + COL_USUARIO_ID + " = ?";
 
 	    Connection con = null;
 	    PreparedStatement pstmt = null;
@@ -296,7 +332,7 @@ public class TableUsuarioDAO {
 
 	        int f = pstmt.executeUpdate();
 	        if (f > 0) {
-	            return "Baja realizada con éxito";
+	            return "Usuario habilitado con éxito";
 	        } else {
 	            return "Algo malo ocurrió";
 	        }
@@ -312,5 +348,70 @@ public class TableUsuarioDAO {
 	            e.printStackTrace();
 	        }
 	    }
+	}
+
+	public String deshabilitarUsuario(int id) {
+	    String sen = "UPDATE " + NOM_TAB + " SET " + COL_ACTIVO + " = 0 WHERE " + COL_USUARIO_ID + " = ?";
+
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+
+	    try {
+	        con = acc.getConnection();
+	        pstmt = con.prepareStatement(sen);
+	        pstmt.setInt(1, id);
+
+	        int f = pstmt.executeUpdate();
+	        if (f > 0) {
+	            return "Usuario deshabilitado con éxito";
+	        } else {
+	            return "Algo malo ocurrió";
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "Error: se ha producido un error al establecer la conexion con la base de datos";
+	    } finally {
+	        try {
+	            if (pstmt != null) pstmt.close();
+	            if (con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+	
+	public String[] selectNombresEmpleados() {
+	    String sen = "SELECT " + COL_NOMBRE + " FROM " + NOM_TAB + " WHERE " + COL_AUTORIZACION + " IN (1, 2)";
+
+	    Connection con = null;
+	    Statement stmt = null;
+	    ResultSet rslt = null;
+
+	    try {
+	        con = acc.getConnection();
+	        stmt = con.createStatement();
+	        rslt = stmt.executeQuery(sen);
+
+	        ArrayList<String> nombres = new ArrayList<>();
+	        while (rslt.next()) {
+	            nombres.add(rslt.getString(COL_NOMBRE));
+	        }
+
+	        return nombres.toArray(new String[0]);
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("Error: se ha producido un error al establecer la conexion con la base de datos");
+	    } finally {
+	        try {
+	            if (rslt != null) rslt.close();
+	            if (stmt != null) stmt.close();
+	            if (con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return new String[0];
 	}
 }

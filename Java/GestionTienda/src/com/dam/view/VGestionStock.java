@@ -56,7 +56,7 @@ public class VGestionStock extends JPanel implements IPanels {
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
-		setPreferredSize(new Dimension(ANCHO, 620));
+		setBackground(VPrincipal.colorPalido);
 		setName(NAME);
 	}
 
@@ -240,6 +240,10 @@ public class VGestionStock extends JPanel implements IPanels {
 	
     public void setVerMasEnabled(boolean b) {
         btnVerMas.setEnabled(b);
+    }
+    
+    public void setBtnMasEnabled(boolean b) {
+    	btnMas.setEnabled(b);
     }
 	
     public void setBtnMenosEnabled(boolean b) {

@@ -63,6 +63,7 @@ public class VGestionProd extends JPanel implements IPanels {
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
 		setName(NAME);
+		setBackground(VPrincipal.colorPalido);
 	}
 
 	@Override
@@ -70,11 +71,12 @@ public class VGestionProd extends JPanel implements IPanels {
 		setLayout(null);
 
 		JLabel lblTitulo = new JLabel("Gestión de Productos");
-		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblTitulo.setFont(Fuentes.BOLD.deriveFont(20f));
 		lblTitulo.setBounds(15, 16, 300, 25);
 		add(lblTitulo);
 
 		JLabel lblNombre = new JLabel("Nombre:");
+		lblNombre.setFont(Fuentes.MEDIUM.deriveFont(14f));
 		lblNombre.setBounds(35, 60, 80, 20);
 		add(lblNombre);
 

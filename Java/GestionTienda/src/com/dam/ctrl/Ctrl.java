@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -17,8 +18,6 @@ import javax.swing.event.ListSelectionListener;
 
 import com.dam.model.acessbd.TableCarritoDAO;
 import com.dam.model.acessbd.TableCarritoProductoDAO;
-import com.dam.model.acessbd.TableCompradorDAO;
-import com.dam.model.acessbd.TableEmpleadoDAO;
 import com.dam.model.acessbd.TableProductoDAO;
 import com.dam.model.acessbd.TableTransaccionesDAO;
 import com.dam.model.acessbd.TableUsuarioDAO;
@@ -31,6 +30,7 @@ import com.dam.view.VCuenta;
 import com.dam.view.VGestionEmp;
 import com.dam.view.VGestionProd;
 import com.dam.view.VGestionStock;
+import com.dam.view.VGestionUsuarios;
 import com.dam.view.VPrincipal;
 import com.dam.view.VRegistrarse;
 import com.dam.view.VShop;
@@ -52,11 +52,10 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 	private VShop vsh;
 	private VTrans vtr;
 	private VCuenta vcuenta;
+	private VGestionUsuarios vgusr;
 
 	private TableUsuarioDAO usuarioDAO = new TableUsuarioDAO();
 	private TableCarritoDAO carritoDao = new TableCarritoDAO();
-	private TableEmpleadoDAO empleadoDAO = new TableEmpleadoDAO();
-	private TableCompradorDAO compradorDAO = new TableCompradorDAO();
 	private TableProductoDAO productoDAO = new TableProductoDAO();
 	private TableCarritoProductoDAO carritoProductoDAO = new TableCarritoProductoDAO();
 	private TableTransaccionesDAO transaccionesDAO = new TableTransaccionesDAO();
@@ -69,7 +68,7 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 	public static final int COMPRADOR = 3;
 
 	public Ctrl(VPrincipal vp, VloginForm vloginForm, VCarrito vca, VGestionEmp vgemp, VGestionProd vgprod,
-			VGestionStock vgstk, VRegistrarse vr, VShop vsh, VTrans vtr, VCuenta vcuenta) {
+			VGestionStock vgstk, VRegistrarse vr, VShop vsh, VTrans vtr, VCuenta vcuenta, VGestionUsuarios vgusr) {
 		this.vp = vp;
 		this.vlf = vloginForm;
 		this.vca = vca;
@@ -80,6 +79,7 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		this.vsh = vsh;
 		this.vtr = vtr;
 		this.vcuenta = vcuenta;
+		this.vgusr = vgusr;
 
 		vp.cargarPanel(vlf);
 
@@ -90,32 +90,36 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 	public void actionPerformed(ActionEvent e) {
 		Component src = (Component) e.getSource();
 		String ac = e.getActionCommand();
-
+		//System.out.println(ac);
 		// System.out.println(src);
 		// System.out.println(vloginForm.getBtnregister());
 
 		if (src instanceof JMenuItem) {
 			switch (ac) {
-			case ConstantesBotones.CERRAR_SESION:
-				cerrarSesion();
-				break;
 			case ConstantesBotones.GESTION_EMPLEADOS:
 				vp.cargarPanel(vgemp);
 				break;
 			case ConstantesBotones.GESTION_PRODUCTOS:
 				vp.cargarPanel(vgprod);
 				vgprod.cargarCategorias(productoDAO.selectCategorias());
-				if(productoDAO.selectProductos(null, null, null,false) != null) vgprod.cargarTabla(productoDAO.selectProductos(null, null, null,false));
+				if (productoDAO.selectProductos(null, null, null, false) != null) {
+					vgprod.cargarTabla(productoDAO.selectProductos(null, null, null, false));
+				}
 				vgprod.hideDescripcion();
 				break;
 			case ConstantesBotones.GESTION_STOCK:
 				vp.cargarPanel(vgstk);
-				if(productoDAO.selectProductos(null, null, null, true) != null) vgstk.cargarTabla(productoDAO.selectProductos(null, null, null, false));
+				if (productoDAO.selectProductos(null, null, null, true) != null) {
+					vgstk.cargarTabla(productoDAO.selectProductos(null, null, null, false));
+				}
 				vgstk.cargarCategorias(productoDAO.selectCategorias());
 				break;
 			case ConstantesBotones.VER_TRANSACCIONES:
 				vp.cargarPanel(vtr);
-				if(transaccionesDAO.selectTransacciones() != null) vtr.cargarTabla(transaccionesDAO.selectTransacciones());
+				if (transaccionesDAO.selectTransacciones() != null) {
+					vtr.chargeEmp(usuarioDAO.selectNombresEmpleados());
+					vtr.cargarTabla(transaccionesDAO.selectTransacciones());
+				}
 				break;
 			case ConstantesBotones.COMPRAR:
 				vp.cargarPanel(vsh);
@@ -127,11 +131,15 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 				vp.cargarPanel(vcuenta);
 				System.out.println(usuarioLogueado.getUserId()); // = 5
 				Comprador comp = usuarioDAO.selectComprador(usuarioLogueado.getUserId());
-				
+
 				System.out.println(comp);
-		    	if(comp != null) { 
-		    		vcuenta.cargarDatos(comp);
-		    		}
+				if (comp != null) {
+					vcuenta.cargarDatos(comp);
+				}
+				break;
+			case ConstantesBotones.GESTION_USUARIOS:
+				vp.cargarPanel(vgusr);
+				vgusr.cargarTabla(usuarioDAO.selectAllUsuarios());
 				break;
 			}
 		} else if (src instanceof JButton) {
@@ -165,41 +173,75 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 			case VCuenta.NAME:
 				acVCuenta(ac);
 				break;
+			case VGestionUsuarios.NAME:
+				acVGU(ac);
+				break;
 			}
+		}
+	}
+
+	private void acVGU(String ac) {
+		switch (ac) {
+		case ConstantesBotones.HABILITAR_USUARIO:
+			int fila = vgusr.getTblUsuarios().getSelectedRow();
+			if (fila != -1) {
+				int x = JOptionPane.showConfirmDialog(vgusr, "¿Seguro que desea habilitar este usuario?",
+						"Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				if (x == JOptionPane.YES_OPTION) {
+					JOptionPane.showMessageDialog(vgusr,
+							usuarioDAO.habilitarUsuario(vgusr.getUsuarioEnFila(fila).getUserId()), "Resultado",
+							JOptionPane.INFORMATION_MESSAGE);
+					vgusr.cargarTabla(usuarioDAO.selectAllUsuarios());
+				}
+			}
+			break;
+		case ConstantesBotones.DESHABILITAR_USUARIO:
+			int fila2 = vgusr.getTblUsuarios().getSelectedRow();
+			if (fila2 != -1) {
+				int y = JOptionPane.showConfirmDialog(vgusr, "¿Seguro que desea deshabilitar este usuario?",
+						"Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				if (y == JOptionPane.YES_OPTION) {
+					JOptionPane.showMessageDialog(vgusr,
+							usuarioDAO.deshabilitarUsuario(vgusr.getUsuarioEnFila(fila2).getUserId()), "Resultado",
+							JOptionPane.INFORMATION_MESSAGE);
+					vgusr.cargarTabla(usuarioDAO.selectAllUsuarios());
+				}
+			}
+			break;
 		}
 	}
 
 	private void acVCuenta(String ac) {
 		switch (ac) {
-	    case ConstantesBotones.MODIFICAR_COMPRADOR:
-	        Comprador comp = vcuenta.obtenerDatosFormulario(usuarioLogueado.getUserId());
-	        
-	        if (comp != null) {
-	            JOptionPane.showMessageDialog(vcuenta, usuarioDAO.updateComprador(comp),
-	                    "Resultado", JOptionPane.INFORMATION_MESSAGE);
-	            usuarioLogueado = usuarioDAO.login(comp.getNombre(), comp.getContrasenia());
-	        }
-	        break;
-	    case ConstantesBotones.DARSE_DE_BAJA:
-	    	int res = JOptionPane.showConfirmDialog(vp, "¿Seguro que desea darse de baja?",
-					"Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+		case ConstantesBotones.MODIFICAR_COMPRADOR:
+			Comprador comp = vcuenta.obtenerDatosFormulario(usuarioLogueado.getUserId());
+
+			if (comp != null) {
+				JOptionPane.showMessageDialog(vcuenta, usuarioDAO.updateComprador(comp), "Resultado",
+						JOptionPane.INFORMATION_MESSAGE);
+				usuarioLogueado = usuarioDAO.login(comp.getNombre(), comp.getContrasenia());
+			}
+			break;
+		case ConstantesBotones.DARSE_DE_BAJA:
+			int res = JOptionPane.showConfirmDialog(vp, "¿Seguro que desea darse de baja?", "Confirmación",
+					JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (res == JOptionPane.YES_OPTION) {
-				JOptionPane.showMessageDialog(vcuenta, usuarioDAO.darDeBaja(usuarioLogueado.getUserId()),
-	                    "Resultado", JOptionPane.INFORMATION_MESSAGE);
-	           
+				JOptionPane.showMessageDialog(vcuenta, usuarioDAO.deshabilitarUsuario(usuarioLogueado.getUserId()),
+						"Resultado", JOptionPane.INFORMATION_MESSAGE);
+
 				carritoActivoId = -1;
 				vca.limpiarCarrito();
-				
+
 				usuarioLogueado = null;
 				vp.quitarMenu();
 				vlf.getTxtUsuario().setText("");
 				vlf.getTxtContrasenia().setText("");
 				vp.cargarPanel(vlf);
 				vlf.getRootPane().setDefaultButton(vlf.getBtnEntrar());
-				
+
 			}
-	        break;
-	    }
+			break;
+		}
 	}
 
 	private void acVSh(String ac) {
@@ -256,7 +298,9 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 
 	private void acVT(String ac) {
 		switch (ac) {
-
+		case ConstantesBotones.BUSCAR_TRANSACCION:
+			vtr.cargarTabla(transaccionesDAO.selectTransaccionesCons(vtr.getConsulta()));
+			break;
 		}
 	}
 
@@ -483,12 +527,14 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 			vp.menuAdmin();
 			vp.cargarPanel(vgemp);
 			ArrayList<Empleado> emp = usuarioDAO.selectEmpleados(null);
-			if(emp != null) vgemp.cargarTabla(emp);
+			if (emp != null)
+				vgemp.cargarTabla(emp);
 			break;
 		case EMPLEADO:
 			vp.crearMenuBase();
 			vp.cargarPanel(vgstk);
-			if(productoDAO.selectProductos(null, null, null, true) != null) vgstk.cargarTabla(productoDAO.selectProductos(null, null, null, false));
+			if (productoDAO.selectProductos(null, null, null, true) != null)
+				vgstk.cargarTabla(productoDAO.selectProductos(null, null, null, false));
 			vgstk.cargarCategorias(productoDAO.selectCategorias());
 			break;
 		case COMPRADOR:
@@ -499,7 +545,8 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 			vca.cargarEmpleados(usuarioDAO.selectEmpleados(null));
 			carritoActivoId = carritoDao.getCarritoActivo(usuarioLogueado.getUserId());
 			Comprador comp = usuarioDAO.selectComprador(usuarioLogueado.getUserId());
-		    if (comp != null) vcuenta.cargarDatos(comp);
+			if (comp != null)
+				vcuenta.cargarDatos(comp);
 			break;
 		default:
 			vp.quitarMenu();
@@ -517,7 +564,7 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 			if (res == JOptionPane.YES_OPTION) {
 				carritoActivoId = -1;
 				vca.limpiarCarrito();
-				
+
 				usuarioLogueado = null;
 				vp.quitarMenu();
 				vlf.getTxtUsuario().setText("");
@@ -525,9 +572,9 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 				vp.cargarPanel(vlf);
 				vlf.getRootPane().setDefaultButton(vlf.getBtnEntrar());
 			}
-		}else {
-			int res = JOptionPane.showConfirmDialog(vp, "¿Seguro que desea cerrar sesion?",
-					"Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			int res = JOptionPane.showConfirmDialog(vp, "¿Seguro que desea cerrar sesion?", "Confirmación",
+					JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (res == JOptionPane.YES_OPTION) {
 				usuarioLogueado = null;
 				vp.quitarMenu();
@@ -537,7 +584,7 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 				vlf.getRootPane().setDefaultButton(vlf.getBtnEntrar());
 			}
 		}
-		
+
 	}
 
 	public Usuario getUsuarioLogueado() {
@@ -547,6 +594,15 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		Object src = e.getSource();
+
+		if (src == vp.getScrlCont()) {
+			// limpiar la tabla de la vista activa
+			vgemp.getTblEmpleados().clearSelection();
+			vgprod.getTblProductos().clearSelection();
+			vgstk.getTblProductos().clearSelection();
+			vgusr.getTblUsuarios().clearSelection();
+			vtr.getTblTransacciones().clearSelection();
+		}
 
 		if (src == vca.getTblCarrito()) {
 			int fila = vca.getTblCarrito().rowAtPoint(e.getPoint());
@@ -612,6 +668,8 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 					break;
 				}
 			}
+		}else if(src == vp.getMnCerrarSesion()) {
+			cerrarSesion();
 		}
 	}
 
@@ -630,7 +688,7 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("over");
+		// System.out.println("over");
 	}
 
 	@Override
@@ -674,18 +732,31 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 					vsh.verDescripcion(vsh.getProductoEnFila(fila).getDescripcion());
 				}
 			} else if (src == vgstk.getTblProductos().getSelectionModel()) {
-			    int fila = vgstk.getTblProductos().getSelectedRow();
-			    if (fila != -1) {
-			        vgstk.setVerMasEnabled(true);
-			        vgstk.setBtnMenosEnabled(true);
-			        if (vgstk.isDescripcionVisible()) {
-			            vgstk.verDescripcion(vgstk.getProductoEnFila(fila).getDescripcion());
-			        }
-			    } else {
-			        vgstk.setVerMasEnabled(false);
-			        vgstk.setBtnMenosEnabled(false);
-			        vgstk.hideDescripcion();
-			    }
+				int fila = vgstk.getTblProductos().getSelectedRow();
+				if (fila != -1) {
+					vgstk.setVerMasEnabled(true);
+					vgstk.setBtnMasEnabled(true);
+					vgstk.setBtnMenosEnabled(true);
+					if (vgstk.isDescripcionVisible()) {
+						vgstk.verDescripcion(vgstk.getProductoEnFila(fila).getDescripcion());
+					}
+				} else {
+					vgstk.setVerMasEnabled(false);
+					vgstk.setBtnMasEnabled(false);
+					vgstk.setBtnMenosEnabled(false);
+					vgstk.hideDescripcion();
+				}
+			} else if (src == vgusr.getSelectionModel()) {
+				// System.out.println("holi");
+				int fila = vgusr.getTblUsuarios().getSelectedRow();
+				if (fila != -1) {
+					boolean activo = vgusr.getUsuarioEnFila(fila).isActivo();
+					vgusr.setHabilitarEnabled(!activo);
+					vgusr.setDeshabilitarEnabled(activo);
+				} else {
+					vgusr.setHabilitarEnabled(false);
+					vgusr.setDeshabilitarEnabled(false);
+				}
 			}
 
 		}

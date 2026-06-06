@@ -53,7 +53,7 @@ public class VShop extends JPanel implements IPanels {
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
-		setPreferredSize(new Dimension(ANCHO, 600));
+		setBackground(VPrincipal.colorPalido);
 		setName(NAME);
 	}
 
@@ -88,7 +88,7 @@ public class VShop extends JPanel implements IPanels {
 
 		dcbmCategoria = new DefaultComboBoxModel<>();
 		dcbmCategoria.addElement("Todas");
-		cmbCategoria = new JComboBox<>(dcbmCategoria);
+		cmbCategoria = new JComboBox<String>(dcbmCategoria);
 		cmbCategoria.setBounds(501, 42, 110, 26);
 		add(cmbCategoria);
 

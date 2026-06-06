@@ -16,6 +16,7 @@ import com.dam.view.VCuenta;
 import com.dam.view.VGestionEmp;
 import com.dam.view.VGestionProd;
 import com.dam.view.VGestionStock;
+import com.dam.view.VGestionUsuarios;
 import com.dam.view.VPrincipal;
 import com.dam.view.VRegistrarse;
 import com.dam.view.VShop;
@@ -52,8 +53,9 @@ public class App {
 				VShop vsh = new VShop();
 				VTrans vtr = new VTrans();
 				VCuenta vcuenta = new VCuenta();
+				VGestionUsuarios vgusr = new VGestionUsuarios();
 				
-				Ctrl c = new Ctrl(vp,vlf, vca, vgemp, vgprod, vgstk, vr, vsh, vtr, vcuenta);
+				Ctrl c = new Ctrl(vp,vlf, vca, vgemp, vgprod, vgstk, vr, vsh, vtr, vcuenta, vgusr);
 				
 				vp.setControlador(c);
 				vlf.setControlador(c);
@@ -65,6 +67,7 @@ public class App {
 				vsh.setControlador(c);
 				vtr.setControlador(c);
 				vcuenta.setControlador(c);
+				vgusr.setControlador(c);
 				
 				vp.hacerVisible();
 				

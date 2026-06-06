@@ -45,7 +45,7 @@ public class VCarrito extends JPanel implements IPanels {
     @Override
     public void configurarVentana() {
         setSize(ANCHO, ALTO);
-        setPreferredSize(new Dimension(ANCHO, 590));
+        setBackground(VPrincipal.colorPalido);
         setName(NAME);
     }
 

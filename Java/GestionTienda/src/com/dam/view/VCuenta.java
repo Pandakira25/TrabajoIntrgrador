@@ -34,6 +34,7 @@ public class VCuenta extends JPanel implements IPanels {
     @Override
     public void configurarVentana() {
         setSize(ANCHO, ALTO);
+        setBackground(VPrincipal.colorPalido);
         setName(NAME);
     }
 

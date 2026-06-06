@@ -3,17 +3,21 @@ package com.dam.view;
 import java.awt.Font;
 import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import com.dam.ctrl.Ctrl;
 import com.dam.model.pojos.Producto;
 import com.dam.model.pojos.Transacciones;
+import javax.swing.JComboBox;
 
 public class VTrans extends JPanel implements IPanels {
 	public static final String NAME = "VTrans";
@@ -24,6 +28,11 @@ public class VTrans extends JPanel implements IPanels {
 	private JTable tblTransacciones;
 	private DefaultTableModel dtmTransacciones;
 	private JScrollPane scrpTransacciones;
+	private JTextField txtBuscarNombre;
+	private JButton btnBuscar;
+	private JLabel lblBuscarEmpleado;
+	private JComboBox<String> cmbBuscarEmpleado;
+	private DefaultComboBoxModel<String> dfcbBuscarEmpleado;
 
 	public VTrans() {
 		configurarVentana();
@@ -33,6 +42,7 @@ public class VTrans extends JPanel implements IPanels {
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
+		setBackground(VPrincipal.colorPalido);
 		setName(NAME);
 	}
 
@@ -47,19 +57,54 @@ public class VTrans extends JPanel implements IPanels {
 
 		JLabel lblInfo = new JLabel("Histórico de todas las transacciones realizadas:");
 		lblInfo.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblInfo.setBounds(35, 55, 380, 20);
+		lblInfo.setBounds(36, 85, 380, 20);
 		add(lblInfo);
 
 		scrpTransacciones = new JScrollPane();
-		scrpTransacciones.setBounds(35, 82, 710, 430);
+		scrpTransacciones.setBounds(35, 112, 710, 400);
 		add(scrpTransacciones);
 
 		tblTransacciones = new JTable();
 		tblTransacciones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrpTransacciones.setViewportView(tblTransacciones);
 		configurarTabla();
-	}
+		
+		JLabel lblBuscarComprador = new JLabel("Comprador:");
+		lblBuscarComprador.setBounds(35, 55, 75, 20);
+		add(lblBuscarComprador);
 
+		txtBuscarNombre = new JTextField();
+		txtBuscarNombre.setBounds(115, 52, 155, 26);
+		add(txtBuscarNombre);
+
+		btnBuscar = new JButton(ConstantesBotones.BUSCAR_TRANSACCION);
+		btnBuscar.setBounds(474, 52, 155, 26);
+		add(btnBuscar);
+		
+		lblBuscarEmpleado = new JLabel("Empleado:");
+		lblBuscarEmpleado.setBounds(281, 63, 58, 12);
+		add(lblBuscarEmpleado);
+		
+		dfcbBuscarEmpleado = new DefaultComboBoxModel<String>();
+		dfcbBuscarEmpleado.addElement("Todos");
+		cmbBuscarEmpleado = new JComboBox<String>(dfcbBuscarEmpleado);
+		cmbBuscarEmpleado.setBounds(345, 55, 112, 20);
+		add(cmbBuscarEmpleado);
+	}
+	
+	public String[] getConsulta() {
+		String nombre = txtBuscarNombre.getText().trim();
+		String empleado = (String)cmbBuscarEmpleado.getSelectedItem();
+		
+		if(nombre.isEmpty() && empleado.equals("todos")) {
+			return null;
+		}
+		
+	    return new String [] {
+	    		nombre.isEmpty()? null : txtBuscarNombre.getText(),
+	    		empleado.equals("Todos")? null : (String)cmbBuscarEmpleado.getSelectedItem()
+	    };
+	}
 
 	private void configurarTabla() {
 		dtmTransacciones = new DefaultTableModel() {
@@ -117,9 +162,22 @@ public class VTrans extends JPanel implements IPanels {
 		dtmTransacciones.getDataVector().clear();
 		dtmTransacciones.fireTableDataChanged();
 	}
+	
+	public void chargeEmp(String emps[]) {
+		dfcbBuscarEmpleado.removeAllElements();
+		dfcbBuscarEmpleado.addElement("Todos");
+		for (String emp : emps) {
+			dfcbBuscarEmpleado.addElement(emp);
+		}
+	}
 
 	@Override
 	public void setControlador(Ctrl c) {
-		//No tiene botones por el momento
+		btnBuscar.addActionListener(c);
+	    btnBuscar.setActionCommand(ConstantesBotones.BUSCAR_TRANSACCION);
+	}
+	
+	public JTable getTblTransacciones() {
+		return tblTransacciones;
 	}
 }

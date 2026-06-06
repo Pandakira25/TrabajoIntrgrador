@@ -37,5 +37,9 @@ public final class ConstantesBotones {
 	public static final String MI_CUENTA = "Mi cuenta";
 	public static final String MODIFICAR_COMPRADOR = "Modificar Perfil";
 	public static final String DARSE_DE_BAJA = "Darse de Baja";
+	public static final String HABILITAR_USUARIO = "Habilitar Usuario";
+	public static final String DESHABILITAR_USUARIO = "Deshabilitar Usuario";
+	public static final String GESTION_USUARIOS = "Gestión de Usuarios";
+	public static final String BUSCAR_TRANSACCION = "Buscar Transacción";
 	
 }
