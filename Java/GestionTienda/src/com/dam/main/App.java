@@ -12,6 +12,7 @@ import com.dam.model.acessbd.TableEmpleadoDAO;
 import com.dam.model.acessbd.TableProductoDAO;
 import com.dam.model.acessbd.TableTransaccionesDAO;
 import com.dam.view.VCarrito;
+import com.dam.view.VCuenta;
 import com.dam.view.VGestionEmp;
 import com.dam.view.VGestionProd;
 import com.dam.view.VGestionStock;
@@ -50,8 +51,9 @@ public class App {
 				VRegistrarse vr = new VRegistrarse();
 				VShop vsh = new VShop();
 				VTrans vtr = new VTrans();
+				VCuenta vcuenta = new VCuenta();
 				
-				Ctrl c = new Ctrl(vp,vlf, vca, vgemp, vgprod, vgstk, vr, vsh, vtr);
+				Ctrl c = new Ctrl(vp,vlf, vca, vgemp, vgprod, vgstk, vr, vsh, vtr, vcuenta);
 				
 				vp.setControlador(c);
 				vlf.setControlador(c);
@@ -62,6 +64,7 @@ public class App {
 				vr.setControlador(c);
 				vsh.setControlador(c);
 				vtr.setControlador(c);
+				vcuenta.setControlador(c);
 				
 				vp.hacerVisible();
 				

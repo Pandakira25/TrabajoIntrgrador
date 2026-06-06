@@ -45,6 +45,7 @@ public class VPrincipal extends JFrame implements IFrames {
 	private JMenu mnProductos;
 
 	private JMenu mnTransacciones;
+	private JMenuItem mntmCuenta;
 
 	public VPrincipal() {
 		configurarVentana();
@@ -77,7 +78,12 @@ public class VPrincipal extends JFrame implements IFrames {
 		
 		mnTransacciones = new JMenu("Transacciones");
 		
+		
+		
 		//-------------------------------------------------------
+		
+		mntmCuenta = new JMenuItem(ConstantesBotones.MI_CUENTA);
+		
 		mntmCerrarSesion = new JMenuItem(ConstantesBotones.CERRAR_SESION);
 		
 		mntmGestionEmp = new JMenuItem(ConstantesBotones.GESTION_EMPLEADOS);
@@ -140,6 +146,8 @@ public class VPrincipal extends JFrame implements IFrames {
 
 	public void menuComprador() {
 		crearMenuBase();
+		
+		menuBar.add(mntmCuenta);
 
 		menuBar.add(mnTienda, 0);
 		
@@ -188,6 +196,9 @@ public class VPrincipal extends JFrame implements IFrames {
 		
 		mntmCarrito.addActionListener(c);
 		mntmCarrito.setActionCommand(ConstantesBotones.CARRITO);
+		
+		mntmCuenta.addActionListener(c);
+		mntmCuenta.setActionCommand(ConstantesBotones.MI_CUENTA);
 	}
 
 	public JMenuItem getMntmShop() {

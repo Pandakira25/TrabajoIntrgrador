@@ -96,9 +96,11 @@ public class TableUsuarioDAO {
 
 	                } else if (u instanceof Comprador) {
 	                    Comprador comp = (Comprador) u;
-	                    String senComp = "INSERT INTO " + NOM_TAB_COMPRADOR + " (" + COL_COMPRADOR_ID + ") VALUES(?)";
+	                    String senComp = "INSERT INTO " + NOM_TAB_COMPRADOR + " (" + COL_COMPRADOR_ID + ", " + COL_DIRECCION + ", " + COL_N_TARJETA + ") VALUES(?,?,?)";
 	                    pstmt = con.prepareStatement(senComp);
 	                    pstmt.setInt(1, id);
+	                    pstmt.setString(2, comp.getDireccion());
+	                    pstmt.setString(3, comp.getnTarjeta());
 	                    pstmt.executeUpdate();
 	                }
 
@@ -202,5 +204,113 @@ public class TableUsuarioDAO {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	
+	public Comprador selectComprador(int id) {
+	    String sen = "SELECT u.usuario_id, u.autorizacion, u.nombre, u.contrasenia, u.activo, u.tel, " +
+	                 "c.direccion, c.n_tarjeta FROM " + NOM_TAB + " u JOIN " + NOM_TAB_COMPRADOR + " c ON u.usuario_id = c.comprador_id " +
+	                 "WHERE u.usuario_id = ?";
+
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rslt = null;
+
+	    try {
+	        con = acc.getConnection();
+	        pstmt = con.prepareStatement(sen);
+	        pstmt.setInt(1, id);
+	        rslt = pstmt.executeQuery();
+
+	        if (rslt.next()) {
+	        	System.out.println(rslt.getInt(COL_COMPRADOR_ID));
+	            return new Comprador(rslt.getInt(COL_COMPRADOR_ID), rslt.getInt("autorizacion"),
+	                    rslt.getString("nombre"), rslt.getString("contrasenia"),
+	                    rslt.getInt("tel"), rslt.getBoolean("activo"),
+	                    rslt.getString("direccion"), rslt.getString("n_tarjeta"));
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("Error: se ha producido un error al establecer la conexion con la base de datos");
+	    } finally {
+	        try {
+	            if (rslt != null) rslt.close();
+	            if (pstmt != null) pstmt.close();
+	            if (con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return null;
+	}
+
+	public String updateComprador(Comprador c) {
+	    String senUsr = "UPDATE " + NOM_TAB + " SET " + COL_NOMBRE + " = ?, " + COL_CONTRASENIA + " = ?, " + COL_TEL + " = ? WHERE " + COL_USUARIO_ID + " = ?";
+	    String senComp = "UPDATE " + NOM_TAB_COMPRADOR + " SET " + COL_DIRECCION + " = ?, " + COL_N_TARJETA + " = ? WHERE " + COL_COMPRADOR_ID + " = ?";
+
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+
+	    try {
+	        con = acc.getConnection();
+
+	        pstmt = con.prepareStatement(senUsr);
+	        pstmt.setString(1, c.getNombre());
+	        pstmt.setString(2, c.getContrasenia());
+	        pstmt.setInt(3, c.getTel());
+	        pstmt.setInt(4, c.getUserId());
+	        pstmt.executeUpdate();
+	        pstmt.close();
+
+	        pstmt = con.prepareStatement(senComp);
+	        pstmt.setString(1, c.getDireccion());
+	        pstmt.setString(2, c.getnTarjeta());
+	        pstmt.setInt(3, c.getUserId());
+	        pstmt.executeUpdate();
+
+	        return "Perfil actualizado con éxito";
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "Error: se ha producido un error al establecer la conexion con la base de datos";
+	    } finally {
+	        try {
+	            if (pstmt != null) pstmt.close();
+	            if (con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+
+	public String darDeBaja(int id) {
+	    String sen = "UPDATE " + NOM_TAB + " SET activo = 0 WHERE " + COL_USUARIO_ID + " = ?";
+
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+
+	    try {
+	        con = acc.getConnection();
+	        pstmt = con.prepareStatement(sen);
+	        pstmt.setInt(1, id);
+
+	        int f = pstmt.executeUpdate();
+	        if (f > 0) {
+	            return "Baja realizada con éxito";
+	        } else {
+	            return "Algo malo ocurrió";
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "Error: se ha producido un error al establecer la conexion con la base de datos";
+	    } finally {
+	        try {
+	            if (pstmt != null) pstmt.close();
+	            if (con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 }

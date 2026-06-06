@@ -34,5 +34,8 @@ public final class ConstantesBotones {
 	public static final String COMPRAR = "Comprar";
 	public static final String HABILITAR_PRODUCTO = "Habilitar Producto";
 	public static final String DESHABILITAR_PRODUCTO = "Deshabilitar Producto";
+	public static final String MI_CUENTA = "Mi cuenta";
+	public static final String MODIFICAR_COMPRADOR = "Modificar Perfil";
+	public static final String DARSE_DE_BAJA = "Darse de Baja";
 	
 }

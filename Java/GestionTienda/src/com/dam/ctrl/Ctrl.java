@@ -27,6 +27,7 @@ import com.dam.model.pojos.Empleado;
 import com.dam.model.pojos.Producto;
 import com.dam.model.pojos.Usuario;
 import com.dam.view.VCarrito;
+import com.dam.view.VCuenta;
 import com.dam.view.VGestionEmp;
 import com.dam.view.VGestionProd;
 import com.dam.view.VGestionStock;
@@ -50,6 +51,7 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 	private VRegistrarse vr;
 	private VShop vsh;
 	private VTrans vtr;
+	private VCuenta vcuenta;
 
 	private TableUsuarioDAO usuarioDAO = new TableUsuarioDAO();
 	private TableCarritoDAO carritoDao = new TableCarritoDAO();
@@ -67,7 +69,7 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 	public static final int COMPRADOR = 3;
 
 	public Ctrl(VPrincipal vp, VloginForm vloginForm, VCarrito vca, VGestionEmp vgemp, VGestionProd vgprod,
-			VGestionStock vgstk, VRegistrarse vr, VShop vsh, VTrans vtr) {
+			VGestionStock vgstk, VRegistrarse vr, VShop vsh, VTrans vtr, VCuenta vcuenta) {
 		this.vp = vp;
 		this.vlf = vloginForm;
 		this.vca = vca;
@@ -77,6 +79,7 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		this.vr = vr;
 		this.vsh = vsh;
 		this.vtr = vtr;
+		this.vcuenta = vcuenta;
 
 		vp.cargarPanel(vlf);
 
@@ -120,6 +123,16 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 			case ConstantesBotones.CARRITO:
 				vp.cargarPanel(vca);
 				break;
+			case ConstantesBotones.MI_CUENTA:
+				vp.cargarPanel(vcuenta);
+				System.out.println(usuarioLogueado.getUserId());
+				Comprador comp = usuarioDAO.selectComprador(usuarioLogueado.getUserId());
+				
+				System.out.println(comp);
+		    	if(comp != null) { 
+		    		vcuenta.cargarDatos(comp);
+		    		}
+				break;
 			}
 		} else if (src instanceof JButton) {
 			Container srcCont = src.getParent();
@@ -149,8 +162,33 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 			case VShop.NAME:
 				acVSh(ac);
 				break;
+			case VCuenta.NAME:
+				acVCuenta(ac);
+				break;
 			}
 		}
+	}
+
+	private void acVCuenta(String ac) {
+		switch (ac) {
+	    case ConstantesBotones.MODIFICAR_COMPRADOR:
+	        Comprador comp = vcuenta.obtenerDatosFormulario(usuarioLogueado.getUserId());
+	        
+	        if (comp != null) {
+	            JOptionPane.showMessageDialog(vcuenta, usuarioDAO.updateComprador(comp),
+	                    "Resultado", JOptionPane.INFORMATION_MESSAGE);
+	            usuarioLogueado = usuarioDAO.login(comp.getNombre(), comp.getContrasenia());
+	        }
+	        break;
+	    case ConstantesBotones.DARSE_DE_BAJA:
+	        int x = JOptionPane.showConfirmDialog(vcuenta, "¿Seguro que desea darse de baja?", "Confirmación",
+	                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+	        if (x == JOptionPane.YES_OPTION) {
+	            usuarioDAO.darDeBaja(usuarioLogueado.getUserId());
+	            cerrarSesion();
+	        }
+	        break;
+	    }
 	}
 
 	private void acVSh(String ac) {
@@ -371,6 +409,7 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 
 					vp.cargarPanel(vlf);
 					vlf.setTxtUsuario(compr.getNombre());
+					vlf.getRootPane().setDefaultButton(vlf.getBtnEntrar());
 				} else {
 					JOptionPane.showMessageDialog(vgemp, "Error al insertar el usuario.", "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -448,6 +487,8 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 			vsh.cargarTabla(productoDAO.selectProductos(null, null, null, true));
 			vca.cargarEmpleados(usuarioDAO.selectEmpleados(null));
 			carritoActivoId = carritoDao.getCarritoActivo(usuarioLogueado.getUserId());
+			Comprador comp = usuarioDAO.selectComprador(usuarioLogueado.getUserId());
+		    if (comp != null) vcuenta.cargarDatos(comp);
 			break;
 		default:
 			vp.quitarMenu();
@@ -465,14 +506,27 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 			if (res == JOptionPane.YES_OPTION) {
 				carritoActivoId = -1;
 				vca.limpiarCarrito();
+				
+				usuarioLogueado = null;
+				vp.quitarMenu();
+				vlf.getTxtUsuario().setText("");
+				vlf.getTxtContrasenia().setText("");
+				vp.cargarPanel(vlf);
+				vlf.getRootPane().setDefaultButton(vlf.getBtnEntrar());
+			}
+		}else {
+			int res = JOptionPane.showConfirmDialog(vp, "¿Seguro que desea cerrar sesion?",
+					"Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+			if (res == JOptionPane.YES_OPTION) {
+				usuarioLogueado = null;
+				vp.quitarMenu();
+				vlf.getTxtUsuario().setText("");
+				vlf.getTxtContrasenia().setText("");
+				vp.cargarPanel(vlf);
+				vlf.getRootPane().setDefaultButton(vlf.getBtnEntrar());
 			}
 		}
-		usuarioLogueado = null;
-		vp.quitarMenu();
-		vlf.getTxtUsuario().setText("");
-		vlf.getTxtContrasenia().setText("");
-		vp.cargarPanel(vlf);
-		vlf.getRootPane().setDefaultButton(vlf.getBtnEntrar());
+		
 	}
 
 	public Usuario getUsuarioLogueado() {
