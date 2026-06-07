@@ -1,14 +1,11 @@
 package com.dam.view;
 
 import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -24,38 +21,75 @@ import com.dam.model.pojos.Producto;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
+/**
+ * Panel de la vista de Gestión de Empleados (`VGestionEmp`).
+ * <p>
+ * Hereda de {@link JPanel} e implementa {@link IPanels}. Esta vista provee las herramientas 
+ * de interfaz gráfica necesarias para que los administradores den de alta nuevos miembros 
+ * del personal, realicen búsquedas filtradas por nombre, consulten el nivel de autorización y 
+ * den de baja registros de la base de datos de manera intuitiva.
+ * </p>
+ * * @author Zoe
+ * @version 1.0
+ */
 public class VGestionEmp extends JPanel implements IPanels {
+	/** Identificador único para el gestor de diseño o la navegación de paneles. */
 	public static final String NAME = "VGestionEmp";
 
+	/** Ancho útil calculado en píxeles para el panel según los márgenes de la ventana principal. */
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
+	/** Alto útil calculado en píxeles para el panel descontando la barra de menús. */
 	private static final int ALTO = VPrincipal.ALTO - VPrincipal.insetsT - VPrincipal.insetsB - VPrincipal.menuH;
 	
+	/** Almacén secuencial de los objetos Empleado recuperados y renderizados en la cuadrícula. */
 	private ArrayList<Empleado> empleadosCargados = new ArrayList<>();
 
+	/** Campo de texto destinado a la inserción del nombre del empleado. */
 	private JTextField txtNombre;
-	private JMenuBar mnBarraMenu;
-	private JMenuItem mntmGestionStock;
+	/** Campo de contraseña enmascarado para la clave de acceso del empleado. */
 	private JPasswordField txtContrasenia;
+	/** Campo de texto estructurado para el número telefónico de contacto. */
 	private JTextField txtTel;
+	/** Campo de texto destinado al Número de la Seguridad Social (NSS). */
 	private JTextField txtNSeguridad;
+	/** Campo de texto extendido para la inserción del código de cuenta bancaria IBAN. */
 	private JTextField txtIban;
+	/** Botón encargado de procesar y disparar el registro de un nuevo empleado. */
 	private JButton btnRegistrarEmp;
+	/** Botón encargado de restablecer el estado inicial de los campos del formulario. */
 	private JButton btnLimpiar;
+	/** Tabla interactiva que presenta los registros del personal contratado. */
 	private JTable tblEmpleados;
+	/** Modelo de datos estructurado para la gestión lógica de las celdas de la tabla. */
 	private DefaultTableModel dtmEmpleados;
+	/** Panel de soporte con barras de desplazamiento verticales y horizontales para la tabla. */
 	private JScrollPane scrpEmpleados;
+	/** Botón para llevar a cabo la revocación o eliminación del empleado seleccionado. */
 	private JButton btnEliminarEmp;
+	/** Etiqueta informativa que precede a la cuadrícula de datos del personal. */
 	private JLabel lblListado;
+	/** Campo de texto para ingresar los criterios de búsqueda o filtrado analítico. */
 	private JTextField txtBuscarNombre;
+	/** Etiqueta descriptiva para el componente de rango de autorización. */
 	private JLabel lblAutorizacion;
+	/** Selector numérico continuo para determinar el rango o rol de privilegios. */
 	private JSpinner spnAutorizacion;
+	/** Botón encargado de invocar la consulta de búsqueda según el filtro de texto. */
 	private JButton btnBuscarNombre;
 
+	/**
+	 * Constructor por defecto del panel de gestión de empleados.
+	 * Inicializa las propiedades de la ventana y construye el árbol de componentes gráficos.
+	 */
 	public VGestionEmp() {
 		configurarVentana();
 		crearComponentes();
 	}
 	
+	/**
+	 * Define las propiedades físicas básicas del panel, tales como su tamaño absoluto, 
+	 * el color de fondo institucional y el nombre de identidad de la vista.
+	 */
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
@@ -63,6 +97,10 @@ public class VGestionEmp extends JPanel implements IPanels {
 		setName(NAME);
 	}
 
+	/**
+	 * Instancia, personaliza con fuentes específicas y posiciona de forma absoluta 
+	 * todos los componentes interactivos y etiquetas que conforman el formulario de gestión.
+	 */
 	@Override
 	public void crearComponentes() {
 		setLayout(null);
@@ -178,8 +216,10 @@ public class VGestionEmp extends JPanel implements IPanels {
 
 	}
 
-	//corregir: hecho
-	//No se debería ver el id
+	/**
+	 * Configura el modelo interno de la tabla para impedir la edición directa de celdas,
+	 * restringe la reordenación de cabeceras mediante arrastre y determina los títulos de columna con sus respectivos anchos.
+	 */
 	private void configurarTabla() {
 		dtmEmpleados = new DefaultTableModel() {
 			@Override
@@ -201,7 +241,11 @@ public class VGestionEmp extends JPanel implements IPanels {
 		tblEmpleados.getColumnModel().getColumn(3).setPreferredWidth(220);
 	}
 
-	// corregir cargar tabla: hecho
+	/**
+	 * Despeja las selecciones visuales e inyecta la colección actualizada de empleados en la tabla.
+	 * Si la lista suministrada está vacía, emite un aviso informativo.
+	 * * @param empleados Estructura {@link ArrayList} que alberga a los objetos {@link Empleado} vigentes.
+	 */
 	public void cargarTabla(ArrayList<Empleado> empleados) {
 		tblEmpleados.clearSelection();
 		dtmEmpleados.getDataVector().clear();
@@ -223,6 +267,9 @@ public class VGestionEmp extends JPanel implements IPanels {
 		}
 	}
 
+	/**
+	 * Remueve de forma secuencial cada una de las filas activas en el modelo de la tabla.
+	 */
 	private void clearTable() {
 		int r = dtmEmpleados.getRowCount();
 		for(int i = 0; i < r; i++) {
@@ -231,11 +278,21 @@ public class VGestionEmp extends JPanel implements IPanels {
 		}
 	}
 
+	/**
+	 * Altera el estado de activación interactiva del botón encargado de suprimir empleados.
+	 * * @param b {@code true} para habilitar el botón; {@code false} para deshabilitarlo.
+	 */
 	public void setEliminarEnabled(boolean b) {
 		btnEliminarEmp.setEnabled(b);
 	}
 	
 	//TODO: validar datos
+	/**
+	 * Sanea y comprueba exhaustivamente la validez sintáctica de las entradas recolectadas en el formulario.
+	 * Genera diálogos contextuales de error si se detectan campos vacíos o tipos numéricos inválidos.
+	 * * @return Una nueva instancia mapeada de {@link Empleado} si los datos cumplen el criterio de validación; 
+	 * o {@code null} si se detectan anomalías en el llenado.
+	 */
 	public Empleado obtenerDatosFormulario() {
 		String nombre = txtNombre.getText().trim();
 		String contra = new String(txtContrasenia.getPassword()).trim();
@@ -289,6 +346,9 @@ public class VGestionEmp extends JPanel implements IPanels {
 		}
 	}
 
+	/**
+	 * Restablece las cadenas de caracteres vacías en todos los campos editables del registro.
+	 */
 	public void limpiarDatos() {
 		txtNombre.setText("");
 		txtContrasenia.setText("");
@@ -297,23 +357,44 @@ public class VGestionEmp extends JPanel implements IPanels {
 		txtIban.setText("");
 	}
 	
+	/**
+	 * Obtiene el criterio de búsqueda alfabético ingresado por el usuario en el campo de filtrado.
+	 * * @return Cadena de caracteres con el texto de consulta.
+	 */
 	public String getConsulta() {
 		return txtBuscarNombre.getText();
 	}
 	
+	/**
+	 * Proporciona el componente de tabla donde se visualiza el personal.
+	 * * @return El objeto {@link JTable} interno de la vista.
+	 */
 	public JTable getTblEmpleados() {
 		return tblEmpleados;
 	}
 	
+	/**
+	 * Facilita el acceso al modelo de gestión de selecciones asignado a la tabla de empleados.
+	 * * @return La instancia de {@link ListSelectionModel} en uso.
+	 */
 	public ListSelectionModel getSelectionModel() {
 		return tblEmpleados.getSelectionModel();
 	}
 	
 	// En VGestionEmp
+	/**
+	 * Captura la cadena de texto con el nombre del empleado que se encuentra seleccionado en la fila activa.
+	 * * @return El nombre del empleado como {@link String}.
+	 */
 	public String getNombreSeleccionado() {
 	    return (String) tblEmpleados.getValueAt(tblEmpleados.getSelectedRow(), 0);
 	}
 	
+	/**
+	 * Vincula de forma centralizada la lógica de los botones y el gestor de selecciones
+	 * de la tabla a las directivas del controlador principal.
+	 * * @param c Instancia de la clase controladora central {@link Ctrl}.
+	 */
 	@Override
 	public void setControlador(Ctrl c) {
 		btnRegistrarEmp.addActionListener(c);
@@ -331,6 +412,10 @@ public class VGestionEmp extends JPanel implements IPanels {
 		tblEmpleados.getSelectionModel().addListSelectionListener(c);
 	}
 
+	/**
+	 * Proporciona el componente de la tabla (mantiene concordancia con la referencia de empleados).
+	 * * @return El objeto {@link JTable} representativo.
+	 */
 	public JTable getTblProductos() {
 		return tblEmpleados;
 	}

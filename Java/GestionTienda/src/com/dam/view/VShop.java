@@ -20,36 +20,72 @@ import javax.swing.table.DefaultTableModel;
 import com.dam.ctrl.Ctrl;
 import com.dam.model.pojos.Producto;
 
+/**
+ * Panel de la vista de la Tienda o Catálogo (`VShop`).
+ * <p>
+ * Hereda de {@link JPanel} e implementa la interfaz {@link IPanels}. Esta vista 
+ * expone el catálogo interactivo de artículos disponibles. Permite la aplicación de 
+ * filtros combinados por nombre, rangos preestablecidos de precio y categorías, 
+ * además de gestionar la preselección de unidades y la visualización de descripciones extendidas.
+ * </p>
+ * * @author Zoe
+ * @version 1.0
+ */
 public class VShop extends JPanel implements IPanels {
+	/** Identificador único para la gestión dinámica del diseño o de la navegación de vistas. */
 	public static final String NAME = "VShop";
 
+	/** Ancho útil calculado en píxeles para el panel según los márgenes de la ventana principal. */
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
+	/** Alto útil calculado en píxeles para el panel descontando la barra de menús. */
 	private static final int ALTO = VPrincipal.ALTO - VPrincipal.insetsT - VPrincipal.insetsB - VPrincipal.menuH;
 
+	/** Campo de entrada alfabética destinado a filtrar los productos por coincidencia de nombre. */
 	private JTextField txtBuscarNombre;
+	/** Selector de caja desplegable con los rangos acotados de precios. */
 	private JComboBox<String> cmbPrecio;
+	/** Selector de caja desplegable con los nombres de las categorías comerciales disponibles. */
 	private JComboBox<String> cmbCategoria;
+	/** Modelo estructural asignado al desplegable para el manejo dinámico de las categorías. */
 	private DefaultComboBoxModel<String> dcbmCategoria;
+	/** Botón encargado de detonar la petición de búsqueda combinada según los filtros. */
 	private JButton btnBuscar;
 
+	/** Tabla interactiva principal que presenta el catálogo estructurado de artículos. */
 	private JTable tblProductos;
+	/** Modelo lógico para la manipulación y renderizado estructural de celdas en la cuadrícula. */
 	private DefaultTableModel dtmProductos;
+	/** Panel de soporte con barras de desplazamiento verticales y horizontales para la tabla. */
 	private JScrollPane scrpProductos;
 
+	/** Etiqueta descriptiva superior del bloque lateral de información adicional. */
 	private JLabel lblDescripcion;
+	/** Área de visualización de texto multilínea sin edición para la ficha técnica del producto. */
 	private JTextArea txaDescripcion;
+	/** Panel contenedor de soporte para dotar de desplazamiento al bloque lateral de texto. */
 	private JScrollPane scrpDescripcion;
+	/** Botón conmutador que expande o repliega la sección informativa lateral del ítem. */
 	private JButton btnVerMas;
+	/** Botón encargado de procesar la navegación directa o volcado de registros hacia el carrito. */
 	private JButton btnCarrito;
 	
+	/** Almacén secuencial de objetos de tipo {@link Producto} cargados en el estado actual de la vista. */
 	private ArrayList<Producto> productosCargados = new ArrayList<>();
 
 
+	/**
+	 * Constructor por defecto del panel de tienda.
+	 * Configura las dimensiones del lienzo y ensambla la totalidad de sus módulos visuales.
+	 */
 	public VShop() {
 		configurarVentana();
 		crearComponentes();
 	}
 
+	/**
+	 * Modifica los parámetros de geometría espacial del panel, fija el color pálido de
+	 * fondo institucional de la interfaz y define el nombre exclusivo de la vista.
+	 */
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
@@ -57,6 +93,10 @@ public class VShop extends JPanel implements IPanels {
 		setName(NAME);
 	}
 
+	/**
+	 * Instancia, parametriza con tipografías y fuentes corporativas, y distribuye 
+	 * de forma absoluta todos los componentes y controles gráficos Swing integrados.
+	 */
 	@Override
 	public void crearComponentes() {
 		setLayout(null);
@@ -131,6 +171,10 @@ public class VShop extends JPanel implements IPanels {
 
 	}
 
+	/**
+	 * Configura el {@link DefaultTableModel} para inhabilitar la edición directa sobre la rejilla, 
+	 * veta la reordenación de columnas mediante arrastre de ratón y dimensiona los anchos preferidos.
+	 */
 	private void configurarTabla() {
         dtmProductos = new DefaultTableModel() {
             @Override
@@ -154,6 +198,11 @@ public class VShop extends JPanel implements IPanels {
         tblProductos.getColumnModel().getColumn(4).setPreferredWidth(50);
     }
 
+	/**
+	 * Vuelca los ítems del listado provisto en las celdas lógicas del modelo de la tabla, 
+	 * restableciendo el bloque lateral informativo y las selecciones previas. Despliega un aviso si está vacío.
+	 * * @param productos El {@link ArrayList} que contiene las instancias de {@link Producto} filtradas.
+	 */
     public void cargarTabla(ArrayList<Producto> productos) {
         tblProductos.clearSelection();
         dtmProductos.getDataVector().clear();
@@ -178,6 +227,9 @@ public class VShop extends JPanel implements IPanels {
         }
     }
 
+	/**
+	 * Remueve de manera secuencial cada fila existente en el modelo de datos de la tabla.
+	 */
 	private void clearTable() {
 		int r = dtmProductos.getRowCount();
 		for (int i = 0; i < r; i++) {
@@ -186,6 +238,12 @@ public class VShop extends JPanel implements IPanels {
 		}
 	}
 
+	/**
+	 * Incrementa en una unidad el indicador de cantidad preseleccionada para la fila provista,
+	 * controlando que no se sobrepase el límite de existencias (stock) físicas del artículo.
+	 * * @param fila Posición entera de la fila referenciada en la cuadrícula.
+	 * @return {@code true} si la operación fue válida y se sumó una unidad; {@code false} si colisiona con el stock.
+	 */
 	public boolean sumarCantidad(int fila) {
 	    int cant = (int) dtmProductos.getValueAt(fila, 2);
 	    int stock = productosCargados.get(fila).getStock();
@@ -196,6 +254,11 @@ public class VShop extends JPanel implements IPanels {
 	    return false;
 	}
 
+	/**
+	 * Sustrae una unidad en el contador interno de unidades deseadas para una fila indicada,
+	 * deteniendo el decremento al alcanzar el valor basal de cero.
+	 * * @param fila Posición entera de la fila que se va a modificar.
+	 */
     public void restarCantidad(int fila) {
         int cant = (int) dtmProductos.getValueAt(fila, 2);
         if (cant > 0) {
@@ -203,18 +266,37 @@ public class VShop extends JPanel implements IPanels {
         }
     }
 
+    /**
+     * Devuelve el recuento provisional de unidades de compra marcadas en la celda correspondiente.
+     * * @param fila Índice numérico de la fila de consulta.
+     * @return El número entero con las unidades estipuladas.
+     */
     public int getCantidadEnFila(int fila) {
         return (int) dtmProductos.getValueAt(fila, 2);
     }
 
+    /**
+     * Obtiene la instancia completa del artículo en la posición provista.
+     * * @param fila Índice numérico de la consulta en el vector secuencial de productos.
+     * @return El objeto de tipo {@link Producto} correspondiente.
+     */
     public Producto getProductoEnFila(int fila) {
         return productosCargados.get(fila);
     }
 
+    /**
+     * Devuelve la referencia directa del componente de tabla de artículos.
+     * * @return El componente objeto {@link JTable} integrado en el panel.
+     */
     public JTable getTblProductos() {
         return tblProductos;
     }
 
+    /**
+     * Revela de forma interactiva el bloque lateral de detalles visuales, insertando 
+     * el texto descriptivo y conmutando la etiqueta del botón de control.
+     * * @param descripcion Cadena alfabética que contiene la ficha informativa del artículo.
+     */
     public void verDescripcion(String descripcion) {
         lblDescripcion.setVisible(true);
         scrpDescripcion.setVisible(true);
@@ -222,6 +304,9 @@ public class VShop extends JPanel implements IPanels {
         btnVerMas.setText(ConstantesBotones.VER_MENOS);
     }
 
+    /**
+     * Oculta el bloque de detalles de la interfaz gráfica y purga el texto informativo previo.
+     */
     public void hideDescripcion() {
         lblDescripcion.setVisible(false);
         scrpDescripcion.setVisible(false);
@@ -229,14 +314,28 @@ public class VShop extends JPanel implements IPanels {
         btnVerMas.setText(ConstantesBotones.VER_MAS);
     }
 
+    /**
+     * Consulta el estado de visibilidad activo del panel de ficha técnica del producto.
+     * * @return {@code true} si el scroll de descripción está visible; {@code false} en caso contrario.
+     */
     public boolean isDescripcionVisible() {
         return scrpDescripcion.isVisible();
     }
 
+    /**
+     * Altera el estado de activación o interactividad del botón Ver Más.
+     * * @param b {@code true} para habilitar el control; {@code false} para deshabilitarlo.
+     */
     public void setVerMasEnabled(boolean b) {
         btnVerMas.setEnabled(b);
     }
 
+    /**
+     * Captura los criterios de filtrado seleccionados en la cabecera del módulo de búsqueda.
+     * Sanea de espacios colindantes el texto y discrimina si se mantiene la opción genérica de búsqueda.
+     * * @return Un array indexado de cadenas {@link String} formateado de la siguiente manera:
+     * `[Nombre, Precio, Categoría]`. Retorna {@code null} si todos mantienen la opción neutra por defecto.
+     */
     public String[] getConsulta() {
         String nombre = txtBuscarNombre.getText().trim();
         String precio = (String) cmbPrecio.getSelectedItem();
@@ -253,6 +352,11 @@ public class VShop extends JPanel implements IPanels {
         };
     }
 
+    /**
+     * Sincroniza y pobla de manera dinámica las opciones de filtrado del combo de categorías,
+     * anteponiendo la opción neutra general del sistema ("Todas").
+     * * @param categorias Un {@link ArrayList} que contiene los nombres de las categorías.
+     */
     public void cargarCategorias(ArrayList<String> categorias) {
         dcbmCategoria.removeAllElements();
         dcbmCategoria.addElement("Todas");
@@ -261,6 +365,10 @@ public class VShop extends JPanel implements IPanels {
         }
     }
 
+    /**
+     * Purga los vectores de datos de la rejilla, vacía el registro de productos en memoria,
+     * limpia las cajas de texto y restaura los selectores desplegables al índice cero.
+     */
     public void limpiarDatos() {
         dtmProductos.getDataVector().clear();
         dtmProductos.fireTableDataChanged();
@@ -272,6 +380,11 @@ public class VShop extends JPanel implements IPanels {
         btnVerMas.setEnabled(false);
     }
 
+    /**
+     * Vincula los periféricos interactivos, botones de acción y manejadores de clics
+     * de celdas a la lógica unificada del controlador de eventos.
+     * * @param c Instancia de la clase controladora principal ({@link Ctrl}).
+     */
     @Override
     public void setControlador(Ctrl c) {
         btnBuscar.addActionListener(c);

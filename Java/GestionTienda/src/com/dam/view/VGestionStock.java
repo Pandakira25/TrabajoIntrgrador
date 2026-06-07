@@ -21,38 +21,77 @@ import javax.swing.table.DefaultTableModel;
 import com.dam.ctrl.Ctrl;
 import com.dam.model.pojos.Producto;
 
+/**
+ * Clase de la interfaz gráfica que representa el panel de administración de inventario (`VGestionStock`).
+ * <p>
+ * Hereda de {@link JPanel} e implementa {@link IPanels}. Esta vista proporciona al personal de la 
+ * empresa un entorno interactivo para la monitorización, filtrado y modificación ágil de las existencias 
+ * de los artículos del almacén. Permite buscar por múltiples criterios (nombre, precio, categoría), visualizar 
+ * información detallada mediante un panel de descripción colapsable y realizar incrementos o decrementos masivos 
+ * del stock en base a un valor cuantitativo de entrada.
+ * </p>
+ * * @author Zoe
+ * @version 1.0
+ */
 public class VGestionStock extends JPanel implements IPanels {
+	/** Identificador único asignado al panel para la gestión y alternancia en el layout de la aplicación. */
 	public static final String NAME = "VGestionStock";
 
+	/** Anchura neta calculada del panel basada en las dimensiones de la ventana principal y sus insets. */
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
+	/** Altura neta calculada del panel basada en las dimensiones de la ventana principal, insets y menú. */
 	private static final int ALTO = VPrincipal.ALTO - VPrincipal.insetsT - VPrincipal.insetsB - VPrincipal.menuH;
 
+	/** Campo de texto destinado a introducir la cadena o patrón para el filtrado por nombre de artículos. */
 	private JTextField txtBuscarNombre;
+	/** Componente de selección desplegable para acotar los artículos por rangos o umbrales económicos. */
 	private JComboBox<String> cmbPrecio;
+	/** Componente de selección desplegable para filtrar los artículos por su sector o categoría. */
 	private JComboBox<String> cmbCategoria;
+	/** Modelo de datos dinámico asignado para la gestión del contenido del combo box de categorías. */
 	private DefaultComboBoxModel<String> dcbmCategoria;
+	/** Botón disparador encargado de iniciar la búsqueda aplicando la colección de filtros configurada. */
 	private JButton btnBuscar;
 
+	/** Componente gráfico de tabla para renderizar los detalles analíticos de los productos mapeados. */
 	private JTable tblProductos;
+	/** Modelo de datos subyacente para el control estructurado de filas y columnas de la tabla. */
 	private DefaultTableModel dtmProductos;
+	/** Contenedor con barras de desplazamiento para albergar y permitir la navegación sobre la tabla. */
 	private JScrollPane scrpProductos;
 
+	/** Campo de texto interactivo para indicar la cantidad de unidades físicas que se sumarán o restarán del inventario. */
 	private JTextField txtCantidad;
+	/** Botón iconográfico encargado de procesar la suma de unidades de stock añadidas en el formulario. */
 	private JButton btnMas;
+	/** Botón iconográfico encargado de procesar la resta o sustracción de unidades de stock del inventario. */
 	private JButton btnMenos;
 
+	/** Etiqueta informativa que sirve de cabecera para el área de previsualización descriptiva. */
 	private JLabel lblDescripcion;
+	/** Área de texto enriquecida y multilínea dedicada a previsualizar la descripción del producto seleccionado. */
 	private JTextArea txaDescripcion;
+	/** Contenedor con barras de desplazamiento para albergar y permitir la lectura fluida en el área de texto. */
 	private JScrollPane scrpDescripcion;
+	/** Botón interactivo para alternar dinámicamente la visibilidad del panel de descripción colapsable. */
 	private JButton btnVerMas;
 	
+	/** Colección indexada que almacena temporalmente las referencias de tipo {@link Producto} cargadas en la tabla. */
 	private ArrayList<Producto> productosCargados = new ArrayList<>();
 
+	/**
+	 * Constructor por defecto de la clase.
+	 * Coordina de forma secuencial la definición de las propiedades del lienzo gráfico y la construcción de widgets.
+	 */
 	public VGestionStock() {
 		configurarVentana();
 		crearComponentes();
 	}
 
+	/**
+	 * Configura las propiedades geométricas y estéticas del panel.
+	 * Define la dimensión neta calculada, el color de fondo pálido y su nombre identificativo en el layout.
+	 */
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
@@ -60,6 +99,14 @@ public class VGestionStock extends JPanel implements IPanels {
 		setName(NAME);
 	}
 
+	/**
+	 * Inicializa, dimensiona y añade al layout absoluto todos los componentes visuales del flujo de control de existencias.
+	 * <p>
+	 * Configura los criterios de filtrado de productos, la tabla de datos principal, los botones de acción para 
+	 * incremento/decremento mediante iconos específicos cargados desde las constantes, y el área lateral colapsable 
+	 * de texto descriptivo (inicializada oculta por defecto).
+	 * </p>
+	 */
 	@Override
 	public void crearComponentes() {
 		setLayout(null);
@@ -160,6 +207,10 @@ public class VGestionStock extends JPanel implements IPanels {
 
 	// corregir: hecho
 	// No se debería cargar el id
+	/**
+	 * Realiza la definición estructural, inhabilitación de edición de celdas, cabeceras y 
+	 * asignación de anchos preferidos para las columnas de la tabla de control de stock.
+	 */
 	private void configurarTabla() {
 		dtmProductos = new DefaultTableModel() {
 			@Override
@@ -181,6 +232,15 @@ public class VGestionStock extends JPanel implements IPanels {
 	}
 
 	// corregir el cargar tabla: hecho
+	/**
+	 * Vuelca una colección dinámica de productos en el modelo de datos visual de la tabla.
+	 * <p>
+	 * Resetea las selecciones de fila, vacía los detalles informativos previos en pantalla, 
+	 * sincroniza el vector de datos e informa al usuario mediante diálogo flotante si el filtro 
+	 * no obtuvo coincidencias.
+	 * </p>
+	 * * @param productos Estructura {@link ArrayList} de entidades {@link Producto} a listar.
+	 */
 	public void cargarTabla(ArrayList<Producto> productos) {
 		tblProductos.clearSelection();
 		dtmProductos.getDataVector().clear();
@@ -204,6 +264,9 @@ public class VGestionStock extends JPanel implements IPanels {
 		}
 	}
 
+	/**
+	 * Limpia y remueve físicamente la totalidad de las filas contenidas en el modelo de datos de la tabla.
+	 */
 	private void clearTable() {
 		int r = dtmProductos.getRowCount();
 		for(int i = 0; i < r; i++) {
@@ -212,6 +275,11 @@ public class VGestionStock extends JPanel implements IPanels {
 		}
 	}	
 
+	/**
+	 * Vuelca de manera dinámica una lista de categorías del almacén directamente en el desplegable de búsquedas.
+	 * Remueve los datos existentes y respeta la opción comodín "Todas" en el índice inicial.
+	 * * @param categorias Colección de cadenas de texto con los nombres de los sectores comerciales.
+	 */
 	public void cargarCategorias(ArrayList<String> categorias) {
 		dcbmCategoria.removeAllElements();
 		dcbmCategoria.addElement("Todas");
@@ -220,6 +288,11 @@ public class VGestionStock extends JPanel implements IPanels {
 		}
 	}
 
+	/**
+	 * Hace visibles el encabezado y el visor con la descripción textual del artículo seleccionado.
+	 * Actualiza el estado estético del conmutador a modo de cierre (Ver menos).
+	 * * @param descripción Cadena de caracteres con la información textual a volcar.
+	 */
 	public void verDescripcion(String descripción) {
 		lblDescripcion.setVisible(true);
 		scrpDescripcion.setVisible(true);
@@ -229,6 +302,10 @@ public class VGestionStock extends JPanel implements IPanels {
 		btnVerMas.setActionCommand(ConstantesBotones.VER_MENOS);
 	}
 	
+	/**
+	 * Oculta por completo de la pantalla el área y la cabecera del texto descriptivo.
+	 * Borra el contenido actual del área de texto y reestablece el botón al modo inicial (Ver más).
+	 */
 	public void hideDescripcion() {
 		lblDescripcion.setVisible(false);
 		scrpDescripcion.setVisible(false);
@@ -238,18 +315,35 @@ public class VGestionStock extends JPanel implements IPanels {
 		btnVerMas.setActionCommand(ConstantesBotones.VER_MAS);
 	}
 	
-    public void setVerMasEnabled(boolean b) {
-        btnVerMas.setEnabled(b);
-    }
-    
-    public void setBtnMasEnabled(boolean b) {
-    	btnMas.setEnabled(b);
-    }
+	/**
+	 * Modifica el estado de habilitación del botón encargado de expandir/contraer la descripción.
+	 * * @param b {@code true} para activar el componente; {@code false} para congelar su interacción.
+	 */
+	public void setVerMasEnabled(boolean b) {
+		btnVerMas.setEnabled(b);
+	}
 	
-    public void setBtnMenosEnabled(boolean b) {
-        btnMenos.setEnabled(b);
-    }
+	/**
+	 * Modifica el estado de habilitación del botón para añadir stock (Mas).
+	 * * @param b {@code true} para activar el componente; {@code false} para restringirlo.
+	 */
+	public void setBtnMasEnabled(boolean b) {
+		btnMas.setEnabled(b);
+	}
+	
+	/**
+	 * Modifica el estado de habilitación del botón para reducir stock (Menos).
+	 * * @param b {@code true} para activar el componente; {@code false} para restringirlo.
+	 */
+	public void setBtnMenosEnabled(boolean b) {
+		btnMenos.setEnabled(b);
+	}
 
+	/**
+	 * Extrae y procesa aritméticamente el contenido del campo de texto cuantitativo.
+	 * En caso de que se digite una cadena inválida o no numérica, el método captura la excepción retornando la cantidad unitaria base.
+	 * * @return Valor entero parseado de las unidades indicadas en el campo de texto; o {@code 1} ante entradas erróneas.
+	 */
 	public int getCantidad() {
 		try {
 			return Integer.parseInt(txtCantidad.getText().trim());
@@ -258,6 +352,10 @@ public class VGestionStock extends JPanel implements IPanels {
 		}
 	}
 
+	/**
+	 * Inicializa por completo el estado analítico y gráfico de todos los elementos del panel.
+	 * Purga los datos mapeados en la tabla, limpia filtros, reestablece la cantidad base y congela la interacción de operaciones.
+	 */
 	public void limpiarDatos() {
 		dtmProductos.getDataVector().clear();
 		dtmProductos.fireTableDataChanged();
@@ -272,6 +370,14 @@ public class VGestionStock extends JPanel implements IPanels {
 		btnVerMas.setText(ConstantesBotones.VER_MAS);
 	}
 
+	/**
+	 * Registra el controlador unificado de la aplicación como oyente y disparador en todos los elementos interactivos.
+	 * <p>
+	 * Acopla escuchadores a los botones de búsqueda, sumadores de inventario, visualizadores 
+	 * y eventos de cambio de selección sobre las filas del listado de productos.
+	 * </p>
+	 * * @param c Instancia de la clase controladora principal {@link Ctrl}.
+	 */
 	@Override
 	public void setControlador(Ctrl c) {
 		btnBuscar.addActionListener(c);
@@ -289,6 +395,16 @@ public class VGestionStock extends JPanel implements IPanels {
 		tblProductos.getSelectionModel().addListSelectionListener(c);
 	}
 
+	/**
+	 * Compila y agrupa los estados de filtrado vigentes en el subformulario de búsqueda de almacén.
+	 * <p>
+	 * Evalúa si las entradas corresponden a los valores comodín por defecto ("Todos", "Todas" o vacío), 
+	 * traduciéndolos a referencias {@code null} para simplificar el filtrado dinámico en la capa del controlador.
+	 * </p>
+	 * * @return Un array unidimensional de cadenas de texto ({@code String[]}) de tamaño 3, donde `index[0]` 
+	 * es el nombre buscado, `index[1]` representa la escala de precio y `index[2]` contiene la categoría seleccionada. 
+	 * Retorna {@code null} si no hay ninguna regla restrictiva establecida.
+	 */
 	public String [] getConsulta() {
 		String nombre = txtBuscarNombre.getText().trim();
         String precio = (String) cmbPrecio.getSelectedItem();
@@ -304,14 +420,27 @@ public class VGestionStock extends JPanel implements IPanels {
             categoria.equals("Todas") ? null : categoria
         };	}
 
+	/**
+	 * Comprueba el estado actual de visibilidad del contenedor deslizable de descripción de la interfaz.
+	 * * @return {@code true} si el panel está desplegado en pantalla; {@code false} si permanece oculto.
+	 */
 	public boolean isDescripcionVisible() {
 		return scrpDescripcion.isVisible();
 	}
 
+	/**
+	 * Proporciona acceso directo al componente visual de la tabla de catálogo.
+	 * * @return La instancia {@link JTable} empleada para renderizar el inventario.
+	 */
 	public JTable getTblProductos() {
 		return tblProductos;
 	}
 
+	/**
+	 * Recupera el objeto completo con la información de negocio indexado en una posición específica de la lista.
+	 * * @param fila Índice numérico de la fila seleccionada.
+	 * @return El objeto de tipo {@link Producto} almacenado en esa posición del vector.
+	 */
 	public Producto getProductoEnFila(int fila) {
 		return productosCargados.get(fila);
 	}

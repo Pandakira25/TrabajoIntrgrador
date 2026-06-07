@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.JButton;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -39,34 +38,80 @@ import com.dam.view.VloginForm;
 
 import com.dam.view.ConstantesBotones;
 
+/**
+ * Clase Controlador principal de la aplicación (`Ctrl`).
+ * <p>
+ * Implementa las interfaces {@link ActionListener}, {@link MouseListener} y {@link ListSelectionListener}
+ * para gestionar el flujo de navegación entre pantallas, el comportamiento de los botones y menús,
+ * así como la interacción con las distintas tablas de la interfaz gráfica y la base de datos (DAOs).
+ * </p>
+ * * @author zoe
+ * @version 1.0
+ */
 public class Ctrl implements ActionListener, MouseListener, ListSelectionListener {
 
+	/** Vista principal (marco contenedor de la aplicación). */
 	private VPrincipal vp;
 
+	/** Vista del formulario de inicio de sesión (Login). */
 	private VloginForm vlf;
+	/** Vista del carrito de compras. */
 	private VCarrito vca;
+	/** Vista de la gestión de empleados (exclusiva de Administrador). */
 	private VGestionEmp vgemp;
+	/** Vista de la gestión de productos (CRUD de productos). */
 	private VGestionProd vgprod;
+	/** Vista de la gestión y actualización del stock de productos. */
 	private VGestionStock vgstk;
+	/** Vista del formulario de registro para nuevos compradores. */
 	private VRegistrarse vr;
+	/** Vista de la tienda/catálogo de productos para el comprador. */
 	private VShop vsh;
+	/** Vista del histórico y consulta de transacciones. */
 	private VTrans vtr;
+	/** Vista del perfil o datos de cuenta del comprador logueado. */
 	private VCuenta vcuenta;
+	/** Vista de la gestión del estado de usuarios de la aplicación. */
 	private VGestionUsuarios vgusr;
 
+	/** Objeto DAO para las operaciones sobre la tabla de usuarios. */
 	private TableUsuarioDAO usuarioDAO = new TableUsuarioDAO();
+	/** Objeto DAO para las operaciones sobre la tabla de carritos. */
 	private TableCarritoDAO carritoDao = new TableCarritoDAO();
+	/** Objeto DAO para las operaciones sobre la tabla de productos. */
 	private TableProductoDAO productoDAO = new TableProductoDAO();
+	/** Objeto DAO para gestionar la relación de productos dentro de un carrito. */
 	private TableCarritoProductoDAO carritoProductoDAO = new TableCarritoProductoDAO();
+	/** Objeto DAO para registrar y consultar transacciones. */
 	private TableTransaccionesDAO transaccionesDAO = new TableTransaccionesDAO();
 
+	/** Almacena la entidad del usuario que ha iniciado sesión actualmente. */
 	private Usuario usuarioLogueado;
+	/** Identificador del carrito activo del comprador actual. -1 si no hay ninguno. */
 	private int carritoActivoId = -1;
 
+	/** Constante de nivel de autorización para Administradores (Valor: 1). */
 	public static final int ADMIN = 1;
+	/** Constante de nivel de autorización para Empleados (Valor: 2). */
 	public static final int EMPLEADO = 2;
+	/** Constante de nivel de autorización para Compradores (Valor: 3). */
 	public static final int COMPRADOR = 3;
 
+	/**
+	 * Constructor del controlador. Inicializa las referencias de todas las vistas
+	 * necesarias y carga el panel de inicio de sesión (`VloginForm`) por defecto.
+	 * * @param vp Vista principal contenedora.
+	 * @param vloginForm Vista del formulario de inicio de sesión.
+	 * @param vca Vista del carrito de compras.
+	 * @param vgemp Vista de gestión de empleados.
+	 * @param vgprod Vista de gestión de productos.
+	 * @param vgstk Vista de gestión de existencias (stock).
+	 * @param vr Vista de registro de usuario.
+	 * @param vsh Vista de la tienda.
+	 * @param vtr Vista de transacciones.
+	 * @param vcuenta Vista de cuenta del comprador.
+	 * @param vgusr Vista de gestión de usuarios.
+	 */
 	public Ctrl(VPrincipal vp, VloginForm vloginForm, VCarrito vca, VGestionEmp vgemp, VGestionProd vgprod,
 			VGestionStock vgstk, VRegistrarse vr, VShop vsh, VTrans vtr, VCuenta vcuenta, VGestionUsuarios vgusr) {
 		this.vp = vp;
@@ -86,6 +131,13 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		vlf.getRootPane().setDefaultButton(vlf.getBtnEntrar());
 	}
 
+	/**
+	 * Captura y procesa los eventos de acción producidos por componentes que emiten
+	 * {@link ActionEvent} (por ejemplo, botones y opciones de menú).
+	 * Distingue la lógica dependiendo de si el evento proviene de un item de menú
+	 * (`JMenuItem`) o de un botón estándar (`JButton`).
+	 * * @param e Objeto con los detalles del evento de acción provocado.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Component src = (Component) e.getSource();
@@ -180,6 +232,11 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		}
 	}
 
+	/**
+	 * Procesa los comandos de acción originados dentro del panel de Gestión de Usuarios.
+	 * Permite habilitar o deshabilitar las cuentas de usuario seleccionadas.
+	 * * @param ac El comando de acción asociado al botón pulsado.
+	 */
 	private void acVGU(String ac) {
 		switch (ac) {
 		case ConstantesBotones.HABILITAR_USUARIO:
@@ -211,6 +268,11 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		}
 	}
 
+	/**
+	 * Procesa los comandos de acción originados dentro del panel Mi Cuenta del comprador.
+	 * Permite modificar los datos personales o solicitar la baja del perfil.
+	 * * @param ac El comando de acción asociado al botón pulsado.
+	 */
 	private void acVCuenta(String ac) {
 		switch (ac) {
 		case ConstantesBotones.MODIFICAR_COMPRADOR:
@@ -244,6 +306,11 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		}
 	}
 
+	/**
+	 * Procesa los comandos de acción originados dentro de la vista de Catálogo/Tienda (`VShop`).
+	 * Gestiona la búsqueda de artículos por filtros o el despliegue de su descripción extendida.
+	 * * @param ac El comando de acción asociado al botón pulsado.
+	 */
 	private void acVSh(String ac) {
 		switch (ac) {
 		case ConstantesBotones.BUSCAR_PRODUCTO:
@@ -270,6 +337,11 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		}
 	}
 
+	/**
+	 * Procesa los comandos de acción originados dentro del panel del Carrito de la compra (`VCarrito`).
+	 * Efectúa la lógica de pago de la compra, decrementando el stock de los productos.
+	 * * @param ac El comando de acción asociado al botón pulsado.
+	 */
 	private void acVCa(String ac) {
 		switch (ac) {
 		case ConstantesBotones.PAGAR:
@@ -296,6 +368,11 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		}
 	}
 
+	/**
+	 * Procesa los comandos de acción originados dentro de la vista de Transacciones (`VTrans`).
+	 * Filtra el listado histórico de transacciones del comercio según los criterios estipulados.
+	 * * @param ac El comando de acción asociado al botón pulsado.
+	 */
 	private void acVT(String ac) {
 		switch (ac) {
 		case ConstantesBotones.BUSCAR_TRANSACCION:
@@ -304,6 +381,11 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		}
 	}
 
+	/**
+	 * Procesa los comandos de acción originados en la vista de control de Existencias/Stock (`VGestionStock`).
+	 * Incrementa o decrementa de forma directa las unidades de un artículo determinado en almacén.
+	 * * @param ac El comando de acción asociado al botón pulsado.
+	 */
 	private void acVGSt(String ac) {
 		switch (ac) {
 		case ConstantesBotones.BUSCAR_PRODUCTO:
@@ -353,6 +435,11 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		}
 	}
 
+	/**
+	 * Procesa los comandos de acción de la vista CRUD para artículos y mercaderías (`VGestionProd`).
+	 * Realiza altas, modificaciones, búsquedas y lógicas de inhabilitación/habilitación de productos.
+	 * * @param ac El comando de acción asociado al botón pulsado.
+	 */
 	private void acVGP(String ac) {
 		switch (ac) {
 		case ConstantesBotones.ADD_PRODUCTO:
@@ -417,6 +504,11 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		}
 	}
 
+	/**
+	 * Procesa los comandos de acción asociados con la pantalla de Gestión de Empleados (`VGestionEmp`).
+	 * Encargado de registrar altas, realizar búsquedas o la remoción (eliminación) de personal.
+	 * * @param ac El comando de acción asociado al botón pulsado.
+	 */
 	private void acVGE(String ac) {
 		switch (ac) {
 		case ConstantesBotones.BUSCAR_EMPLEADO:
@@ -453,6 +545,11 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		}
 	}
 
+	/**
+	 * Procesa los comandos de acción de la pantalla de Registro de Compradores (`VRegistrarse`).
+	 * Valida e introduce un nuevo comprador en el sistema.
+	 * * @param ac El comando de acción asociado al botón pulsado.
+	 */
 	private void acVR(String ac) {
 		switch (ac) {
 		case ConstantesBotones.REGISTRARSE:
@@ -484,6 +581,11 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		}
 	}
 
+	/**
+	 * Procesa los comandos de acción iniciales del panel de Login (`VloginForm`).
+	 * Redirige al proceso de entrada o a la pantalla de auto-registro.
+	 * * @param ac El comando de acción asociado al botón pulsado.
+	 */
 	private void acVLF(String ac) {
 		switch (ac) {
 		case ConstantesBotones.ENTRAR:
@@ -495,6 +597,11 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		}
 	}
 
+	/**
+	 * Ejecuta la lógica de autenticación (Login) de usuarios en la plataforma.
+	 * Comprueba las credenciales contra la base de datos, verifica que la cuenta esté activa
+	 * y despliega la barra de menús y la vista asignada de acuerdo a su rol (ADMIN, EMPLEADO o COMPRADOR).
+	 */
 	private void entrar() {
 		String nombre = vlf.getUsr()[0].trim();
 		String pwd = new String(vlf.getUsr()[1]);
@@ -557,6 +664,11 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		vp.repaint();
 	}
 
+	/**
+	 * Cierra la sesión del usuario actual previa confirmación en ventana emergente.
+	 * Si el usuario es un comprador, se le notifica que los ítems del carrito pendientes se descartarán.
+	 * Limpia el estado del formulario y restablece la vista al panel de Login (`VloginForm`).
+	 */
 	private void cerrarSesion() {
 		if (usuarioLogueado.getAutorizacion() == 3) {
 			int res = JOptionPane.showConfirmDialog(vp, "¿Seguro que desea cerrar sesion? su carrito será descartado",
@@ -587,10 +699,23 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 
 	}
 
+	/**
+	 * Obtiene el objeto del usuario autenticado en la sesión actual.
+	 * * @return El {@link Usuario} logueado.
+	 */
 	public Usuario getUsuarioLogueado() {
 		return usuarioLogueado;
 	}
 
+	/**
+	 * Controla los eventos de clics del ratón en las tablas y menús de la interfaz.
+	 * <p>
+	 * Permite limpiar selecciones al clicar en zonas vacías, o interactuar directamente
+	 * pulsando en columnas específicas (añadir unidades, sustraer o remover productos) 
+	 * dentro de las tablas de `VCarrito` y `VShop`.
+	 * </p>
+	 * * @param e Detalles físicos de las coordenadas y componente del click de ratón.
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		Object src = e.getSource();
@@ -673,30 +798,54 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		}
 	}
 
+	/**
+	 * Método de la interfaz MouseListener (Sin implementación en esta versión).
+	 * * @param e Datos de evento de ratón.
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Método de la interfaz MouseListener (Sin implementación en esta versión).
+	 * * @param e Datos de evento de ratón.
+	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Método de la interfaz MouseListener (Sin implementación en esta versión).
+	 * * @param e Datos de evento de ratón.
+	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 		// System.out.println("over");
 	}
 
+	/**
+	 * Método de la interfaz MouseListener (Sin implementación en esta versión).
+	 * * @param e Datos de evento de ratón.
+	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Controla los cambios de estado en las selecciones de filas en las JTables.
+	 * <p>
+	 * Habilita o deshabilita botones dinámicamente de acuerdo al elemento marcado
+	 * en los paneles de Empleados, Gestión de Productos, Catálogo, Control de Stock y Usuarios.
+	 * </p>
+	 * * @param e El evento que caracteriza la modificación de la fila seleccionada.
+	 */
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		if (!e.getValueIsAdjusting()) {

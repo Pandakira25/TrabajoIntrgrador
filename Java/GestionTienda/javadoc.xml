@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="protected" additionalparam=" -encoding UTF-8 -docencoding UTF-8 -charset UTF-8" author="true" classpath="C:\FP\eclipse-java-2025-09-R-win32-x86_64\eclipse\plugins\org.junit_4.13.2.v20240929-1000.jar;C:\FP\eclipse-java-2025-09-R-win32-x86_64\eclipse\plugins\org.hamcrest_3.0.0.jar;Lib/sqlite-jdbc-3.51.3.0.jar" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.dam.main" source="21" sourcepath="src" splitindex="true" use="true" version="true"/>
+    </target>
+</project>

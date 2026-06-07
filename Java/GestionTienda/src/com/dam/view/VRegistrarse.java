@@ -12,25 +12,53 @@ import javax.swing.JTextField;
 import com.dam.ctrl.Ctrl;
 import com.dam.model.pojos.Comprador;
 
+/**
+ * Panel de la vista de Registro de Compradores (`VRegistrarse`).
+ * <p>
+ * Hereda de {@link JPanel} e implementa {@link IPanels}. Esta vista proporciona un formulario 
+ * interactivo destinado al alta de nuevos usuarios compradores en el sistema. Realiza 
+ * validaciones de datos en tiempo de ejecución antes de consolidar el registro.
+ * </p>
+ * * @author Zoe
+ * @version 1.0
+ */
 public class VRegistrarse extends JPanel implements IPanels {
+	/** Identificador único para el gestor de diseño o la navegación de paneles. */
 	public static final String NAME = "VRegistrarse";
 
+	/** Ancho útil en píxeles calculado para este panel según las dimensiones de la ventana principal. */
 	private static final int ANCHO = VPrincipal.ANCHO - VPrincipal.insetsL - VPrincipal.insetsR;
+	/** Alto útil en píxeles calculado para este panel considerando los márgenes de ventana. */
 	private static final int ALTO  = VPrincipal.ALTO  - VPrincipal.insetsT - VPrincipal.insetsB;
 
+	/** Campo de texto destinado al ingreso del nombre del nuevo comprador. */
 	private JTextField txtNombre;
+	/** Campo de contraseña enmascarado para la clave del nuevo perfil. */
 	private JPasswordField txtContrasenia;
+	/** Campo de texto estructurado para capturar el teléfono del usuario. */
 	private JTextField txtTel;
+	/** Campo de texto destinado a almacenar la dirección física de correspondencia. */
 	private JTextField txtDireccion;
+	/** Campo de texto destinado a la captura del número de tarjeta bancaria. */
 	private JTextField txtNTarjeta;
+	/** Botón encargado de validar y procesar la solicitud de alta en el sistema. */
 	private JButton btnRegistrar;
+	/** Botón encargado de abortar el flujo actual y regresar a la vista previa. */
 	private JButton btnCancelar;
 
+	/**
+	 * Constructor por defecto del panel de registro.
+	 * Inicializa las propiedades de dimensionamiento geométrico y ensambla los componentes.
+	 */
 	public VRegistrarse() {
 		configurarVentana();
 		crearComponentes();
 	}
 
+	/**
+	 * Configura los parámetros espaciales iniciales del panel, asigna el fondo cromático
+	 * pálido y establece el nombre clave de identidad del contenedor.
+	 */
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
@@ -38,6 +66,10 @@ public class VRegistrarse extends JPanel implements IPanels {
 		setName(NAME);
 	}
 
+	/**
+	 * Instancia, personaliza con estilos tipográficos y posiciona de manera absoluta
+	 * mediante coordenadas fijas todos los componentes interactivos y etiquetas del formulario.
+	 */
 	@Override
 	public void crearComponentes() {
 		setLayout(null);
@@ -96,6 +128,9 @@ public class VRegistrarse extends JPanel implements IPanels {
 		add(btnCancelar);
 	}
 
+	/**
+	 * Restablece y vacía el texto contenido en todos los campos editables del formulario.
+	 */
 	public void limpiarDatos() {
 		txtNombre.setText("");
 		txtContrasenia.setText("");
@@ -104,6 +139,11 @@ public class VRegistrarse extends JPanel implements IPanels {
 		txtNTarjeta.setText("");
 	}
 
+	/**
+	 * Conecta los botones de la vista al controlador del patrón MVC, configurando
+	 * adicionalmente sus respectivos comandos de acción.
+	 * * @param c Instancia de la clase controladora principal {@link Ctrl}.
+	 */
 	@Override
 	public void setControlador(Ctrl c) {
 		btnRegistrar.addActionListener(c);
@@ -115,6 +155,16 @@ public class VRegistrarse extends JPanel implements IPanels {
 	
 	
 	//TODO: Comprobaciones
+	/**
+	 * Extrae, sanea de espacios en blanco y valida la integridad de los datos ingresados en el formulario.
+	 * <p>
+	 * Evalúa que ningún campo requerido se encuentre vacío y comprueba mediante captura de excepciones
+	 * que la cadena del teléfono corresponda a un formato numérico entero válido. Despliega ventanas emergentes
+	 * informativas en caso de error.
+	 * </p>
+	 * * @return Un objeto {@link Comprador} debidamente instanciado con los valores del formulario si pasan 
+	 * la validación; o {@code null} en caso de detectarse incongruencias en el rellenado.
+	 */
 	public Comprador obtenerDatos() {
 		String nombre    = txtNombre.getText().trim();
 		String contra    = new String(txtContrasenia.getPassword()).trim();

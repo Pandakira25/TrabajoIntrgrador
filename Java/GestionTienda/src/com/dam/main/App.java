@@ -7,8 +7,6 @@ import com.dam.ctrl.Ctrl;
 import com.dam.model.acessbd.AccessDBProp;
 import com.dam.model.acessbd.TableCarritoDAO;
 import com.dam.model.acessbd.TableCarritoProductoDAO;
-import com.dam.model.acessbd.TableCompradorDAO;
-import com.dam.model.acessbd.TableEmpleadoDAO;
 import com.dam.model.acessbd.TableProductoDAO;
 import com.dam.model.acessbd.TableTransaccionesDAO;
 import com.dam.view.VCarrito;
@@ -38,8 +36,6 @@ public class App {
 			public void run() {
 				TableCarritoDAO tca = new TableCarritoDAO();
 				TableCarritoProductoDAO tcap = new TableCarritoProductoDAO();
-				TableCompradorDAO tco = new TableCompradorDAO();
-				TableEmpleadoDAO te = new TableEmpleadoDAO();
 				TableProductoDAO tp = new TableProductoDAO();
 				TableTransaccionesDAO ttr = new TableTransaccionesDAO();
 				

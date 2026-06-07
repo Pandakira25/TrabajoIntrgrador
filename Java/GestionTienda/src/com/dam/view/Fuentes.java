@@ -4,9 +4,23 @@ import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 
+/**
+ * Clase de utilidad para la gestión y carga de tipografías personalizadas en la aplicación (`Fuentes`).
+ * <p>
+ * Centraliza la inicialización de los estilos de la fuente corporativa "Nunito" (Regular, Bold y Medium) 
+ * desde archivos locales TrueType (TTF). Las fuentes se registran dinámicamente en el entorno gráfico 
+ * local mediante {@link GraphicsEnvironment}. En caso de fallo o ausencia de los archivos de recursos, 
+ * la clase implementa un mecanismo de contingencia ("fallback") aplicando por defecto la familia tipográfica "Tahoma".
+ * </p>
+ * * @author Zoe
+ * @version 1.0
+ */
 public class Fuentes {
+    /** Representa la variante de estilo normal o regular de la fuente, con un tamaño por defecto de 14 puntos. */
     public static Font REGULAR;
+    /** Representa la variante de estilo negrita o bold de la fuente, con un tamaño por defecto de 14 puntos. */
     public static Font BOLD;
+    /** Representa la variante de estilo medio o medium de la fuente, con un tamaño por defecto de 14 puntos. */
     public static Font MEDIUM;
 
     static {
@@ -22,7 +36,7 @@ public class Fuentes {
             GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(MEDIUM);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("aaaaaaaaa");
+            //System.out.println("aaaaaaaaa");
             REGULAR = new Font("Tahoma", Font.PLAIN, 14);
             BOLD = new Font("Tahoma", Font.BOLD, 14);
             MEDIUM = new Font("Tahoma", Font.PLAIN, 14);
