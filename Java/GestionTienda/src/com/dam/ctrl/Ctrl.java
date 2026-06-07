@@ -221,23 +221,29 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		case ConstantesBotones.MAS:
 			int filaMas = vgstk.getTblProductos().getSelectedRow();
 			if (filaMas != -1) {
-				int cantidad = vgstk.getCantidad();
+				Integer cantidadMas = vgstk.obtenerCantidadValidada();
+				if (cantidadMas == null) {
+					break;
+				}
 				Producto p = vgstk.getProductoEnFila(filaMas);
-				productoDAO.incrementarStock(p.getId(), cantidad);
+				productoDAO.incrementarStock(p.getId(), cantidadMas);
 				vgstk.cargarTabla(productoDAO.selectProductos(null, null, null, false));
 			}
 			break;
 		case ConstantesBotones.MENOS:
 			int filaMenos = vgstk.getTblProductos().getSelectedRow();
 			if (filaMenos != -1) {
-				int cantidad = vgstk.getCantidad();
+				Integer cantidadMenos = vgstk.obtenerCantidadValidada();
+				if (cantidadMenos == null) {
+					break;
+				}
 				Producto p = vgstk.getProductoEnFila(filaMenos);
-				if (cantidad > p.getStock()) {
+				if (cantidadMenos > p.getStock()) {
 					JOptionPane.showMessageDialog(vgstk,
 							"No puedes restar más stock del disponible. Stock actual: " + p.getStock(),
 							"Stock insuficiente", JOptionPane.WARNING_MESSAGE);
 				} else {
-					productoDAO.decrementarStock(p.getId(), cantidad);
+					productoDAO.decrementarStock(p.getId(), cantidadMenos);
 					vgstk.cargarTabla(productoDAO.selectProductos(null, null, null, false));
 				}
 			}
@@ -268,6 +274,11 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 			}
 			break;
 		case ConstantesBotones.MODIFICAR_PRODUCTO:
+			if (vgprod.getIdSeleccionado() == -1) {
+				JOptionPane.showMessageDialog(vgprod, "Selecciona un producto de la tabla para modificar.",
+						"Error de datos", JOptionPane.WARNING_MESSAGE);
+				break;
+			}
 			Producto modificado = vgprod.obtenerDatosFormulario();
 			if (modificado != null) {
 				JOptionPane.showMessageDialog(vgprod, productoDAO.updateProducto(modificado),
@@ -358,21 +369,17 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 	private void acVR(String ac) {
 		switch (ac) {
 		case ConstantesBotones.REGISTRARSE:
-			if (vr.obtenerDatos() != null) {
-				Comprador compr = vr.obtenerDatos();
+			Comprador compr = vr.obtenerDatos();
+			if (compr != null) {
 				if (usuarioDAO.insertUsr(compr) > 0) {
-					JOptionPane.showMessageDialog(vgemp, "Usuario insertado con éxito.", "Resultado",
+					JOptionPane.showMessageDialog(vr, "Usuario insertado con éxito.", "Resultado",
 							JOptionPane.INFORMATION_MESSAGE);
-
 					vp.cargarPanel(vlf);
 					vlf.setTxtUsuario(compr.getNombre());
 				} else {
-					JOptionPane.showMessageDialog(vgemp, "Error al insertar el usuario.", "Error",
+					JOptionPane.showMessageDialog(vr, "Error al insertar el usuario.", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
-			} else {
-				JOptionPane.showMessageDialog(vr, "El teléfono es obligatorio.", "Error de datos",
-						JOptionPane.ERROR_MESSAGE);
 			}
 			break;
 		case ConstantesBotones.CANCELAR:

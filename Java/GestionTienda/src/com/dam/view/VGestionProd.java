@@ -343,7 +343,6 @@ public class VGestionProd extends JPanel implements IPanels {
 		btnAgregarProd.setEnabled(b);
 	}
 
-	// TODO: validación de datos
 	public Producto obtenerDatosFormulario() {
 		String nombre = txtNombre.getText().trim();
 		String categoria = txtCategoria.getText().trim();
@@ -351,41 +350,56 @@ public class VGestionProd extends JPanel implements IPanels {
 		String stockStr = txtStock.getText().trim();
 		String descripcion = txtDescripcion.getText().trim();
 
-		boolean valid = true;
-
 		if (nombre.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Error de datos",
 					JOptionPane.ERROR_MESSAGE);
-			valid = false;
+			return null;
+		}
+		if (categoria.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "La categoría es obligatoria.", "Error de datos",
+					JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		if (precioStr.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "El precio es obligatorio.", "Error de datos",
+					JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		if (stockStr.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "El stock es obligatorio.", "Error de datos",
+					JOptionPane.ERROR_MESSAGE);
+			return null;
 		}
 
-		double precio = 0;
-		int stock = 0;
-
+		double precio;
+		int stock;
 		try {
-			if (!precioStr.isEmpty()) {
-				precio = Double.parseDouble(precioStr);
-			}
+			precio = Double.parseDouble(precioStr);
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(this, "El precio debe ser un número decimal.", "Error de datos",
 					JOptionPane.ERROR_MESSAGE);
-			valid = false;
+			return null;
 		}
 		try {
-			if (!stockStr.isEmpty()) {
-				stock = Integer.parseInt(stockStr);
-			}
+			stock = Integer.parseInt(stockStr);
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(this, "El stock debe ser un número entero.", "Error de datos",
 					JOptionPane.ERROR_MESSAGE);
-			valid = false;
-		}
-
-		if (valid) {
-			return new Producto(idSeleccionado, nombre, categoria, precio, descripcion, stock, true);
-		} else {
 			return null;
 		}
+
+		if (precio < 0) {
+			JOptionPane.showMessageDialog(this, "El precio no puede ser negativo.", "Error de datos",
+					JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		if (stock < 0) {
+			JOptionPane.showMessageDialog(this, "El stock no puede ser negativo.", "Error de datos",
+					JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+
+		return new Producto(idSeleccionado, nombre, categoria, precio, descripcion, stock, true);
 	}
 
 	public String[] getConsulta() {

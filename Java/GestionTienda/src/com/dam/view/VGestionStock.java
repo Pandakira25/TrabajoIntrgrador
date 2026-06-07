@@ -254,6 +254,32 @@ public class VGestionStock extends JPanel implements IPanels {
 		}
 	}
 
+	/**
+	 * Valida la cantidad introducida para ajustes de stock.
+	 * @return cantidad válida o null si hay error
+	 */
+	public Integer obtenerCantidadValidada() {
+		String texto = txtCantidad.getText().trim();
+		if (texto.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "La cantidad es obligatoria.", "Error de datos",
+					JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		try {
+			int cantidad = Integer.parseInt(texto);
+			if (cantidad <= 0) {
+				JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor que cero.", "Error de datos",
+						JOptionPane.ERROR_MESSAGE);
+				return null;
+			}
+			return cantidad;
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "La cantidad debe ser un número entero.", "Error de datos",
+					JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+	}
+
 	public void limpiarDatos() {
 		dtmProductos.getDataVector().clear();
 		dtmProductos.fireTableDataChanged();
