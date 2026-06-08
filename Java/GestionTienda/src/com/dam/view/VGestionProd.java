@@ -399,7 +399,7 @@ public class VGestionProd extends JPanel implements IPanels {
 		separator.setBackground(VPrincipal.colorNaranjaPatito);
 		add(separator);
 
-		lblVerDescripcion = new JLabel("Descripcion:");
+		lblVerDescripcion = new JLabel("Descripción:");
 		lblVerDescripcion.setBounds(892, 258, 115, 25);
 		lblVerDescripcion.setFont(Fuentes.MEDIUM.deriveFont(16f));
 		lblVerDescripcion.setForeground(VPrincipal.colorLetras);

@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.dam.ctrl.Ctrl;
 import com.dam.model.pojos.Producto;
+import javax.swing.SwingConstants;
 
 /**
  * Clase de la interfaz gráfica que representa el panel de administración de
@@ -274,13 +275,14 @@ public class VGestionStock extends JPanel implements IPanels {
 
 		// --- Panel derecho: cantidad ---
 		JLabel lblCantInfo = new JLabel("Ingrese la cantidad a añadir/eliminar");
-		lblCantInfo.setBounds(869, 166, 224, 26);
-		lblCantInfo.setFont(Fuentes.MEDIUM.deriveFont(12f));
+		lblCantInfo.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCantInfo.setBounds(869, 166, 286, 26);
+		lblCantInfo.setFont(Fuentes.MEDIUM.deriveFont(16f));
 		lblCantInfo.setForeground(VPrincipal.colorLetras);
 		add(lblCantInfo);
 
 		spnCantidad = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
-		spnCantidad.setBounds(869, 213, 62, 38);
+		spnCantidad.setBounds(869, 193, 62, 38);
 		spnCantidad.setFont(Fuentes.REGULAR.deriveFont(16f));
 		spnCantidad.setForeground(VPrincipal.colorLetras);
 		((JSpinner.DefaultEditor) spnCantidad.getEditor()).getTextField().setEditable(false);
@@ -291,11 +293,11 @@ public class VGestionStock extends JPanel implements IPanels {
 		btnMas.setFont(Fuentes.MEDIUM.deriveFont(16f));
 		btnMas.setForeground(VPrincipal.colorLetras);
 		btnMas.setBackground(VPrincipal.colorNaranjaPatito);
-		btnMas.setBounds(953, 223, 38, 28);
+		btnMas.setBounds(941, 203, 38, 28);
 		add(btnMas);
 
 		btnMenos = new JButton(new ImageIcon(ConstantesBotones.MENOSICONO));
-		btnMenos.setBounds(1001, 223, 38, 28);
+		btnMenos.setBounds(989, 203, 38, 28);
 		btnMenos.setFont(Fuentes.MEDIUM.deriveFont(16f));
 		btnMenos.setForeground(VPrincipal.colorLetras);
 		btnMenos.setBackground(VPrincipal.colorNaranjaPatito);
@@ -305,23 +307,23 @@ public class VGestionStock extends JPanel implements IPanels {
 		lblDescripcion = new JLabel("Descripción");
 		lblDescripcion.setFont(Fuentes.MEDIUM.deriveFont(16f));
 		lblDescripcion.setForeground(VPrincipal.colorLetras);
-		lblDescripcion.setBounds(869, 296, 100, 20);
+		lblDescripcion.setBounds(869, 254, 100, 20);
 		lblDescripcion.setVisible(false);
 		add(lblDescripcion);
 
 		scrpDescripcion = new JScrollPane();
-		scrpDescripcion.setBounds(867, 326, 531, 212);
+		scrpDescripcion.setBounds(869, 284, 531, 264);
 		scrpDescripcion.setVisible(false);
 		add(scrpDescripcion);
-
-		txaDescripcion = new JTextArea();
-		scrpDescripcion.setViewportView(txaDescripcion);
-		txaDescripcion.setLineWrap(true);
-		txaDescripcion.setWrapStyleWord(true);
-		txaDescripcion.setEditable(false);
-		txaDescripcion.setFont(Fuentes.REGULAR.deriveFont(14f));
-		txaDescripcion.setForeground(VPrincipal.colorLetras);
-		txaDescripcion.setBackground(VPrincipal.colorVibrante);
+				
+						txaDescripcion = new JTextArea();
+						scrpDescripcion.setViewportView(txaDescripcion);
+						txaDescripcion.setLineWrap(true);
+						txaDescripcion.setWrapStyleWord(true);
+						txaDescripcion.setEditable(false);
+						txaDescripcion.setFont(Fuentes.REGULAR.deriveFont(14f));
+						txaDescripcion.setForeground(VPrincipal.colorLetras);
+						txaDescripcion.setBackground(VPrincipal.colorVibrante);
 	}
 
 	/**
