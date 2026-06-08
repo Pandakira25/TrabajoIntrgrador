@@ -4,3 +4,6 @@
 *.class
 *.db-shm
 *.db-wal
+*.db.wal
+/bin/
+*.db
