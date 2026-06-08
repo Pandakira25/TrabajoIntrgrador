@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.dam.ctrl.Ctrl;
 import com.dam.model.pojos.Producto;
+import com.dam.model.pojos.Producto;
 
 public class VGestionStock extends JPanel implements IPanels {
 	public static final String NAME = "VGestionStock";
@@ -56,7 +57,7 @@ public class VGestionStock extends JPanel implements IPanels {
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
-		setPreferredSize(new Dimension(ANCHO, 620));
+		setBackground(VPrincipal.colorPalido);
 		setName(NAME);
 	}
 
@@ -241,6 +242,10 @@ public class VGestionStock extends JPanel implements IPanels {
     public void setVerMasEnabled(boolean b) {
         btnVerMas.setEnabled(b);
     }
+    
+    public void setBtnMasEnabled(boolean b) {
+    	btnMas.setEnabled(b);
+    }
 	
     public void setBtnMenosEnabled(boolean b) {
         btnMenos.setEnabled(b);
@@ -259,23 +264,10 @@ public class VGestionStock extends JPanel implements IPanels {
 	 * @return cantidad válida o null si hay error
 	 */
 	public Integer obtenerCantidadValidada() {
-		String texto = txtCantidad.getText().trim();
-		if (texto.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "La cantidad es obligatoria.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
 		try {
-			int cantidad = Integer.parseInt(texto);
-			if (cantidad <= 0) {
-				JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor que cero.", "Error de datos",
-						JOptionPane.ERROR_MESSAGE);
-				return null;
-			}
-			return cantidad;
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "La cantidad debe ser un número entero.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
+			return Producto.parseCantidadMovimiento(txtCantidad.getText());
+		} catch (IllegalArgumentException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error de datos", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 	}

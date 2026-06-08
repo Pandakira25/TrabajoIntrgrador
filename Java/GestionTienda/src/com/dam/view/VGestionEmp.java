@@ -59,6 +59,7 @@ public class VGestionEmp extends JPanel implements IPanels {
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
+		setBackground(VPrincipal.colorPalido);
 		setName(NAME);
 	}
 
@@ -235,54 +236,19 @@ public class VGestionEmp extends JPanel implements IPanels {
 	}
 	
 	public Empleado obtenerDatosFormulario() {
-		String nombre = txtNombre.getText().trim();
-		String contra = new String(txtContrasenia.getPassword()).trim();
-		String telStr = txtTel.getText().trim();
-		String nSeguridad = txtNSeguridad.getText().trim();
-		String iban = txtIban.getText().trim();
-		int autorizacion = (int) spnAutorizacion.getValue();
-
-		if (nombre.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-		if (contra.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-		if (telStr.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "El teléfono es obligatorio.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-		if (nSeguridad.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "El número de seguridad social es obligatorio.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-		if (iban.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "El IBAN es obligatorio.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-
-		int tel;
 		try {
-			tel = Integer.parseInt(telStr);
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "El teléfono debe ser un número entero.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
+			return new Empleado(
+					(int) spnAutorizacion.getValue(),
+					txtNombre.getText(),
+					new String(txtContrasenia.getPassword()),
+					txtTel.getText(),
+					true,
+					txtNSeguridad.getText(),
+					txtIban.getText());
+		} catch (IllegalArgumentException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error de datos", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		if (tel <= 0) {
-			JOptionPane.showMessageDialog(this, "El teléfono debe ser un número positivo.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-
-		return new Empleado(autorizacion, nombre, contra, tel, true, nSeguridad, iban);
 	}
 
 	public void limpiarDatos() {

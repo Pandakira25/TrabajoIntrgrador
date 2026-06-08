@@ -34,6 +34,7 @@ public class VRegistrarse extends JPanel implements IPanels {
 	@Override
 	public void configurarVentana() {
 		setSize(ANCHO, ALTO);
+		setBackground(VPrincipal.colorPalido);
 		setName(NAME);
 	}
 
@@ -113,52 +114,16 @@ public class VRegistrarse extends JPanel implements IPanels {
 	}
 
 	public Comprador obtenerDatos() {
-		String nombre = txtNombre.getText().trim();
-		String contra = new String(txtContrasenia.getPassword()).trim();
-		String telStr = txtTel.getText().trim();
-		String direccion = txtDireccion.getText().trim();
-		String nTarjeta = txtNTarjeta.getText().trim();
-
-		if (nombre.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-		if (contra.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-		if (telStr.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "El teléfono es obligatorio.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-		if (direccion.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "La dirección es obligatoria.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-		if (nTarjeta.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Debe ingresar una tarjeta.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-
-		int tel;
 		try {
-			tel = Integer.parseInt(telStr);
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "El teléfono debe ser un número entero.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
+			return new Comprador(
+					txtNombre.getText(),
+					new String(txtContrasenia.getPassword()),
+					txtTel.getText(),
+					txtDireccion.getText(),
+					txtNTarjeta.getText());
+		} catch (IllegalArgumentException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error de datos", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		if (tel <= 0) {
-			JOptionPane.showMessageDialog(this, "El teléfono debe ser un número positivo.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-
-		return new Comprador(nombre, contra, tel, direccion, nTarjeta);
 	}
 }
