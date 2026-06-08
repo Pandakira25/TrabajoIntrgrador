@@ -106,6 +106,7 @@ public class VCarrito extends JPanel implements IPanels {
         tblCarrito.getTableHeader().setForeground(VPrincipal.colorLetras);
         tblCarrito.getTableHeader().setFont(Fuentes.MEDIUM.deriveFont(16f));
         tblCarrito.setFont(Fuentes.REGULAR.deriveFont(14f));
+        tblCarrito.setForeground(VPrincipal.colorLetras);
         tblCarrito.setRowHeight(28);
         scrpCarrito.setViewportView(tblCarrito);
         configurarTabla();
@@ -134,6 +135,7 @@ public class VCarrito extends JPanel implements IPanels {
         btnPagar = new JButton(ConstantesBotones.PAGAR);
         btnPagar.setBackground(VPrincipal.colorNaranjaPatito);
         btnPagar.setFont(Fuentes.MEDIUM.deriveFont(16f));
+        btnPagar.setForeground(VPrincipal.colorLetras);
         btnPagar.setBounds(722, 779, 120, 30);
         add(btnPagar);
     }

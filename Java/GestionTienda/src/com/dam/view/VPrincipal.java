@@ -32,7 +32,7 @@ public class VPrincipal extends JFrame implements IFrames {
 	/** Ancho por defecto de la ventana principal en píxeles. */
 	public static final int ANCHO = 1440;
 	/** Alto por defecto de la ventana principal en píxeles. */
-	public static final int ALTO = 1024;
+	public static final int ALTO = 1070;
 
 	/** Margen (inset) derecho de la ventana obtenido en tiempo de ejecución. */
 	public static int insetsR;

@@ -85,26 +85,39 @@ public class VGestionUsuarios extends JPanel implements IPanels {
         setLayout(null);
 
         JLabel lblTitulo = new JLabel("Gestión de Usuarios");
-        lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblTitulo.setFont(Fuentes.BOLD.deriveFont(20f));
+        lblTitulo.setForeground(VPrincipal.colorLetras);
         lblTitulo.setBounds(15, 16, 300, 25);
         add(lblTitulo);
 
         scrpUsuarios = new JScrollPane();
-        scrpUsuarios.setBounds(35, 55, 710, 430);
+        scrpUsuarios.setBounds(15, 56, 827, 688);
+        scrpUsuarios.getViewport().setBackground(VPrincipal.colorVibrante);
         add(scrpUsuarios);
 
         tblUsuarios = new JTable();
         tblUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblUsuarios.setFont(Fuentes.REGULAR.deriveFont(14f));
+        tblUsuarios.setForeground(VPrincipal.colorLetras);
+        tblUsuarios.getTableHeader().setBackground(VPrincipal.colorNaranjaPatito);
+        tblUsuarios.getTableHeader().setFont(Fuentes.MEDIUM.deriveFont(16f));
+        tblUsuarios.getTableHeader().setForeground(VPrincipal.colorLetras);
         scrpUsuarios.setViewportView(tblUsuarios);
         configurarTabla();
 
         btnHabilitar = new JButton(ConstantesBotones.HABILITAR_USUARIO);
-        btnHabilitar.setBounds(35, 500, 175, 30);
+        btnHabilitar.setBounds(15, 770, 175, 30);
+        btnHabilitar.setBackground(VPrincipal.colorNaranjaPatito);
+        btnHabilitar.setForeground(VPrincipal.colorLetras);
+        btnHabilitar.setFont(Fuentes.MEDIUM.deriveFont(16f));
         btnHabilitar.setEnabled(false);
         add(btnHabilitar);
 
         btnDeshabilitar = new JButton(ConstantesBotones.DESHABILITAR_USUARIO);
-        btnDeshabilitar.setBounds(570, 500, 175, 30);
+        btnDeshabilitar.setBounds(212, 770, 193, 30);
+        btnDeshabilitar.setFont(Fuentes.MEDIUM.deriveFont(16f));
+        btnDeshabilitar.setForeground(VPrincipal.colorLetras);
+        btnDeshabilitar.setBackground(VPrincipal.colorNaranjaPatito);
         btnDeshabilitar.setEnabled(false);
         add(btnDeshabilitar);
     }

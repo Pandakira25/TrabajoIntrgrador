@@ -78,7 +78,7 @@ public class VCuenta extends JPanel implements IPanels {
         JLabel lblTitulo = new JLabel("Mi Perfil");
         lblTitulo.setFont(Fuentes.BOLD.deriveFont(24f));
         lblTitulo.setForeground(VPrincipal.colorLetras);
-        lblTitulo.setBounds(15, 16, 300, 25);
+        lblTitulo.setBounds(35, 10, 145, 25);
         add(lblTitulo);
 
         JLabel lblNombre = new JLabel("Nombre:");
@@ -106,35 +106,52 @@ public class VCuenta extends JPanel implements IPanels {
         add(txtContrasenia);
 
         JLabel lblTel = new JLabel("Teléfono:");
-        lblTel.setBounds(35, 143, 80, 20);
+        lblTel.setBounds(35, 143, 105, 20);
+        lblTel.setFont(Fuentes.MEDIUM.deriveFont(20f));
+        lblTel.setForeground(VPrincipal.colorLetras);
         add(lblTel);
 
         txtTel = new JTextField();
         txtTel.setBounds(165, 141, 200, 26);
+        txtTel.setForeground(VPrincipal.colorLetras);
+        txtTel.setFont(Fuentes.REGULAR.deriveFont(16f));
         add(txtTel);
 
         JLabel lblDireccion = new JLabel("Dirección:");
-        lblDireccion.setBounds(35, 185, 80, 20);
+        lblDireccion.setBounds(35, 185, 105, 20);
+        lblDireccion.setFont(Fuentes.MEDIUM.deriveFont(20f));
+        lblDireccion.setForeground(VPrincipal.colorLetras);
         add(lblDireccion);
 
         txtDireccion = new JTextField();
         txtDireccion.setBounds(165, 183, 200, 26);
+        txtDireccion.setFont(Fuentes.REGULAR.deriveFont(16f));
         add(txtDireccion);
 
         JLabel lblNTarjeta = new JLabel("N. Tarjeta:");
-        lblNTarjeta.setBounds(35, 227, 80, 20);
+        lblNTarjeta.setBounds(35, 227, 105, 20);
+        lblNTarjeta.setFont(Fuentes.MEDIUM.deriveFont(20f));
+        lblNTarjeta.setForeground(VPrincipal.colorLetras);
         add(lblNTarjeta);
 
         txtNTarjeta = new JTextField();
         txtNTarjeta.setBounds(165, 225, 200, 26);
+        txtNTarjeta.setFont(Fuentes.REGULAR.deriveFont(16f));
+        txtNTarjeta.setForeground(VPrincipal.colorLetras);
         add(txtNTarjeta);
 
         btnModificar = new JButton(ConstantesBotones.MODIFICAR_COMPRADOR);
-        btnModificar.setBounds(235, 304, 175, 30);
+        btnModificar.setBounds(228, 279, 175, 30);
+        btnModificar.setFont(Fuentes.MEDIUM.deriveFont(16f));
+        btnModificar.setForeground(VPrincipal.colorLetras);
+        btnModificar.setBackground(VPrincipal.colorNaranjaPatito);
         add(btnModificar);
 
         btnDarseDeBaja = new JButton(ConstantesBotones.DARSE_DE_BAJA);
-        btnDarseDeBaja.setBounds(35, 304, 175, 30);
+        btnDarseDeBaja.setBounds(35, 279, 175, 30);
+        btnDarseDeBaja.setFont(Fuentes.MEDIUM.deriveFont(16f));
+        btnDarseDeBaja.setForeground(VPrincipal.colorLetras);
+        btnDarseDeBaja.setBackground(VPrincipal.colorNaranjaPatito);
         add(btnDarseDeBaja);
     }
 

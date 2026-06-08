@@ -70,31 +70,47 @@ public class VloginForm extends JPanel implements IPanels {
 		setLayout(null);
 		
 		lblTitulo = new JLabel("Iniciar sesión");
-		lblTitulo.setBounds(110, 15, 180, 28);
+		lblTitulo.setBounds(591, 273, 129, 28);
+		lblTitulo.setFont(Fuentes.MEDIUM.deriveFont(20f));
+		lblTitulo.setForeground(VPrincipal.colorLetras);
 		add(lblTitulo);
 
 		lblUsuario = new JLabel("Usuario:");
-		lblUsuario.setBounds(40, 60, 90, 25);
+		lblUsuario.setBounds(506, 332, 90, 25);
+		lblUsuario.setFont(Fuentes.MEDIUM.deriveFont(16f));
+		lblUsuario.setForeground(VPrincipal.colorLetras);
 		add(lblUsuario);
 
 		txtUsuario = new JTextField();
-		txtUsuario.setBounds(130, 60, 210, 25);
+		txtUsuario.setBounds(615, 331, 210, 25);
+		txtUsuario.setFont(Fuentes.MEDIUM.deriveFont(16f));
+		txtUsuario.setForeground(VPrincipal.colorLetras);
 		add(txtUsuario);
 
 		lblContrasena = new JLabel("Contraseña:");
-		lblContrasena.setBounds(40, 100, 90, 25);
+		lblContrasena.setBounds(506, 373, 90, 25);
+		lblContrasena.setFont(Fuentes.MEDIUM.deriveFont(16f));
+		lblContrasena.setForeground(VPrincipal.colorLetras);
 		add(lblContrasena);
 
 		txtContrasenia = new JPasswordField();
-		txtContrasenia.setBounds(130, 100, 210, 25);
+		txtContrasenia.setBounds(615, 372, 210, 25);
+		txtContrasenia.setFont(Fuentes.MEDIUM.deriveFont(16f));
+		txtContrasenia.setForeground(VPrincipal.colorLetras);
 		add(txtContrasenia);
 
 		btnEntrar = new JButton(ConstantesBotones.ENTRAR);
-		btnEntrar.setBounds(130, 150, 95, 30);
+		btnEntrar.setBounds(517, 418, 95, 30);
+		btnEntrar.setFont(Fuentes.MEDIUM.deriveFont(16f));
+		btnEntrar.setForeground(VPrincipal.colorLetras);
+		btnEntrar.setBackground(VPrincipal.colorNaranjaPatito);
 		add(btnEntrar);
 
 		btnRegistrarse = new JButton(ConstantesBotones.REGISTRARSE);
-		btnRegistrarse.setBounds(235, 150, 105, 30);
+		btnRegistrarse.setBounds(637, 418, 122, 30);
+		btnRegistrarse.setFont(Fuentes.MEDIUM.deriveFont(16f));
+		btnRegistrarse.setForeground(VPrincipal.colorLetras);
+		btnRegistrarse.setBackground(VPrincipal.colorNaranjaPatito);
 		add(btnRegistrarse);
 	}
 

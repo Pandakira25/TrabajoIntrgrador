@@ -88,44 +88,63 @@ public class VTrans extends JPanel implements IPanels {
 		setLayout(null);
 
 		JLabel lblTitulo = new JLabel("Transacciones");
-		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblTitulo.setFont(Fuentes.BOLD.deriveFont(20f));
+		lblTitulo.setForeground(VPrincipal.colorLetras);
 		lblTitulo.setBounds(36, 20, 300, 25);
 		add(lblTitulo);
 
 		JLabel lblInfo = new JLabel("Histórico de todas las transacciones realizadas:");
-		lblInfo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblInfo.setFont(Fuentes.MEDIUM.deriveFont(16f));
+		lblInfo.setForeground(VPrincipal.colorLetras);
 		lblInfo.setBounds(36, 85, 380, 20);
 		add(lblInfo);
 
 		scrpTransacciones = new JScrollPane();
-		scrpTransacciones.setBounds(35, 112, 710, 400);
+		scrpTransacciones.setBounds(35, 112, 827, 688);
+		scrpTransacciones.getViewport().setBackground(VPrincipal.colorVibrante);
 		add(scrpTransacciones);
 
 		tblTransacciones = new JTable();
 		tblTransacciones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tblTransacciones.getTableHeader().setFont(Fuentes.MEDIUM.deriveFont(16f));
+		tblTransacciones.getTableHeader().setForeground(VPrincipal.colorLetras);
+		tblTransacciones.getTableHeader().setBackground(VPrincipal.colorNaranjaPatito);
+		tblTransacciones.setFont(Fuentes.REGULAR.deriveFont(14f));
+		tblTransacciones.setForeground(VPrincipal.colorLetras);
 		scrpTransacciones.setViewportView(tblTransacciones);
 		configurarTabla();
 		
 		JLabel lblBuscarComprador = new JLabel("Comprador:");
-		lblBuscarComprador.setBounds(35, 55, 75, 20);
+		lblBuscarComprador.setBounds(35, 55, 97, 20);
+		lblBuscarComprador.setFont(Fuentes.MEDIUM.deriveFont(16f));
+		lblBuscarComprador.setForeground(VPrincipal.colorLetras);
 		add(lblBuscarComprador);
 
 		txtBuscarNombre = new JTextField();
-		txtBuscarNombre.setBounds(115, 52, 155, 26);
+		txtBuscarNombre.setBounds(133, 52, 155, 26);
+		txtBuscarNombre.setFont(Fuentes.REGULAR.deriveFont(16f));
+		txtBuscarNombre.setForeground(VPrincipal.colorLetras);
 		add(txtBuscarNombre);
 
 		btnBuscar = new JButton(ConstantesBotones.BUSCAR_TRANSACCION);
-		btnBuscar.setBounds(474, 52, 155, 26);
+		btnBuscar.setBounds(523, 52, 179, 26);
+		btnBuscar.setFont(Fuentes.MEDIUM.deriveFont(16f));
+		btnBuscar.setForeground(VPrincipal.colorLetras);
+		btnBuscar.setBackground(VPrincipal.colorNaranjaPatito);
 		add(btnBuscar);
 		
 		lblBuscarEmpleado = new JLabel("Empleado:");
-		lblBuscarEmpleado.setBounds(281, 63, 58, 12);
+		lblBuscarEmpleado.setBounds(298, 55, 89, 20);
+		lblBuscarEmpleado.setFont(Fuentes.MEDIUM.deriveFont(16f));
+		lblBuscarEmpleado.setForeground(VPrincipal.colorLetras);
 		add(lblBuscarEmpleado);
 		
 		dfcbBuscarEmpleado = new DefaultComboBoxModel<String>();
 		dfcbBuscarEmpleado.addElement("Todos");
 		cmbBuscarEmpleado = new JComboBox<String>(dfcbBuscarEmpleado);
-		cmbBuscarEmpleado.setBounds(345, 55, 112, 20);
+		cmbBuscarEmpleado.setBounds(383, 52, 112, 26);
+		cmbBuscarEmpleado.setFont(Fuentes.REGULAR.deriveFont(16f));
+		cmbBuscarEmpleado.setForeground(VPrincipal.colorLetras);
 		add(cmbBuscarEmpleado);
 	}
 	

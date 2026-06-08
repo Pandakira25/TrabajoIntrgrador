@@ -75,56 +75,82 @@ public class VRegistrarse extends JPanel implements IPanels {
 		setLayout(null);
 
 		JLabel lblTitulo = new JLabel("Registrarse como Comprador");
-		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblTitulo.setFont(Fuentes.BOLD.deriveFont(20f));
+		lblTitulo.setForeground(VPrincipal.colorLetras);
 		lblTitulo.setBounds(15, 16, 350, 25);
 		add(lblTitulo);
 
 		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(60, 65, 90, 20);
+		lblNombre.setBounds(15, 65, 90, 20);
+		lblNombre.setFont(Fuentes.MEDIUM.deriveFont(16f));
+		lblNombre.setForeground(VPrincipal.colorLetras);
 		add(lblNombre);
 
 		txtNombre = new JTextField();
-		txtNombre.setBounds(165, 62, 250, 26);
+		txtNombre.setBounds(128, 62, 250, 26);
+		txtNombre.setFont(Fuentes.REGULAR.deriveFont(16f));
 		add(txtNombre);
 
 		JLabel lblContrasenia = new JLabel("Contraseña:");
-		lblContrasenia.setBounds(60, 105, 90, 20);
+		lblContrasenia.setBounds(15, 105, 90, 20);
+		lblContrasenia.setFont(Fuentes.MEDIUM.deriveFont(16f));
+		lblContrasenia.setForeground(VPrincipal.colorLetras);
 		add(lblContrasenia);
 
 		txtContrasenia = new JPasswordField();
-		txtContrasenia.setBounds(165, 102, 250, 26);
+		txtContrasenia.setBounds(128, 102, 250, 26);
+		txtContrasenia.setFont(Fuentes.REGULAR.deriveFont(16f));
+		txtContrasenia.setForeground(VPrincipal.colorLetras);
 		add(txtContrasenia);
 
 		JLabel lblTel = new JLabel("Teléfono:");
-		lblTel.setBounds(60, 145, 90, 20);
+		lblTel.setBounds(15, 145, 90, 20);
+		lblTel.setFont(Fuentes.MEDIUM.deriveFont(16f));
+		lblTel.setForeground(VPrincipal.colorLetras);
 		add(lblTel);
 
 		txtTel = new JTextField();
-		txtTel.setBounds(165, 142, 150, 26);
+		txtTel.setBounds(128, 142, 150, 26);
+		txtTel.setFont(Fuentes.REGULAR.deriveFont(16f));
+		txtTel.setForeground(VPrincipal.colorLetras);
 		add(txtTel);
 
 		JLabel lblDireccion = new JLabel("Dirección:");
-		lblDireccion.setBounds(60, 185, 90, 20);
+		lblDireccion.setBounds(15, 185, 90, 20);
+		lblDireccion.setFont(Fuentes.MEDIUM.deriveFont(16f));
+		lblDireccion.setForeground(VPrincipal.colorLetras);
 		add(lblDireccion);
 
 		txtDireccion = new JTextField();
-		txtDireccion.setBounds(165, 182, 450, 26);
+		txtDireccion.setBounds(128, 182, 450, 26);
+		txtDireccion.setFont(Fuentes.REGULAR.deriveFont(16f));
+		txtDireccion.setForeground(VPrincipal.colorLetras);
 		add(txtDireccion);
 
 		JLabel lblNTarjeta = new JLabel("N. Tarjeta:");
-		lblNTarjeta.setBounds(60, 225, 90, 20);
+		lblNTarjeta.setBounds(15, 225, 90, 20);
+		lblNTarjeta.setFont(Fuentes.MEDIUM.deriveFont(16f));
+		lblNTarjeta.setForeground(VPrincipal.colorLetras);
 		add(lblNTarjeta);
 
 		txtNTarjeta = new JTextField();
-		txtNTarjeta.setBounds(165, 222, 250, 26);
+		txtNTarjeta.setBounds(128, 222, 250, 26);
+		txtNTarjeta.setFont(Fuentes.REGULAR.deriveFont(16f));
+		txtNTarjeta.setForeground(VPrincipal.colorLetras);
 		add(txtNTarjeta);
 
 		btnRegistrar = new JButton(ConstantesBotones.REGISTRARSE);
-		btnRegistrar.setBounds(185, 285, 130, 30);
+		btnRegistrar.setBounds(128, 271, 130, 30);
+		btnRegistrar.setBackground(VPrincipal.colorNaranjaPatito);
+		btnRegistrar.setForeground(VPrincipal.colorLetras);
+		btnRegistrar.setFont(Fuentes.MEDIUM.deriveFont(16f));
 		add(btnRegistrar);
 
 		btnCancelar = new JButton(ConstantesBotones.CANCELAR);
-		btnCancelar.setBounds(335, 285, 130, 30);
+		btnCancelar.setBounds(279, 271, 130, 30);
+		btnCancelar.setFont(Fuentes.MEDIUM.deriveFont(16f));
+		btnCancelar.setForeground(VPrincipal.colorLetras);
+		btnCancelar.setBackground(VPrincipal.colorNaranjaPatito);
 		add(btnCancelar);
 	}
 
