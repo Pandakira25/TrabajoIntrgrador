@@ -180,42 +180,18 @@ public class VCuenta extends JPanel implements IPanels {
      * o {@code null} si se incumple alguna regla de validación de datos.
      */
     public Comprador obtenerDatosFormulario(int id) {
-        String nombre = txtNombre.getText().trim();
-        String contra = new String(txtContrasenia.getPassword()).trim();
-        String telStr = txtTel.getText().trim();
-        String direccion = txtDireccion.getText().trim();
-        String nTarjeta = txtNTarjeta.getText().trim();
-        
-        int tel = 0;
-
-        boolean valid = true;
-
-        if (!Usuario.validarNombre(nombre)) {
-            JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Error de datos",
-                    JOptionPane.ERROR_MESSAGE);
-            valid = false;
-        } else if (!Usuario.validarContrasenia(contra)) {
-            JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.", "Error de datos",
-                    JOptionPane.ERROR_MESSAGE);
-            valid = false;
-        } else if (!Usuario.validarTel(tel)) {
-            JOptionPane.showMessageDialog(this, "El teléfono es obligatorio y debe tener 9 dígitos que comiencen por 6, 7, 8 o 9.", "Error de datos",
-                    JOptionPane.ERROR_MESSAGE);
-            valid = false;
-        } else {
-            try {
-                tel = Usuario.parseTelefono(telStr);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.getMessage(), "Error de datos",
-                        JOptionPane.ERROR_MESSAGE);
-                valid = false;
-            }
+        try {
+            return new Comprador(
+                    id,
+                    txtNombre.getText(),
+                    new String(txtContrasenia.getPassword()),
+                    txtTel.getText(),
+                    txtDireccion.getText(),
+                    txtNTarjeta.getText());
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error de datos", JOptionPane.ERROR_MESSAGE);
+            return null;
         }
-
-        if (valid) {
-            return new Comprador(id, 3, nombre, contra, tel, true, direccion, nTarjeta);
-        }
-        return null;
     }
 
     /**
