@@ -25,11 +25,11 @@ public class Fuentes {
     static {
         try {
             REGULAR = Font.createFont(Font.TRUETYPE_FONT, 
-                Fuentes.class.getResourceAsStream("/resources/fonts/Nunito-Regular.ttf")).deriveFont(14f);
+                Fuentes.class.getResourceAsStream("/fonts/Nunito-Regular.ttf")).deriveFont(14f);
             BOLD = Font.createFont(Font.TRUETYPE_FONT, 
-                Fuentes.class.getResourceAsStream("/resources/fonts/Nunito-Bold.ttf")).deriveFont(14f);
+                Fuentes.class.getResourceAsStream("/fonts/Nunito-Bold.ttf")).deriveFont(14f);
             MEDIUM = Font.createFont(Font.TRUETYPE_FONT, 
-                Fuentes.class.getResourceAsStream("/resources/fonts/Nunito-Medium.ttf")).deriveFont(14f);
+                Fuentes.class.getResourceAsStream("/fonts/Nunito-Medium.ttf")).deriveFont(14f);
             GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(REGULAR);
             GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(BOLD);
             GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(MEDIUM);

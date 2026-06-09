@@ -471,12 +471,29 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 			vgprod.limpiarDatos();
 			break;
 		case ConstantesBotones.BUSCAR_PRODUCTO:
-			// System.out.println("xd");
+			//System.out.println("xd");
 			String[] consulta = vgprod.getConsulta();
+			//System.out.println(consulta);
 			if (consulta == null) {
-				vgprod.cargarTabla(productoDAO.selectProductos(null, null, null, false));
+				if(!productoDAO.selectProductos(null, null, null, false).isEmpty()) {
+					vgprod.cargarTabla(productoDAO.selectProductos(null, null, null, false));
+					//System.out.println("xd");
+				}else {
+					//System.out.println("xd");
+					JOptionPane.showMessageDialog(vgprod, "No hay productos",
+							"Resultado de la operación", JOptionPane.INFORMATION_MESSAGE);
+				}
+				
 			} else {
-				vgprod.cargarTabla(productoDAO.selectProductos(consulta[0], consulta[1], consulta[2], false));
+				//System.out.println("consulta no null");
+				if(!productoDAO.selectProductos(consulta[0], consulta[1], consulta[2], false).isEmpty()) {
+					vgprod.cargarTabla(productoDAO.selectProductos(consulta[0], consulta[1], consulta[2], false));
+					//System.out.println("retorna algo");
+				}else {
+					//System.out.println("no retorna nada");
+					JOptionPane.showMessageDialog(vgprod, "No se han encontrado items con los filtros seleccionados",
+							"Resultado de la operación", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 			break;
 		case ConstantesBotones.DESHABILITAR_PRODUCTO:

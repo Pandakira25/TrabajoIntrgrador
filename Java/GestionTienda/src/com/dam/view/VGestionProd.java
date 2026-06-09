@@ -418,7 +418,7 @@ public class VGestionProd extends JPanel implements IPanels {
 		txaDescripcion.setForeground(VPrincipal.colorLetras);
 
 		btnVerMas = new JButton(ConstantesBotones.VER_MAS);
-		btnVerMas.setBounds(35, 960, 100, 28);
+		btnVerMas.setBounds(35, 960, 130, 28);
 		btnVerMas.setFont(Fuentes.MEDIUM.deriveFont(16f));
 		btnVerMas.setForeground(VPrincipal.colorLetras);
 		btnVerMas.setBackground(VPrincipal.colorNaranjaPatito);
@@ -626,7 +626,7 @@ public class VGestionProd extends JPanel implements IPanels {
 		btnAgregarProd.setEnabled(b);
 	}
 
-	// TODO:integrar validación de datos
+	// ok
 	/**
 	 * Extrae y valida rigurosamente las cadenas de texto del formulario para
 	 * consolidar un objeto Producto válido.
