@@ -1,6 +1,5 @@
 package com.dam.view;
 
-import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
@@ -17,7 +16,8 @@ import javax.swing.table.DefaultTableModel;
 
 import com.dam.ctrl.Ctrl;
 import com.dam.model.pojos.Empleado;
-import com.dam.model.pojos.Producto;
+import com.dam.model.pojos.Usuario;
+
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
@@ -35,6 +35,7 @@ import javax.swing.SwingConstants;
  * 
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class VGestionEmp extends JPanel implements IPanels {
 	/** Identificador único para el gestor de diseño o la navegación de paneles. */
 	public static final String NAME = "VGestionEmp";
@@ -368,7 +369,7 @@ public class VGestionEmp extends JPanel implements IPanels {
 		btnEliminarEmp.setEnabled(b);
 	}
 
-	// TODO: validar datos
+	// OK
 	/**
 	 * Sanea y comprueba exhaustivamente la validez sintáctica de las entradas
 	 * recolectadas en el formulario. Genera diálogos contextuales de error si se
@@ -377,48 +378,19 @@ public class VGestionEmp extends JPanel implements IPanels {
 	 * validación; o {@code null} si se detectan anomalías en el llenado.
 	 */
 	public Empleado obtenerDatosFormulario() {
-		String nombre = txtNombre.getText().trim();
-		String contra = new String(txtContrasenia.getPassword()).trim();
-		String telStr = txtTel.getText().trim();
-		String nSeguridad = txtNSeguridad.getText().trim();
-		String iban = txtIban.getText().trim();
-		int autorizacion = (int) spnAutorizacion.getValue();
-		;
-
-		boolean valid = true;
-
-		if (nombre.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			valid = false;
-		} else if (contra.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			valid = false;
-		} else if (telStr.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "El teléfono es obligatorio.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			valid = false;
-		} else if (nSeguridad.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "El número de seguridad social es obligatorio.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			valid = false;
-		} else if (iban.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "El IBAN es obligatorio.", "Error de datos", JOptionPane.ERROR_MESSAGE);
-			valid = false;
-		} else if (!telStr.isEmpty()) {
-			try {
-				Integer.parseInt(telStr);
-			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(this, "El teléfono debe ser un número.", "Error de datos",
-						JOptionPane.ERROR_MESSAGE);
-				valid = false;
-			}
-		}
-
-		if (valid) {
-			return new Empleado(autorizacion, nombre, contra, Integer.parseInt(telStr), true, nSeguridad, iban);
-		} else {
+		try {
+			String nombre = Usuario.validarNombre(txtNombre.getText().trim());
+			String contra = Usuario.validarContrasenia(new String(txtContrasenia.getPassword()).trim());
+			String telStr = txtTel.getText().trim();
+			int tel = Usuario.parseTelefono(telStr);
+			String iban = Empleado.validarIban(txtIban.getText().trim());
+			String nSeguridad = Empleado.validarNumSeguridadSocial(txtNSeguridad.getText().trim());
+			//Creo que sería irrelevante pero yqs nunca está de más
+			int autorizacion = Usuario.validarAutorizacion((int) spnAutorizacion.getValue());
+			
+			return new Empleado(autorizacion, nombre, contra, tel, true, nSeguridad, iban);
+		}catch(IllegalArgumentException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error de datos", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 	}

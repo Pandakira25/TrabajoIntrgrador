@@ -2,7 +2,6 @@ package com.dam.view;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -29,6 +28,7 @@ import com.dam.model.pojos.Usuario;
  * * @author Zoe
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class VGestionUsuarios extends JPanel implements IPanels {
     
     /** Identificador único asignado al panel para la gestión y alternancia en el layout de la aplicación. */

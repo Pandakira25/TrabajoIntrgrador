@@ -1,13 +1,10 @@
 package com.dam.view;
 
-import java.awt.Color;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 import com.dam.ctrl.Ctrl;
 
@@ -21,6 +18,7 @@ import com.dam.ctrl.Ctrl;
  * * @author Zoe
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class VloginForm extends JPanel implements IPanels {
 	/** Identificador único asignado al panel para la gestión y alternancia en el layout de la aplicación. */
 	public static final String NAME = "VloginForm";
@@ -144,6 +142,7 @@ public class VloginForm extends JPanel implements IPanels {
 	 * `index[0]` contiene el nombre de usuario y `index[1]` la contraseña introducida.
 	 */
 	public String[] getUsr() {
+		@SuppressWarnings("deprecation")
 		String usr [] = {txtUsuario.getText(), txtContrasenia.getText()};
 		return usr;
 	}

@@ -1,7 +1,5 @@
 package com.dam.view;
 
-import java.awt.Dimension;
-import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
@@ -40,6 +38,7 @@ import javax.swing.SwingConstants;
  * @author Zoe
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class VGestionStock extends JPanel implements IPanels {
 
 	/**

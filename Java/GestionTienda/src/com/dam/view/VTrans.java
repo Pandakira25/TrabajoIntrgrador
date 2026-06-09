@@ -1,7 +1,6 @@
 package com.dam.view;
 
-import java.awt.Font;
-import java.util.ArrayList;
+
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -15,8 +14,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import com.dam.ctrl.Ctrl;
-import com.dam.model.pojos.Producto;
-import com.dam.model.pojos.Transacciones;
+
 import javax.swing.JComboBox;
 
 /**
@@ -30,6 +28,7 @@ import javax.swing.JComboBox;
  * * @author Zoe
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class VTrans extends JPanel implements IPanels {
 	/** Identificador único asignado al panel para la gestión y alternancia en el layout de la aplicación. */
 	public static final String NAME = "VTrans";

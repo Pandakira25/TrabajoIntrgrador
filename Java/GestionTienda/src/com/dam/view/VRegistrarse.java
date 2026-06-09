@@ -1,7 +1,5 @@
 package com.dam.view;
 
-import java.awt.Font;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -11,6 +9,7 @@ import javax.swing.JTextField;
 
 import com.dam.ctrl.Ctrl;
 import com.dam.model.pojos.Comprador;
+import com.dam.model.pojos.Usuario;
 
 /**
  * Panel de la vista de Registro de Compradores (`VRegistrarse`).
@@ -22,6 +21,7 @@ import com.dam.model.pojos.Comprador;
  * * @author Zoe
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class VRegistrarse extends JPanel implements IPanels {
 	/** Identificador único para el gestor de diseño o la navegación de paneles. */
 	public static final String NAME = "VRegistrarse";
@@ -180,7 +180,7 @@ public class VRegistrarse extends JPanel implements IPanels {
 	}
 	
 	
-	//TODO: Comprobaciones
+	//TODO: integrar Comprobaciones
 	/**
 	 * Extrae, sanea de espacios en blanco y valida la integridad de los datos ingresados en el formulario.
 	 * <p>
@@ -192,13 +192,16 @@ public class VRegistrarse extends JPanel implements IPanels {
 	 * la validación; o {@code null} en caso de detectarse incongruencias en el rellenado.
 	 */
 	public Comprador obtenerDatos() {
+		String telStr = txtTel.getText().trim();
+
 		try {
-			return new Comprador(
-					txtNombre.getText(),
-					new String(txtContrasenia.getPassword()),
-					txtTel.getText(),
-					txtDireccion.getText(),
-					txtNTarjeta.getText());
+			String nombre = Usuario.validarNombre(txtNombre.getText().trim());
+			String contra = Usuario.validarContrasenia(new String(txtContrasenia.getPassword()).trim());
+			int tel = Usuario.parseTelefono(telStr);
+			String direccion = Comprador.validarDireccion(txtDireccion.getText().trim());
+			String nTarjeta = Comprador.validarTarjeta(txtNTarjeta.getText().trim());
+			
+			return new Comprador(nombre,contra, tel, direccion, nTarjeta);
 		} catch (IllegalArgumentException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Error de datos", JOptionPane.ERROR_MESSAGE);
 			return null;

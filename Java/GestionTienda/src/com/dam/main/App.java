@@ -5,10 +5,6 @@ import java.io.File;
 
 import com.dam.ctrl.Ctrl;
 import com.dam.model.acessbd.AccessDBProp;
-import com.dam.model.acessbd.TableCarritoDAO;
-import com.dam.model.acessbd.TableCarritoProductoDAO;
-import com.dam.model.acessbd.TableProductoDAO;
-import com.dam.model.acessbd.TableTransaccionesDAO;
 import com.dam.view.VCarrito;
 import com.dam.view.VCuenta;
 import com.dam.view.VGestionEmp;
@@ -34,11 +30,6 @@ public class App {
 			
 			@Override
 			public void run() {
-				TableCarritoDAO tca = new TableCarritoDAO();
-				TableCarritoProductoDAO tcap = new TableCarritoProductoDAO();
-				TableProductoDAO tp = new TableProductoDAO();
-				TableTransaccionesDAO ttr = new TableTransaccionesDAO();
-				
 				VPrincipal vp = new VPrincipal();
 				VloginForm vlf = new VloginForm();
 				VCarrito vca = new VCarrito();

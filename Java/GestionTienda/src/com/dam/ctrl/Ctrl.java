@@ -401,29 +401,23 @@ public class Ctrl implements ActionListener, MouseListener, ListSelectionListene
 		case ConstantesBotones.MAS:
 			int filaMas = vgstk.getTblProductos().getSelectedRow();
 			if (filaMas != -1) {
-				Integer cantidadMas = vgstk.obtenerCantidadValidada();
-				if (cantidadMas == null) {
-					break;
-				}
+				int cantidad = vgstk.getCantidad();
 				Producto p = vgstk.getProductoEnFila(filaMas);
-				productoDAO.incrementarStock(p.getId(), cantidadMas);
+				productoDAO.incrementarStock(p.getId(), cantidad);
 				vgstk.cargarTabla(productoDAO.selectProductos(null, null, null, false));
 			}
 			break;
 		case ConstantesBotones.MENOS:
 			int filaMenos = vgstk.getTblProductos().getSelectedRow();
 			if (filaMenos != -1) {
-				Integer cantidadMenos = vgstk.obtenerCantidadValidada();
-				if (cantidadMenos == null) {
-					break;
-				}
+				int cantidad = vgstk.getCantidad();
 				Producto p = vgstk.getProductoEnFila(filaMenos);
-				if (cantidadMenos > p.getStock()) {
+				if (cantidad > p.getStock()) {
 					JOptionPane.showMessageDialog(vgstk,
 							"No puedes restar más stock del disponible. Stock actual: " + p.getStock(),
 							"Stock insuficiente", JOptionPane.WARNING_MESSAGE);
 				} else {
-					productoDAO.decrementarStock(p.getId(), cantidadMenos);
+					productoDAO.decrementarStock(p.getId(), cantidad);
 					vgstk.cargarTabla(productoDAO.selectProductos(null, null, null, false));
 				}
 			}

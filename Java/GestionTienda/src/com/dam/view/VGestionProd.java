@@ -1,6 +1,5 @@
 package com.dam.view;
 
-import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
@@ -17,7 +16,6 @@ import javax.swing.table.DefaultTableModel;
 import com.dam.ctrl.Ctrl;
 import com.dam.model.pojos.Producto;
 import javax.swing.JComboBox;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
@@ -37,6 +35,7 @@ import javax.swing.JTextArea;
  * 
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class VGestionProd extends JPanel implements IPanels {
 	/**
 	 * Identificador único asignado al panel para la gestión y alternancia en el
@@ -627,7 +626,7 @@ public class VGestionProd extends JPanel implements IPanels {
 		btnAgregarProd.setEnabled(b);
 	}
 
-	// TODO: validación de datos
+	// TODO:integrar validación de datos
 	/**
 	 * Extrae y valida rigurosamente las cadenas de texto del formulario para
 	 * consolidar un objeto Producto válido.
@@ -643,15 +642,18 @@ public class VGestionProd extends JPanel implements IPanels {
 	 */
 	public Producto obtenerDatosFormulario() {
 		try {
-			return new Producto(
-					idSeleccionado,
-					txtNombre.getText(),
-					txtCategoria.getText(),
-					txtPrecio.getText(),
-					txtStock.getText(),
-					txtDescripcion.getText(),
-					true);
-		} catch (IllegalArgumentException e) {
+			String nombre = txtNombre.getText().trim();
+			Producto.validarNombre(nombre);
+			String categoria = txtCategoria.getText().trim();
+			Producto.validarCategoria(categoria);
+			double precio = Producto.parsePrecio(txtPrecio.getText().trim());
+			Producto.validarPrecio(precio);
+			int stock = Producto.parseStock(txtStock.getText().trim());
+			Producto.validarStock(stock);
+			String descripcion = txtDescripcion.getText().trim();
+			
+			return new Producto(idSeleccionado, nombre, categoria, precio, descripcion, stock, true);
+		}catch(IllegalArgumentException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Error de datos", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}

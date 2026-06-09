@@ -1,7 +1,6 @@
 package com.dam.view;
 
-import java.awt.Dimension;
-import java.awt.Font;
+
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
@@ -33,6 +32,7 @@ import com.dam.model.pojos.Producto;
  * 
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class VShop extends JPanel implements IPanels {
 	/**
 	 * Identificador único para la gestión dinámica del diseño o de la navegación de

@@ -37,8 +37,8 @@ public class Empleado extends Usuario{
 	public Empleado(int id, int autorizacion, String nombre, String contrasenia, int tel, boolean activo,
 			String nSeguridad, String iban) {
 		super(id, autorizacion, nombre, contrasenia, tel, activo);
-		this.nSeguridad = validarNumSeguridadSocial(nSeguridad);
-		this.iban = validarIban(iban);
+		this.nSeguridad = nSeguridad;
+		this.iban = iban;
 	}
 	
 	/**
@@ -57,16 +57,13 @@ public class Empleado extends Usuario{
 	 */
 	public Empleado(int autorizacion, String nombre, String contrasenia, int tel, boolean activo, String nSeguridad,
 			String iban) {
-		this(0, autorizacion, nombre, contrasenia, tel, activo, nSeguridad, iban);
+		super(autorizacion, nombre, contrasenia, tel, activo);
+		this.nSeguridad = nSeguridad;
+		this.iban = iban;
 	}
+	
 
-	/** Constructor desde formulario: valida y parsea todos los campos. */
-	public Empleado(int autorizacion, String nombre, String contrasenia, String telStr, boolean activo,
-			String nSeguridad, String iban) {
-		this(autorizacion, nombre, contrasenia, parseTelefono(telStr), activo, nSeguridad, iban);
-	}
-
-	private static String validarNumSeguridadSocial(String texto) {
+	public static String validarNumSeguridadSocial(String texto) {
 		if (texto == null || texto.isBlank()) {
 			throw new IllegalArgumentException("El número de seguridad social es obligatorio.");
 		}
@@ -78,11 +75,12 @@ public class Empleado extends Usuario{
 		return nss;
 	}
 
-	private static String validarIban(String texto) {
+	public static String validarIban(String texto) {
 		if (texto == null || texto.isBlank()) {
 			throw new IllegalArgumentException("El IBAN es obligatorio.");
 		}
 		String iban = texto.trim().toUpperCase().replace(" ", "");
+		//System.out.println(iban);
 		if (!iban.matches("ES\\d{22}")) {
 			throw new IllegalArgumentException(
 					"El IBAN debe ser español (ES seguido de 22 dígitos, 24 caracteres en total).");

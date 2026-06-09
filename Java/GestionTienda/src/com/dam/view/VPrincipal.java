@@ -15,7 +15,6 @@ import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
 import com.dam.ctrl.Ctrl;
-import java.awt.Font;
 
 /**
  * Ventana Principal de la aplicación (`VPrincipal`).
@@ -28,6 +27,7 @@ import java.awt.Font;
  * * @author Zoe
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class VPrincipal extends JFrame implements IFrames {
 	/** Ancho por defecto de la ventana principal en píxeles. */
 	public static final int ANCHO = 1440;

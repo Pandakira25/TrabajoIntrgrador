@@ -38,13 +38,9 @@ public class Usuario {
 	 * @param activo       Estado inicial de habilitación en el sistema.
 	 */
 	public Usuario(int id, int autorizacion, String nombre, String contrasenia, int tel, boolean activo) {
-		validarAutorizacion(autorizacion);
-		validarNombre(nombre);
-		validarContrasenia(contrasenia);
-		validarTel(tel);
 		this.userId = id;
 		this.autorizacion = autorizacion;
-		this.nombre = nombre.trim();
+		this.nombre = nombre;
 		this.contrasenia = contrasenia;
 		this.tel = tel;
 		this.activo = activo;
@@ -60,36 +56,45 @@ public class Usuario {
 	 * @param activo       Estado inicial de habilitación.
 	 */
 	public Usuario(int autorizacion, String nombre, String contrasenia, int tel, boolean activo) {
-		this(0, autorizacion, nombre, contrasenia, tel, activo);
+		super();
+		this.autorizacion = autorizacion;
+		this.nombre = nombre;
+		this.contrasenia = contrasenia;
+		this.tel = tel;
+		this.activo = activo;
 	}
 
-	protected static void validarNombre(String nombre) {
+	public static String validarNombre(String nombre) {
 		if (nombre == null || nombre.isBlank()) {
 			throw new IllegalArgumentException("El nombre es obligatorio.");
 		}
+		return nombre;
 	}
 
-	protected static void validarContrasenia(String contrasenia) {
+	public static String validarContrasenia(String contrasenia) {
 		if (contrasenia == null || contrasenia.isBlank()) {
 			throw new IllegalArgumentException("La contraseña es obligatoria.");
 		}
+		return contrasenia;
 	}
 
-	protected static void validarAutorizacion(int autorizacion) {
+	public static int validarAutorizacion(int autorizacion) {
 		if (autorizacion < 1 || autorizacion > 3) {
 			throw new IllegalArgumentException("La autorización debe ser 1, 2 o 3.");
 		}
+		return autorizacion;
 	}
 
-	protected static void validarTel(int tel) {
+	public static int validarTel(int tel) {
 		if (tel < 600_000_000 || tel > 999_999_999) {
 			throw new IllegalArgumentException(
 					"El teléfono debe tener " + DIGITOS_TELEFONO + " dígitos y comenzar por 6, 7, 8 o 9.");
 		}
+		return tel;
 	}
 
 	/** Convierte texto del formulario a teléfono validado. */
-	protected static int parseTelefono(String texto) {
+	public static int parseTelefono(String texto) {
 		if (texto == null || texto.isBlank()) {
 			throw new IllegalArgumentException("El teléfono es obligatorio.");
 		}

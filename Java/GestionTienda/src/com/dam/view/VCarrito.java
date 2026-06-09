@@ -1,8 +1,5 @@
 package com.dam.view;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -31,6 +28,7 @@ import com.dam.model.pojos.Producto;
  * * @author zoe
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class VCarrito extends JPanel implements IPanels {
     /** Identificador único para el gestor de diseño o la navegación de paneles. */
     public static final String NAME = "VCarrito";
