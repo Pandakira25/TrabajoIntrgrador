@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 
 import com.dam.ctrl.Ctrl;
 import com.dam.model.pojos.Comprador;
+import com.dam.model.pojos.Usuario;
 
 /**
  * Panel de la vista del Perfil de Usuario (`VCuenta`).
@@ -184,33 +185,35 @@ public class VCuenta extends JPanel implements IPanels {
         String telStr = txtTel.getText().trim();
         String direccion = txtDireccion.getText().trim();
         String nTarjeta = txtNTarjeta.getText().trim();
+        
+        int tel = 0;
 
         boolean valid = true;
 
-        if (nombre.isEmpty()) {
+        if (!Usuario.validarNombre(nombre)) {
             JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Error de datos",
                     JOptionPane.ERROR_MESSAGE);
             valid = false;
-        } else if (contra.isEmpty()) {
+        } else if (!Usuario.validarContrasenia(contra)) {
             JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.", "Error de datos",
                     JOptionPane.ERROR_MESSAGE);
             valid = false;
-        } else if (telStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El teléfono es obligatorio.", "Error de datos",
+        } else if (!Usuario.validarTel(tel)) {
+            JOptionPane.showMessageDialog(this, "El teléfono es obligatorio y debe tener 9 dígitos que comiencen por 6, 7, 8 o 9.", "Error de datos",
                     JOptionPane.ERROR_MESSAGE);
             valid = false;
         } else {
             try {
-                Integer.parseInt(telStr);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "El teléfono debe ser un número.", "Error de datos",
+                tel = Usuario.parseTelefono(telStr);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Error de datos",
                         JOptionPane.ERROR_MESSAGE);
                 valid = false;
             }
         }
 
         if (valid) {
-            return new Comprador(id, 3, nombre, contra, Integer.parseInt(telStr), true, direccion, nTarjeta);
+            return new Comprador(id, 3, nombre, contra, tel, true, direccion, nTarjeta);
         }
         return null;
     }
