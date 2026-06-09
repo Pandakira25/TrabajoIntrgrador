@@ -642,45 +642,17 @@ public class VGestionProd extends JPanel implements IPanels {
 	 * algún campo erróneo o vacío.
 	 */
 	public Producto obtenerDatosFormulario() {
-		String nombre = txtNombre.getText().trim();
-		String categoria = txtCategoria.getText().trim();
-		String precioStr = txtPrecio.getText().trim();
-		String stockStr = txtStock.getText().trim();
-		String descripcion = txtDescripcion.getText().trim();
-
-		boolean valid = true;
-
-		if (nombre.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			valid = false;
-		}
-
-		double precio = 0;
-		int stock = 0;
-
 		try {
-			if (!precioStr.isEmpty()) {
-				precio = Double.parseDouble(precioStr);
-			}
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "El precio debe ser un número decimal.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			valid = false;
-		}
-		try {
-			if (!stockStr.isEmpty()) {
-				stock = Integer.parseInt(stockStr);
-			}
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "El stock debe ser un número entero.", "Error de datos",
-					JOptionPane.ERROR_MESSAGE);
-			valid = false;
-		}
-
-		if (valid) {
-			return new Producto(idSeleccionado, nombre, categoria, precio, descripcion, stock, true);
-		} else {
+			return new Producto(
+					idSeleccionado,
+					txtNombre.getText(),
+					txtCategoria.getText(),
+					txtPrecio.getText(),
+					txtStock.getText(),
+					txtDescripcion.getText(),
+					true);
+		} catch (IllegalArgumentException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error de datos", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 	}

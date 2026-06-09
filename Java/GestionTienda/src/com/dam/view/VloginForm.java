@@ -124,8 +124,6 @@ public class VloginForm extends JPanel implements IPanels {
 		setSize(ANCHO, ALTO);
 		setBackground(VPrincipal.colorPalido);
 	}
-	
-	
 
 	/**
 	 * Vincula el objeto controlador unificado a los disparadores de eventos de la vista de login.
@@ -138,8 +136,6 @@ public class VloginForm extends JPanel implements IPanels {
 
 		btnRegistrarse.addActionListener(c);
 		btnRegistrarse.setActionCommand(ConstantesBotones.REGISTRARSE);
-		
-		
 	}
 	
 	/**

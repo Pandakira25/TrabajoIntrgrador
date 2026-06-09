@@ -174,7 +174,7 @@ public class VRegistrarse extends JPanel implements IPanels {
 	public void setControlador(Ctrl c) {
 		btnRegistrar.addActionListener(c);
 		btnRegistrar.setActionCommand(ConstantesBotones.REGISTRARSE);
-		
+
 		btnCancelar.addActionListener(c);
 		btnCancelar.setActionCommand(ConstantesBotones.CANCELAR);
 	}
@@ -192,53 +192,15 @@ public class VRegistrarse extends JPanel implements IPanels {
 	 * la validación; o {@code null} en caso de detectarse incongruencias en el rellenado.
 	 */
 	public Comprador obtenerDatos() {
-		String nombre    = txtNombre.getText().trim();
-		String contra    = new String(txtContrasenia.getPassword()).trim();
-		String telStr    = txtTel.getText().trim();
-		String direccion = txtDireccion.getText().trim();
-		String nTarjeta  = txtNTarjeta.getText().trim();
-		
-		boolean valid = true;
-
-		if (nombre.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "El nombre es obligatorio.",
-					"Error de datos", JOptionPane.ERROR_MESSAGE);
-			valid = false;
-		}
-		else if (contra.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "La contraseña es obligatoria.",
-					"Error de datos", JOptionPane.ERROR_MESSAGE);
-			valid = false;
-		}
-		else if (telStr.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "El teléfono es obligatorio.",
-					"Error de datos", JOptionPane.ERROR_MESSAGE);
-			valid = false;
-		}
-		else if(direccion.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "La direccion es obligatoria.",
-					"Error de datos", JOptionPane.ERROR_MESSAGE);
-			valid = false;
-		}
-		else if(nTarjeta.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Debe ingresar una tarjeta.",
-					"Error de datos", JOptionPane.ERROR_MESSAGE);
-			valid = false;
-		}
-		else if(!telStr.isEmpty()) {
-			try {
-				Integer.parseInt(telStr);
-			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(this, "El teléfono debe ser un número.",
-						"Error de datos", JOptionPane.ERROR_MESSAGE);
-				valid = false;
-			}
-		}
-		
-
-		if(valid) {
-			return new Comprador(nombre,contra, Integer.parseInt(telStr), direccion, nTarjeta);
-		}else {
+		try {
+			return new Comprador(
+					txtNombre.getText(),
+					new String(txtContrasenia.getPassword()),
+					txtTel.getText(),
+					txtDireccion.getText(),
+					txtNTarjeta.getText());
+		} catch (IllegalArgumentException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error de datos", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 	}

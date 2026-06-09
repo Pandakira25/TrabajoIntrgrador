@@ -1,0 +1,13 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "java",
+			"name": "GestionTienda - App",
+			"request": "launch",
+			"mainClass": "com.dam.main.App",
+			"projectName": "GestionTienda",
+			"cwd": "${workspaceFolder}/Java/GestionTienda"
+		}
+	]
+}

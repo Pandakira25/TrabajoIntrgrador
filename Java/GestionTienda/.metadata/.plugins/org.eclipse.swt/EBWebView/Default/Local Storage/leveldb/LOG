@@ -1,3 +1,2 @@
-2026/05/31-20:36:40.468 7eb4 Reusing MANIFEST C:\Users\zoeja\Documents\TrabajoIntrgrador\Java\GestionTienda\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001
-2026/05/31-20:36:40.482 7eb4 Recovering log #3
-2026/05/31-20:36:40.486 7eb4 Reusing old log C:\Users\zoeja\Documents\TrabajoIntrgrador\Java\GestionTienda\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/000003.log 
+2026/05/24-19:35:54.782 547c Creating DB C:\Users\zoeja\Documents\TrabajoIntrgrador\Java\TiendaFnac\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb since it was missing.
+2026/05/24-19:35:54.808 547c Reusing MANIFEST C:\Users\zoeja\Documents\TrabajoIntrgrador\Java\TiendaFnac\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001
