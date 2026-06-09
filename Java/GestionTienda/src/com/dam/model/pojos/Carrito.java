@@ -15,6 +15,7 @@ import java.util.HashMap;
 public class Carrito {
 
 	/** Identificador único asignado al registro del carrito de compra. */
+	@SuppressWarnings("unused")
 	private int carritoId;
 	/** Diccionario estructurado que asocia objetos de tipo {@link Producto} con sus respectivas cantidades ordenadas. */
 	private HashMap<Producto, Integer> productos;
