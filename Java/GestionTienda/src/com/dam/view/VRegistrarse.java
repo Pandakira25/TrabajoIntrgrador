@@ -179,7 +179,7 @@ public class VRegistrarse extends JPanel implements IPanels {
 		btnCancelar.setActionCommand(ConstantesBotones.CANCELAR);
 	}
 	
-	
+
 	public Comprador obtenerDatos() {
 		try {
 			return new Comprador(
