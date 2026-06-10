@@ -108,6 +108,8 @@ public class VTrans extends JPanel implements IPanels {
 		tblTransacciones.getTableHeader().setFont(Fuentes.MEDIUM.deriveFont(16f));
 		tblTransacciones.getTableHeader().setForeground(VPrincipal.colorLetras);
 		tblTransacciones.getTableHeader().setBackground(VPrincipal.colorNaranjaPatito);
+		tblTransacciones.getTableHeader().setReorderingAllowed(false);
+        tblTransacciones.getTableHeader().setResizingAllowed(false);
 		tblTransacciones.setFont(Fuentes.REGULAR.deriveFont(14f));
 		tblTransacciones.setForeground(VPrincipal.colorLetras);
 		scrpTransacciones.setViewportView(tblTransacciones);

@@ -37,11 +37,11 @@ public final class ConstantesBotones {
 	/** Texto descriptivo o comando para contraer la vista detallada de un componente. */
 	public static final String VER_MENOS = "Ver menos";
 	/** Ruta relativa de almacenamiento del recurso gráfico para el icono de adición o incremento. */
-	public static final String MASICONO = "Iconos/icons8-más-30.png";
+	public static final String MASICONO = "/Iconos/mas.png";
 	/** Identificador o comando simplificado para la operación de suma o incremento de unidades. */
 	public static final String MAS = "mas";
 	/** Ruta relativa de almacenamiento del recurso gráfico para el icono de sustracción o decremento. */
-	public static final String MENOSICONO = "Iconos/icons8-subtract-30.png";
+	public static final String MENOSICONO = "/Iconos/menos.png";
 	/** Identificador o comando simplificado para la operación de resta o decremento de unidades. */
 	public static final String MENOS = "menos";
 	/** Texto descriptivo o comando para navegar a la sección del carrito de compra. */

@@ -259,6 +259,8 @@ public class VGestionStock extends JPanel implements IPanels {
 		tblProductos.getTableHeader().setFont(Fuentes.MEDIUM.deriveFont(16f));
 		tblProductos.getTableHeader().setForeground(VPrincipal.colorLetras);
 		tblProductos.getTableHeader().setBackground(VPrincipal.colorNaranjaPatito);
+		tblProductos.getTableHeader().setReorderingAllowed(false);
+        tblProductos.getTableHeader().setResizingAllowed(false);
 		tblProductos.setFont(Fuentes.REGULAR.deriveFont(14f));
 		tblProductos.setForeground(VPrincipal.colorLetras);
 		scrpProductos.setViewportView(tblProductos);
@@ -288,14 +290,18 @@ public class VGestionStock extends JPanel implements IPanels {
 		((JSpinner.DefaultEditor) spnCantidad.getEditor()).getTextField().setFocusable(false);
 		add(spnCantidad);
 
-		btnMas = new JButton(new ImageIcon(ConstantesBotones.MASICONO));
+		//System.out.println(getClass().getResource("/Iconos/mas.png"));
+		//System.out.println(getClass().getResource("/resources/Iconos/mas.png"));
+		//System.out.println(getClass().getResource("Iconos/mas.png"));
+		
+		btnMas = new JButton(new ImageIcon(getClass().getResource(ConstantesBotones.MASICONO)));
 		btnMas.setFont(Fuentes.MEDIUM.deriveFont(16f));
 		btnMas.setForeground(VPrincipal.colorLetras);
 		btnMas.setBackground(VPrincipal.colorNaranjaPatito);
 		btnMas.setBounds(941, 203, 38, 28);
 		add(btnMas);
 
-		btnMenos = new JButton(new ImageIcon(ConstantesBotones.MENOSICONO));
+		btnMenos = new JButton(new ImageIcon(getClass().getResource(ConstantesBotones.MENOSICONO)));
 		btnMenos.setBounds(989, 203, 38, 28);
 		btnMenos.setFont(Fuentes.MEDIUM.deriveFont(16f));
 		btnMenos.setForeground(VPrincipal.colorLetras);

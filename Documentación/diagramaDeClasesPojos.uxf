@@ -1,41 +1,65 @@
-<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>650</x><y>410</y><w>260</w><h>160</h></coordinates><panel_attributes>Carrito
+<diagram program="umletino" version="15.1"><zoom_level>11</zoom_level><element><id>UMLClass</id><coordinates><x>1012</x><y>623</y><w>286</w><h>176</h></coordinates><panel_attributes>Carrito
 --
 	-carritoId: int
 	-productos: HashMap&lt;Producto, Integer&gt;
 --
-	+ Carrito
+	+ Carrito()
+	+ Carrito(int, HashMap&lt;Producto, Integer&gt;)
 	+ toString() String
 	+addP(Prodcuto p, int cant): void
 	+dellP(Producto p): void
 	+restCant(Producto p,int cantR): void
 	+clearCarrito(): void
-//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>290</x><y>410</y><w>270</w><h>110</h></coordinates><panel_attributes>Comprador
+//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>550</x><y>623</y><w>396</w><h>220</h></coordinates><panel_attributes>Comprador
 --
 	- direccion: String
 	- nTarjeta: String
 	-carrito: Carrito
 --
-+ Comprador(String direccion, String nTarjeta)
++ Comprador(int, int, String, String, int, boolean, String, String)
++ Comprador(String, String, int, String, String)
++ validarDireccion(String) :String
++ validarTarjeta(String) :String
++ toString() :String
 + getCarrito(): Carrito
-//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>40</x><y>410</y><w>180</w><h>110</h></coordinates><panel_attributes>Empleado
++ getDireccion() :String
++ getnTarjeta() :String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>154</x><y>623</y><w>385</w><h>187</h></coordinates><panel_attributes>Empleado
 --
 	- String nSeguridad
 	- String iban
 --
-+ toString() String
-//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>710</x><y>160</y><w>260</w><h>180</h></coordinates><panel_attributes>Producto
++ toString() :String
++ Empleado(int, int, String, String, int, boolean, String, String)
++ Empleado(int, String, String, int, boolean, String, String)
++ validarNumSeguridadSocial(String) :String
++ validarIban(String) :String
++ getnSeguridad() :String
++ getIban() :String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1078</x><y>128</y><w>286</w><h>418</h></coordinates><panel_attributes>Producto
 --
-	- int id;
-	- String nombre;
-	- String categoria;
-	- double precio;
+	- int productoId
+	- String nombre
+	- String categoria
+	- double precio
 	- String descripcion
 	- int stock
+	- boolean activo
 --
-+ Producto()
++ Producto(int, String, String, double, String, int, boolean)
++ Producto(String, String, double, int, String)
++ validarNombre(String) :void
++ validarCategoria(String) :void
++ validarPrecio(double) :void
++ validarStock(int) :void
++ parsePrecio(String) : double
++ parseStock(String) :int
 + toString() String
-+ getters
-//TODO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>360</x><y>580</y><w>190</w><h>140</h></coordinates><panel_attributes>Transaccion
++ getId() :int
++ getNombre() :String
++ getCategoria() :String
++ getPrecio() :double
++ getDescripcion() :String
++ getStocl() :int
++ isActivo() :boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>693</x><y>876</y><w>275</w><h>154</h></coordinates><panel_attributes>Transaccion
 --
 	- compradorId: int
 	- empleadoId: int
@@ -43,24 +67,32 @@
 	-fecha: String
 	-importe: double
 --
-	+ toString()
-	+ Transaccion()
-//TODO
-		</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>130</x><y>100</y><w>260</w><h>240</h></coordinates><panel_attributes>Usuario
+	+ toString() :String
+	+ Transaccion(int, int, int, String, double)
+
+		</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>440</x><y>139</y><w>286</w><h>407</h></coordinates><panel_attributes>Usuario
 --
-	-userId: int
-	- int autorizacion;
-	- String nombre;
-	- String contrasenia
-	- int tel
-	-activo: boolean
+	# userId: int
+	# int autorizacion;
+	# String nombre;
+	# String contrasenia
+	# int tel
+	# activo: boolean
 --
-	+ Usuario()
-	+ toString() String 
+	+ Usuario(int, int, String, String, int, boolean)
+	+Usuario(int, String, String, int, boolean)
+	+validarNombre(String) :String
+	+validarContrasenia(String) :String
+	+validarAutorizacion(int) :int
+	+validarTel(int) :int
+	+parseTelefono(String) :int
+	+ toString() :String 
 	+getId(): int
 	+getAutorización(): int
 	+getNombre(): String
 	+getContrasenia(): String
 	+getTel(): int
-	+isActivo(): boolean	
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>110</x><y>330</y><w>90</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;80;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>340</x><y>330</y><w>140</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>120;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>550</x><y>470</y><w>120</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>780</x><y>330</y><w>30</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element></diagram>
+	+isActivo(): boolean
+	+darDeBaja() :void
+	+setUserId(int) :void	
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>418</x><y>535</y><w>99</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;80;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>671</x><y>535</y><w>154</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>120;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>935</x><y>689</y><w>99</w><h>33</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1155</x><y>535</y><w>33</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element></diagram>
