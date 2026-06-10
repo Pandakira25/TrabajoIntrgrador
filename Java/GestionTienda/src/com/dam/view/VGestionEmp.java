@@ -244,6 +244,8 @@ public class VGestionEmp extends JPanel implements IPanels {
 		tblEmpleados.getTableHeader().setBackground(VPrincipal.colorNaranjaPatito);
 		tblEmpleados.getTableHeader().setForeground(VPrincipal.colorLetras);
 		tblEmpleados.getTableHeader().setFont(Fuentes.MEDIUM.deriveFont(16f));
+		tblEmpleados.getTableHeader().setReorderingAllowed(false);
+        tblEmpleados.getTableHeader().setResizingAllowed(false);
 		tblEmpleados.setFont(Fuentes.REGULAR.deriveFont(14f));
 		tblEmpleados.setForeground(VPrincipal.colorLetras);
 		tblEmpleados.setRowHeight(28);

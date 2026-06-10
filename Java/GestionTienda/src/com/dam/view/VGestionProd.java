@@ -326,6 +326,8 @@ public class VGestionProd extends JPanel implements IPanels {
 		tblProductos.getTableHeader().setFont(Fuentes.MEDIUM.deriveFont(16f));
 		tblProductos.getTableHeader().setForeground(VPrincipal.colorLetras);
 		tblProductos.getTableHeader().setBackground(VPrincipal.colorNaranjaPatito);
+		tblProductos.getTableHeader().setReorderingAllowed(false);
+        tblProductos.getTableHeader().setResizingAllowed(false);
 		tblProductos.setFont(Fuentes.REGULAR.deriveFont(14f));
 		tblProductos.setForeground(VPrincipal.colorLetras);
 		tblProductos.setRowHeight(28);

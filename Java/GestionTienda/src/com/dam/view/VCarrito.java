@@ -103,6 +103,8 @@ public class VCarrito extends JPanel implements IPanels {
         tblCarrito.getTableHeader().setBackground(VPrincipal.colorNaranjaPatito);
         tblCarrito.getTableHeader().setForeground(VPrincipal.colorLetras);
         tblCarrito.getTableHeader().setFont(Fuentes.MEDIUM.deriveFont(16f));
+        tblCarrito.getTableHeader().setReorderingAllowed(false);
+        tblCarrito.getTableHeader().setResizingAllowed(false);
         tblCarrito.setFont(Fuentes.REGULAR.deriveFont(14f));
         tblCarrito.setForeground(VPrincipal.colorLetras);
         tblCarrito.setRowHeight(28);

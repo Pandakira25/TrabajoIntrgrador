@@ -102,6 +102,8 @@ public class VGestionUsuarios extends JPanel implements IPanels {
         tblUsuarios.getTableHeader().setBackground(VPrincipal.colorNaranjaPatito);
         tblUsuarios.getTableHeader().setFont(Fuentes.MEDIUM.deriveFont(16f));
         tblUsuarios.getTableHeader().setForeground(VPrincipal.colorLetras);
+        tblUsuarios.getTableHeader().setReorderingAllowed(false);
+        tblUsuarios.getTableHeader().setResizingAllowed(false);
         scrpUsuarios.setViewportView(tblUsuarios);
         configurarTabla();
 
